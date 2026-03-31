@@ -13,6 +13,8 @@ type Props = {
   onLocaleChange: (locale: string) => void;
 };
 
+const isGoLive = process.env.NEXT_PUBLIC_SITE_STATE === 'go-live';
+
 export default function Navigation({ t, locale, onLocaleChange }: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -22,7 +24,6 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
       const oldLang = locale;
       trackLanguageToggled(oldLang, newLocale, 'nav');
       onLocaleChange(newLocale);
-      // Replace locale prefix in URL
       const newPath = pathname.replace(`/${oldLang}`, `/${newLocale}`) || `/${newLocale}`;
       router.push(newPath);
     },
@@ -34,6 +35,23 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
     document.getElementById('forms-row')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToHowItWorks = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToPricing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const goLiveNav = isGoLive ? t.goLiveNav || t.nav : null;
+  const ctaLabel = isGoLive
+    ? (t.goLiveNav?.startFreeTrial ?? 'Start Free Trial →')
+    : t.nav.getEarlyAccess;
+  const ctaScrollHandler = isGoLive ? scrollToPricing : scrollToForms;
+  const ctaDataAttr = isGoLive ? 'nav_start_trial' : 'nav_early_access';
+
   return (
     <nav className="nav" data-site-state={process.env.NEXT_PUBLIC_SITE_STATE || 'pre-launch'}>
       <div className="nav__inner">
@@ -42,31 +60,58 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
         </a>
 
         <ul className="nav__links">
-          <li>
-            <a
-              href={`#whats-coming`}
-              className="nav__link"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('whats-coming')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              {t.nav.howItWorks}
-            </a>
-          </li>
-          <li>
-            <a href="#" className="nav__link" onClick={(e) => { e.preventDefault(); }}>
-              <span style={{ opacity: 0.5 }}>{t.nav.pricing} (coming soon)</span>
-            </a>
-          </li>
+          {isGoLive ? (
+            // Go-Live nav
+            <>
+              <li>
+                <a
+                  href="#how-it-works"
+                  className="nav__link"
+                  onClick={scrollToHowItWorks}
+                >
+                  {goLiveNav?.howItWorks ?? 'How It Works'}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#pricing"
+                  className="nav__link"
+                  onClick={scrollToPricing}
+                >
+                  {goLiveNav?.pricing ?? 'Pricing'}
+                </a>
+              </li>
+            </>
+          ) : (
+            // Pre-launch nav
+            <>
+              <li>
+                <a
+                  href="#whats-coming"
+                  className="nav__link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('whats-coming')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  {t.nav.howItWorks}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="nav__link" onClick={(e) => { e.preventDefault(); }}>
+                  <span style={{ opacity: 0.5 }}>{t.nav.pricing} (coming soon)</span>
+                </a>
+              </li>
+            </>
+          )}
           <li>
             <button
               className="nav__cta"
-              onClick={scrollToForms}
-              data-cta="nav_early_access"
-              data-cta-position="nav_early_access"
+              onClick={ctaScrollHandler}
+              data-cta={ctaDataAttr}
+              data-cta-position="nav"
             >
-              {t.nav.getEarlyAccess}
+              {ctaLabel}
             </button>
           </li>
         </ul>

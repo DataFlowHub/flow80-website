@@ -9,6 +9,94 @@ export type Translations = {
     pricing: string;
     getEarlyAccess: string;
   };
+  howItWorks: {
+    sectionTitle: string;
+    steps: {
+      heading: string;
+      body: string;
+    }[];
+    cta: string;
+  };
+  templates: {
+    sectionTitle: string;
+    intro: string;
+    cards: {
+      icon: string;
+      name: string;
+      description: string;
+    }[];
+    cta: string;
+  };
+  pricing: {
+    sectionTitle: string;
+    leadIn: string;
+    price: string;
+    period: string;
+    tagline: string;
+    features: string[];
+    ctaPrimary: string;
+    trialNote: string;
+  };
+  competitorTable: {
+    sectionTitle: string;
+    flow80: string;
+    hubspotStarter: string;
+    hubspotPro: string;
+    monday: string;
+    activepieces: string;
+    rows: {
+      feature: string;
+      cells: ('check' | 'cross' | 'partial' | string)[];
+    }[];
+    bottomLine: string;
+  };
+  trust: {
+    sectionTitle: string;
+    placeholder: string;
+    quotes: {
+      text: string;
+      attribution: string;
+    }[];
+    badges: string[];
+    cta: string;
+  };
+  footerGoLive: {
+    ctaStripHeadline: string;
+    ctaStripCta: string;
+    tagline: string;
+    groupProduct: string;
+    groupCompany: string;
+    groupLegal: string;
+    links: {
+      howItWorks: string;
+      pricing: string;
+      templates: string;
+      about: string;
+      contact: string;
+      privacy: string;
+      terms: string;
+    };
+    badges: {
+      gdpr: string;
+      denmark: string;
+      secure: string;
+    };
+    copyright: string;
+  };
+  heroGoLive: {
+    headline: string;
+    subheadline: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+    trustBadge1: string;
+    trustBadge2: string;
+    trustBadge3: string;
+  };
+  goLiveNav: {
+    howItWorks: string;
+    pricing: string;
+    startFreeTrial: string;
+  };
   hero: {
     headline: string;
     subheadline: string;
@@ -112,6 +200,136 @@ const en: Translations = {
     howItWorks: 'How It Works',
     pricing: 'Pricing',
     getEarlyAccess: 'Get Early Access →',
+  },
+  goLiveNav: {
+    howItWorks: 'How It Works',
+    pricing: 'Pricing',
+    startFreeTrial: 'Start Free Trial →',
+  },
+  heroGoLive: {
+    headline: 'Your team runs on manual work. We fix that.',
+    subheadline:
+      'Flow80 connects your systems and automates your operations — no developers needed, no complicated setup. Start your free trial today.',
+    ctaPrimary: 'Start Free Trial →',
+    ctaSecondary: 'See How It Works ↓',
+    trustBadge1: 'GDPR Compliant',
+    trustBadge2: 'No credit card required',
+    trustBadge3: '14-day free trial',
+  },
+  howItWorks: {
+    sectionTitle: 'Up and running in three steps.',
+    steps: [
+      {
+        heading: 'Connect your systems.',
+        body: 'Link the tools your team already uses — your database, your apps, your file storage. You don\'t need IT for this. Most connections take under five minutes.',
+      },
+      {
+        heading: 'Build your first workflow.',
+        body: 'Drag the steps together like building blocks. Tell Flow80 what should happen when, and what should happen if something goes wrong. If you\'ve ever used a flowchart, you can do this.',
+      },
+      {
+        heading: 'Watch it run.',
+        body: 'Flip it on. Flow80 executes your workflow, logs every step, retries if something fails, and alerts you only when it actually needs you. No babysitting required.',
+      },
+    ],
+    cta: 'Start Free Trial →',
+  },
+  templates: {
+    sectionTitle: 'Don\'t start from scratch.',
+    intro: 'Pick a proven starting point. Each template is built for a real ops scenario — adapt it to your situation in minutes.',
+    cards: [
+      {
+        icon: '📄',
+        name: 'Order to Invoice',
+        description: 'When a new order comes in, Flow80 pulls the customer details, generates the invoice, and routes it to the right person — automatically. No copy-pasting. No missed orders.',
+      },
+      {
+        icon: '🔄',
+        name: 'Data Sync Between Systems',
+        description: 'Keep two systems in sync without manual exports and imports. Flow80 runs the transfer on a schedule or triggers it when something changes — your choice.',
+      },
+      {
+        icon: '⚠️',
+        name: 'Exception Alert Handler',
+        description: 'When something breaks in a workflow, Flow80 catches it, retries the smart fix, and tells you what happened — with enough detail to act, without the noise.',
+      },
+    ],
+    cta: 'Start Free Trial →',
+  },
+  pricing: {
+    sectionTitle: 'One price. Everything included.',
+    leadIn: 'No per-user fees. No per-run charges. No tiers to decode. One team, one price, unlimited workflows.',
+    price: '€149',
+    period: '/ month',
+    tagline: 'Everything included. No hidden extras.',
+    features: [
+      'Unlimited workflows',
+      'Unlimited workflow runs',
+      'Visual workflow builder',
+      'Pre-built template library',
+      'Real-time monitoring & logs',
+      'Smart exception handling & retries',
+      'All integrations (API, database, EDI, webhooks, email, file storage)',
+      'GDPR-compliant data handling',
+      'Secure credential vault',
+      'Email support (response within 24 hours)',
+      'Onboarding call included',
+    ],
+    ctaPrimary: 'Start Free Trial — No Credit Card Required →',
+    trialNote: '14-day free trial. No credit card needed to start.',
+  },
+  competitorTable: {
+    sectionTitle: 'How does Flow80 compare?',
+    flow80: 'Flow80',
+    hubspotStarter: 'HubSpot Starter',
+    hubspotPro: 'HubSpot Pro',
+    monday: 'monday.com',
+    activepieces: 'Activepieces',
+    rows: [
+      { feature: 'Price', cells: ['€149/mo flat', '$75/user/mo', '~€1,300/mo', '€9–26/user/mo', '€25/mo flat'] },
+      { feature: 'Unlimited workflows', cells: ['check', 'cross', 'check', 'cross', 'check'] },
+      { feature: 'No per-user pricing', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
+      { feature: 'Flat rate (no surprises)', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
+      { feature: 'Built-in exception handling', cells: ['check', 'cross', 'partial', 'cross', 'cross'] },
+      { feature: 'Real-time monitoring', cells: ['check', 'partial', 'partial', 'partial', 'cross'] },
+      { feature: 'EDI + database integrations', cells: ['check', 'cross', 'cross', 'cross', 'cross'] },
+      { feature: 'For ops teams (not marketers)', cells: ['check', 'cross', 'cross', 'partial', 'partial'] },
+      { feature: 'GDPR compliant', cells: ['check', 'check', 'check', 'check', 'partial'] },
+    ],
+    bottomLine: 'Flow80 is the only flat-rate option built specifically for ops teams who need real integrations and reliable execution — not just a pretty Kanban board.',
+  },
+  trust: {
+    sectionTitle: 'Teams already running better.',
+    placeholder: 'We\'re collecting real results from our early customers. Check back soon for case studies and quantified outcomes.',
+    quotes: [
+      { text: 'Testimonial — to be added. Goal: quote addressing ease of setup, time saved, or reliability.', attribution: 'Name, Title, Company' },
+      { text: 'Testimonial — to be added. Goal: quote addressing how Flow80 compared to their previous manual process or expensive alternative.', attribution: 'Name, Title, Company' },
+    ],
+    badges: ['🇪🇺 GDPR Compliant', '🇩🇰 Built in Denmark', '14-day free trial — no credit card', 'Secure by design'],
+    cta: 'Start Free Trial →',
+  },
+  footerGoLive: {
+    ctaStripHeadline: 'Ready to automate?',
+    ctaStripCta: 'Start Free Trial →',
+    tagline: 'Built for ops teams who are tired of manual work.',
+    groupProduct: 'Product',
+    groupCompany: 'Company',
+    groupLegal: 'Legal',
+    links: {
+      howItWorks: 'How It Works',
+      pricing: 'Pricing',
+      templates: 'Templates',
+      about: 'About',
+      contact: 'Contact',
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service',
+    },
+    badges: {
+      gdpr: 'GDPR Compliant',
+      denmark: 'Built in Denmark',
+      secure: 'Secure by design',
+    },
+    copyright: '© 2026 Flow80. All rights reserved.',
   },
   hero: {
     headline: 'Your team runs on manual work. We fix that.',
@@ -256,6 +474,136 @@ const da: Translations = {
     pricing: 'Priser',
     getEarlyAccess: 'Få tidlig adgang →',
   },
+  goLiveNav: {
+    howItWorks: 'Sådan virker det',
+    pricing: 'Priser',
+    startFreeTrial: 'Start gratis prøveperiode →',
+  },
+  heroGoLive: {
+    headline: 'Din virksomhed kører på manuelt arbejde. Vi løser det.',
+    subheadline:
+      'Flow80 forbinder dine systemer og automatiserer dine arbejdsgange — uden udviklere, uden kompliceret setup. Start din gratis prøveperiode i dag.',
+    ctaPrimary: 'Start gratis prøveperiode →',
+    ctaSecondary: 'Se hvordan det virker ↓',
+    trustBadge1: 'GDPR-compliant',
+    trustBadge2: 'Intet kreditkort kræves',
+    trustBadge3: '14 dages gratis prøveperiode',
+  },
+  howItWorks: {
+    sectionTitle: 'Op og klar på tre trin.',
+    steps: [
+      {
+        heading: 'Forbind dine systemer.',
+        body: 'Link de værktøjer dit team allerede bruger — din database, dine apps, din fillagring. Du behøver ikke IT til dette. De fleste forbindelser tager under fem minutter.',
+      },
+      {
+        heading: 'Byg dit første workflow.',
+        body: 'Træk trinene sammen som byggeklodser. Fortæl Flow80 hvad der skal ske hvornår, og hvad der skal ske hvis noget går galt. Hvis du nogensinde har brugt et flowchart, kan du gøre dette.',
+      },
+      {
+        heading: 'Se det køre.',
+        body: 'Tænd for det. Flow80 udfører dit workflow, logger hvert trin, prøver igen hvis noget fejler, og giver dig besked kun når det faktisk har brug for dig. Ingen babysitting nødvendig.',
+      },
+    ],
+    cta: 'Start gratis prøveperiode →',
+  },
+  templates: {
+    sectionTitle: 'Byg ikke fra bunden.',
+    intro: 'Vælg et gennemprøvet udgangspunkt. Hver skabelon er bygget til et rigtigt ops-scenarie — tilpas det til din situation på få minutter.',
+    cards: [
+      {
+        icon: '📄',
+        name: 'Ordre til faktura',
+        description: 'Når en ny ordre kommer ind, henter Flow80 kundeoplysningerne, genererer fakturaen og sender den til den rette person — automatisk. Ingen copy-paste. Ingen manglende ordrer.',
+      },
+      {
+        icon: '🔄',
+        name: 'Datasynkronisering mellem systemer',
+        description: 'Hold to systemer synkroniserede uden manuelle eksporter og imports. Flow80 kører overførslen på en tidsplan eller udløser den når noget ændres — dit valg.',
+      },
+      {
+        icon: '⚠️',
+        name: 'Undtagelsesvarsling',
+        description: 'Når noget går galt i et workflow, fanger Flow80 det, prøver den smarte løsning igen, og fortæller dig hvad der skete — med nok detaljer til at handle, uden støjen.',
+      },
+    ],
+    cta: 'Start gratis prøveperiode →',
+  },
+  pricing: {
+    sectionTitle: 'Én pris. Alt inkluderet.',
+    leadIn: 'Ingen brugergebyrer. Ingen kørselsgebyrer. Ingen niveauer at tyde. Ét team, én pris, ubegrænsede workflows.',
+    price: '€149',
+    period: '/ md.',
+    tagline: 'Alt inkluderet. Ingen skjulte gebyrer.',
+    features: [
+      'Ubegrænsede workflows',
+      'Ubegrænsede workflow-kørsler',
+      'Visuel workflow-bygger',
+      'Bibliotek med færdige skabeloner',
+      'Realtidsovervågning og logs',
+      'Smart undtagelseshåndtering og genforsøg',
+      'Alle integrationer (API, database, EDI, webhooks, email, fillagring)',
+      'GDPR-compliant datahåndtering',
+      'Sikker legitimationsboks',
+      'Email-support (svar inden for 24 timer)',
+      'Onboarding-opkald inkluderet',
+    ],
+    ctaPrimary: 'Start gratis prøveperiode — Intet kreditkort kræves →',
+    trialNote: '14 dages gratis prøveperiode. Intet kreditkort nødvendigt for at starte.',
+  },
+  competitorTable: {
+    sectionTitle: 'Hvordan klarer Flow80 sig i sammenligning?',
+    flow80: 'Flow80',
+    hubspotStarter: 'HubSpot Starter',
+    hubspotPro: 'HubSpot Pro',
+    monday: 'monday.com',
+    activepieces: 'Activepieces',
+    rows: [
+      { feature: 'Pris', cells: ['€149/md. flat', '$75/bruger/md.', '~€1.300/md.', '€9–26/bruger/md.', '€25/md. flat'] },
+      { feature: 'Ubegrænsede workflows', cells: ['check', 'cross', 'check', 'cross', 'check'] },
+      { feature: 'Ingen brugerbaseret prissætning', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
+      { feature: 'Fast pris (ingen overraskelser)', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
+      { feature: 'Indbygget undtagelseshåndtering', cells: ['check', 'cross', 'partial', 'cross', 'cross'] },
+      { feature: 'Realtidsovervågning', cells: ['check', 'partial', 'partial', 'partial', 'cross'] },
+      { feature: 'EDI + database-integrationer', cells: ['check', 'cross', 'cross', 'cross', 'cross'] },
+      { feature: 'Til ops-teams (ikke marketing)', cells: ['check', 'cross', 'cross', 'partial', 'partial'] },
+      { feature: 'GDPR-compliant', cells: ['check', 'check', 'check', 'check', 'partial'] },
+    ],
+    bottomLine: 'Flow80 er den eneste flat-rate løsning bygget specifikt til ops-teams der har brug for rigtige integrationer og pålidelig udførelse — ikke bare et pænt Kanban-board.',
+  },
+  trust: {
+    sectionTitle: 'Teams der allerede kører bedre.',
+    placeholder: 'Vi indsamler rigtige resultater fra vores tidlige kunder. Kom tilbage snart for casestudier og målbare outcomes.',
+    quotes: [
+      { text: 'Testimonial — tilføjes snart. Mål: citat der adresserer nem opsætning, sparet tid eller pålidelighed.', attribution: 'Navn, Titel, Virksomhed' },
+      { text: 'Testimonial — tilføjes snart. Mål: citat der adresserer hvordan Flow80 sammenlignes med deres tidligere manuelle proces eller dyre alternativ.', attribution: 'Navn, Titel, Virksomhed' },
+    ],
+    badges: ['🇪🇺 GDPR-compliant', '🇩🇰 Udviklet i Danmark', '14 dages gratis prøveperiode — intet kreditkort', 'Sikkerhed indbygget'],
+    cta: 'Start gratis prøveperiode →',
+  },
+  footerGoLive: {
+    ctaStripHeadline: 'Klar til at automatisere?',
+    ctaStripCta: 'Start gratis prøveperiode →',
+    tagline: 'Bygget til operations-teams der er trætte af manuelt arbejde.',
+    groupProduct: 'Produkt',
+    groupCompany: 'Virksomhed',
+    groupLegal: 'Juridisk',
+    links: {
+      howItWorks: 'Sådan virker det',
+      pricing: 'Priser',
+      templates: 'Skabeloner',
+      about: 'Om os',
+      contact: 'Kontakt',
+      privacy: 'Privatlivspolitik',
+      terms: 'Vilkår',
+    },
+    badges: {
+      gdpr: 'GDPR-compliant',
+      denmark: 'Udviklet i Danmark',
+      secure: 'Sikkerhed indbygget',
+    },
+    copyright: '© 2026 Flow80. Alle rettigheder forbeholdes.',
+  },
   hero: {
     headline: 'Din virksomhed kører på manuelt arbejde. Vi løser det.',
     subheadline:
@@ -390,6 +738,136 @@ const sv: Translations = {
     howItWorks: 'Så fungerar det',
     pricing: 'Prissättning',
     getEarlyAccess: 'Få tidig tillgång →',
+  },
+  goLiveNav: {
+    howItWorks: 'Så fungerar det',
+    pricing: 'Prissättning',
+    startFreeTrial: 'Starta gratis provperiod →',
+  },
+  heroGoLive: {
+    headline: 'Ditt företag kör på manuellt arbete. Vi fixar det.',
+    subheadline:
+      'Flow80 kopplar ihop dina system och automatiserar dina arbetsflöden — inga utvecklare, ingen komplicerad setup. Starta din gratis provperiod idag.',
+    ctaPrimary: 'Starta gratis provperiod →',
+    ctaSecondary: 'Se hur det fungerar ↓',
+    trustBadge1: 'GDPR-kompatibelt',
+    trustBadge2: 'Inget kreditkort krävs',
+    trustBadge3: '14 dagars Gratis provperiod',
+  },
+  howItWorks: {
+    sectionTitle: 'Upp och redo på tre steg.',
+    steps: [
+      {
+        heading: 'Koppla ihop dina system.',
+        body: 'Länka de verktyg ditt team redan använder — din databas, dina appar, din fillagring. Du behöver inte IT för det här. De flesta anslutningar tar under fem minuter.',
+      },
+      {
+        heading: 'Bygg ditt första arbetsflöde.',
+        body: 'Dra stegen ihop som byggklossar. Berätta för Flow80 vad som ska hända när, och vad som ska hända om något går fel. Om du någonsin har använt ett flödesschema kan du göra det här.',
+      },
+      {
+        heading: 'Se det köra.',
+        body: 'Sätt igång det. Flow80 kör ditt arbetsflöde, loggar varje steg, försöker igen om något misslyckas, och varnar dig bara när det faktiskt behöver dig. Ingen babysitting krävs.',
+      },
+    ],
+    cta: 'Starta gratis provperiod →',
+  },
+  templates: {
+    sectionTitle: 'Börja inte från noll.',
+    intro: 'Välj en beprövad startpunkt. Varje mall är byggd för ett riktigt ops-scenario — anpassa den till din situation på några minuter.',
+    cards: [
+      {
+        icon: '📄',
+        name: 'Order till faktura',
+        description: 'När en ny order kommer in hämtar Flow80 kunduppgifterna, genererar fakturan och skickar den till rätt person — automatiskt. Ingen copy-paste. Inga missade ordrar.',
+      },
+      {
+        icon: '🔄',
+        name: 'Datasynkronisering mellan system',
+        description: 'Håll två system synkroniserade utan manuella exporter och importer. Flow80 kör överföringen enligt ett schema eller utlöser den när något förändras — ditt val.',
+      },
+      {
+        icon: '⚠️',
+        name: 'Undantagsvarningshanterare',
+        description: 'När något går sönder i ett arbetsflöde fångar Flow80 det, försöker med den smarta lösningen igen, och berättar vad som hände — med tillräckligt med detaljer för att agera, utan bruset.',
+      },
+    ],
+    cta: 'Starta gratis provperiod →',
+  },
+  pricing: {
+    sectionTitle: 'Ett pris. Allt inkluderat.',
+    leadIn: 'Inga användaravgifter. Inga körningsavgifter. Inga nivåer att tyda. Ett team, ett pris, obegränsade arbetsflöden.',
+    price: '€149',
+    period: '/ mån',
+    tagline: 'Allt inkluderat. Inga dolda avgifter.',
+    features: [
+      'Obegränsade arbetsflöden',
+      'Obegränsade arbetsflödeskörningar',
+      'Visuell arbetsflödesbyggare',
+      'Bibliotek med färdiga mallar',
+      'Realtidsövervakning och loggar',
+      'Smart undantagshantering och omförsök',
+      'Alla integrationer (API, databas, EDI, webhooks, e-post, fillagring)',
+      'GDPR-kompatibel datahantering',
+      'Säkert autentiseringsvalv',
+      'E-postsupport (svar inom 24 timmar)',
+      'Onboarding-samtal inkluderat',
+    ],
+    ctaPrimary: 'Starta gratis provperiod — Inget kreditkort krävs →',
+    trialNote: '14 dagars gratis provperiod. Inget kreditkort behövs för att börja.',
+  },
+  competitorTable: {
+    sectionTitle: 'Hur jämför sig Flow80?',
+    flow80: 'Flow80',
+    hubspotStarter: 'HubSpot Starter',
+    hubspotPro: 'HubSpot Pro',
+    monday: 'monday.com',
+    activepieces: 'Activepieces',
+    rows: [
+      { feature: 'Pris', cells: ['€149/mån flat', '$75/anv/mån', '~€1.300/mån', '€9–26/anv/mån', '€25/mån flat'] },
+      { feature: 'Obegränsade arbetsflöden', cells: ['check', 'cross', 'check', 'cross', 'check'] },
+      { feature: 'Ingen användarbaserad prissättning', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
+      { feature: 'Fast pris (inga överraskningar)', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
+      { feature: 'Inbyggd undantagshantering', cells: ['check', 'cross', 'partial', 'cross', 'cross'] },
+      { feature: 'Realtidsövervakning', cells: ['check', 'partial', 'partial', 'partial', 'cross'] },
+      { feature: 'EDI + databasintegrationer', cells: ['check', 'cross', 'cross', 'cross', 'cross'] },
+      { feature: 'För ops-team (inte marknadsföring)', cells: ['check', 'cross', 'cross', 'partial', 'partial'] },
+      { feature: 'GDPR-kompatibelt', cells: ['check', 'check', 'check', 'check', 'partial'] },
+    ],
+    bottomLine: 'Flow80 är det enda flat-rate alternativet byggt specifikt för ops-team som behöver riktiga integrationer och pålitlig körning — inte bara en snygg Kanban-tavla.',
+  },
+  trust: {
+    sectionTitle: 'Team som redan fungerar bättre.',
+    placeholder: 'Vi samlar in riktiga resultat från våra tidiga kunder. Kom tillbaka snart för fallstudier och mätbara utfall.',
+    quotes: [
+      { text: 'Testimonial — läggs till snart. Mål: citat som adresserar enkel installation, sparad tid eller tillförlitlighet.', attribution: 'Namn, Titel, Företag' },
+      { text: 'Testimonial — läggs till snart. Mål: citat som adresserar hur Flow80 jämfördes med deras tidigare manuella process eller dyrt alternativ.', attribution: 'Namn, Titel, Företag' },
+    ],
+    badges: ['🇪🇺 GDPR-kompatibelt', '🇩🇰 Utvecklat i Danmark', '14 dagars gratis provperiod — inget kreditkort', 'Säkert byggt'],
+    cta: 'Starta gratis provperiod →',
+  },
+  footerGoLive: {
+    ctaStripHeadline: 'Redo att automatisera?',
+    ctaStripCta: 'Starta gratis provperiod →',
+    tagline: 'Byggt för operations-team som är trötta på manuellt arbete.',
+    groupProduct: 'Produkt',
+    groupCompany: 'Företag',
+    groupLegal: 'Juridik',
+    links: {
+      howItWorks: 'Så fungerar det',
+      pricing: 'Prissättning',
+      templates: 'Mallar',
+      about: 'Om oss',
+      contact: 'Kontakt',
+      privacy: 'Integritetspolicy',
+      terms: 'Villkor',
+    },
+    badges: {
+      gdpr: 'GDPR-kompatibelt',
+      denmark: 'Utvecklat i Danmark',
+      secure: 'Säkert byggt',
+    },
+    copyright: '© 2026 Flow80. Alla rättigheter förbehållna.',
   },
   hero: {
     headline: 'Ditt företag kör på manuellt arbete. Vi fixar det.',

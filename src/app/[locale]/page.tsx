@@ -10,6 +10,11 @@ import PricingTeaserSection from '@/components/PricingTeaserSection';
 import NewsletterForm from '@/components/NewsletterForm';
 import EarlyAccessForm from '@/components/EarlyAccessForm';
 import Footer from '@/components/Footer';
+import HowItWorks from '@/components/HowItWorks';
+import TemplateShowcase from '@/components/TemplateShowcase';
+import Pricing from '@/components/Pricing';
+import CompetitorTable from '@/components/CompetitorTable';
+import TrustSection from '@/components/TrustSection';
 import { useScrollReveal } from '@/components/useScrollReveal';
 import { translations, locales, defaultLocale, type Locale } from '@/i18n/translations';
 import {
@@ -17,6 +22,8 @@ import {
   initSectionTracking,
   initCtaTracking,
 } from '@/services/analytics';
+
+const isGoLive = process.env.NEXT_PUBLIC_SITE_STATE === 'go-live';
 
 export default function LocalePage() {
   const pathname = usePathname();
@@ -49,6 +56,20 @@ export default function LocalePage() {
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`) || `/${newLocale}`;
     router.push(newPath);
   }, [locale, pathname, router]);
+
+  if (isGoLive) {
+    return (
+      <>
+        <main>
+          <HowItWorks t={t} />
+          <TemplateShowcase t={t} />
+          <Pricing t={t} />
+          <CompetitorTable t={t} />
+          <TrustSection t={t} />
+        </main>
+      </>
+    );
+  }
 
   return (
     <>

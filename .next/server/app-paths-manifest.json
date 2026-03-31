@@ -1,7 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/early-access/apply/route": "app/api/early-access/apply/route.js",
-  "/api/newsletter/subscribe/route": "app/api/newsletter/subscribe/route.js",
-  "/page": "app/page.js",
-  "/[locale]/page": "app/[locale]/page.js"
-}

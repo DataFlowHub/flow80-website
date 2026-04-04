@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrations — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F7FAFC;color:#2D3748;font-size:13px}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:#1A1D2E;color:#fff;z-index:100;display:flex;flex-direction:column}
+.sidebar-logo{padding:20px 20px 16px;font-weight:700;font-size:18px;color:#5B50D6;border-bottom:1px solid #2D3154}
+.sidebar-section{padding:16px 0 4px}
+.sidebar-section-label{font-size:10px;font-weight:600;color:#6C7A9C;text-transform:uppercase;letter-spacing:0.8px;padding:0 20px 8px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:#A0AEC0;font-size:13px;cursor:pointer}
+.sidebar-item:hover{background:#252A40;color:#fff}
+.sidebar-item.active{background:#2D3154;color:#fff;border-left:3px solid #5B50D6;padding-left:17px}
+.sidebar-item i{width:16px;text-align:center}
+.sidebar-item .count{margin-left:auto;background:#2D3154;font-size:11px;padding:2px 7px;border-radius:10px}
+.sidebar-bottom{padding:16px 20px;border-top:1px solid #2D3154;margin-top:auto}
+.sidebar-item.red .count{background:#DC3545}
+.topbar{position:fixed;top:0;left:240px;right:0;height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 24px;z-index:99;gap:16px}
+.breadcrumb{font-size:14px;color:#2D3748;font-weight:500}
+.breadcrumb span{color:#A0AEC0;font-weight:400}
+.cmd-bar{flex:1;max-width:500px;margin:0 auto;background:#F7FAFC;border:1.5px solid #E2E8F0;border-radius:24px;padding:8px 16px;display:flex;align-items:center;gap:8px;color:#A0AEC0;font-size:13px;cursor:pointer}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:16px;color:#718096;padding:6px}
+.env-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:#28A74520;color:#28A745}
+.avatar{width:30px;height:30px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px}
+.main{margin-left:240px;margin-top:60px;padding:28px 32px}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.page-title{font-size:20px;font-weight:700}
+.page-subtitle{font-size:13px;color:#718096;margin-top:2px}
+.btn-primary{display:inline-block;background:#007BFF;color:#fff;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;border:none}
+.btn-primary:hover{background:#0069D9}
+.health-row{display:flex;gap:16px;margin-bottom:24px}
+.health-card{flex:1;background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.health-card .dot{width:12px;height:12px;border-radius:50%}
+.health-card .val{font-size:22px;font-weight:700}
+.health-card .lbl{font-size:12px;color:#718096}
+.table-wrap{background:#fff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;margin-bottom:24px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 16px;font-size:11px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #E2E8F0;background:#FAFBFC}
+td{padding:11px 16px;font-size:13px;border-bottom:1px solid #F7FAFC;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F7FAFC}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.sd-green{background:#28A745}
+.sd-amber{background:#F5A623}
+.sd-red{background:#DC3545}
+.action-btn{background:none;border:none;cursor:pointer;color:#718096;font-size:14px}
+.expandable{background:#fff;border:1px solid #E2E8F0;border-radius:10px;margin-bottom:20px}
+.expand-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;cursor:pointer;font-weight:600;font-size:13px}
+.expand-content{padding:0 20px 16px}
+.cred-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid #F7FAFC;font-size:13px}
+.cred-row:last-child{border-bottom:none}
+.cred-app{flex:1;font-weight:500}
+.cred-type{font-size:12px;color:#718096;margin-right:20px}
+.cred-exp{font-size:12px;color:#718096;margin-right:16px}
+.btn-cred{font-size:12px;color:#007BFF;background:none;border:none;cursor:pointer;font-weight:500}
+.btn-cred:hover{text-decoration:underline}
+.error-row{display:flex;align-items:center;padding:12px 20px;border-bottom:1px solid #F7FAFC;gap:12px}
+.error-row:last-child{border-bottom:none}
+.error-row:hover{background:#F7FAFC}
+.error-icon{width:28px;height:28px;background:#DC354520;color:#DC3545;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+.error-info{flex:1}
+.error-title{font-weight:500;font-size:13px}
+.error-detail{font-size:12px;color:#718096}
+.btn-retry{background:#DC354520;color:#DC3545;border:1px solid #DC3545;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sidebar-logo">⚡ Flow80</div>
+  <div class="sidebar-section"><div class="sidebar-section-label">Workspace</div>
+    <div class="sidebar-item"><i class="fa-solid fa-house"></i> Dashboard</div>
+    <div class="sidebar-item"><i class="fa-solid fa-bolt"></i> Workflows <span class="count">12</span></div>
+  </div>
+  <div class="sidebar-section"><div class="sidebar-section-label">Connections</div>
+    <div class="sidebar-item active"><i class="fa-solid fa-link"></i> Integrations</div>
+    <div class="sidebar-item"><i class="fa-solid fa-key"></i> API Keys</div>
+    <div class="sidebar-item"><i class="fa-solid fa-arrow-up-right-from-square"></i> Webhooks</div>
+  </div>
+  <div class="sidebar-section"><div class="sidebar-section-label">Monitor</div>
+    <div class="sidebar-item"><i class="fa-solid fa-list"></i> Logs</div>
+    <div class="sidebar-item red"><i class="fa-solid fa-triangle-exclamation"></i> Alerts <span class="count">2</span></div>
+    <div class="sidebar-item"><i class="fa-solid fa-chart-line"></i> Analytics</div>
+  </div>
+  <div class="sidebar-section"><div class="sidebar-section-label">Admin</div>
+    <div class="sidebar-item"><i class="fa-solid fa-users"></i> Team</div>
+    <div class="sidebar-item"><i class="fa-solid fa-shield-halved"></i> Audit Log</div>
+    <div class="sidebar-item"><i class="fa-solid fa-gear"></i> Settings</div>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i> Help & Docs</div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="breadcrumb">Home / <span>Integrations</span></div>
+  <div class="cmd-bar"><i class="fa-solid fa-terminal"></i> Search or jump to… <span style="margin-left:auto;font-size:11px">⌘K</span></div>
+  <div class="topbar-right">
+    <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+    <span class="env-badge">● Production</span>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="page-header">
+    <div><div class="page-title">Integrations</div><div class="page-subtitle">12 connected · 2 errors · 34 in use by active workflows</div></div>
+    <button class="btn-primary"><i class="fa-solid fa-plus"></i> Connect Integration</button>
+  </div>
+
+  <div class="health-row">
+    <div class="health-card"><span class="dot sd-green" style="background:#28A745;width:12px;height:12px;border-radius:50%"></span><div><div class="val">12</div><div class="lbl">Connected</div></div></div>
+    <div class="health-card"><span class="dot" style="background:#DC3545"></span><div><div class="val" style="color:#DC3545">2</div><div class="lbl">Errors</div></div></div>
+    <div class="health-card"><span class="dot" style="background:#A0AEC0"></span><div><div class="val">1</div><div class="lbl">Inactive &gt;7 days</div></div></div>
+    <div class="health-card"><span class="dot" style="background:#F5A623"></span><div><div class="val" style="color:#F5A623">1</div><div class="lbl">Expiring soon</div></div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>App</th><th>Category</th><th>Status</th><th>Used in</th><th>Last event</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><i class="fa-brands fa-salesforce" style="color:#00A1E0;margin-right:8px"></i> Salesforce</td><td>CRM</td><td><span class="status-dot sd-green"></span> Healthy</td><td>4 workflows</td><td>2 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td><i class="fa-brands fa-slack" style="color:#4A154B;margin-right:8px"></i> Slack</td><td>Communication</td><td><span class="status-dot sd-green"></span> Healthy</td><td>7 workflows</td><td>5 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td><i class="fa-brands fa-hubspot" style="color:#FF7A59;margin-right:8px"></i> HubSpot</td><td>CRM</td><td><span class="status-dot sd-amber"></span> Degraded</td><td>2 workflows</td><td>1 hour ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td><i class="fa-solid fa-diagram-project" style="color:#F0A500;margin-right:8px"></i> SAP Business One</td><td>ERP</td><td><span class="status-dot sd-red"></span> Error</td><td>3 workflows</td><td>3 hours ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td><i class="fa-brands fa-aws" style="color:#FF9900;margin-right:8px"></i> AWS S3</td><td>Storage</td><td><span class="status-dot sd-green"></span> Healthy</td><td>5 workflows</td><td>12 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="expandable">
+    <div class="expand-header"><i class="fa-solid fa-key" style="margin-right:8px;color:#718096"></i> API Keys & Credentials <i class="fa-solid fa-chevron-down" style="color:#A0AEC0;font-size:12px"></i></div>
+    <div class="expand-content">
+      <div class="cred-row"><div class="cred-app"><i class="fa-brands fa-salesforce" style="color:#00A1E0;margin-right:6px"></i> Salesforce</div><div class="cred-type">OAuth 2.0</div><div class="cred-exp">Expires in 62 days</div><button class="btn-cred">Renew</button></div>
+      <div class="cred-row"><div class="cred-app"><i class="fa-brands fa-slack" style="color:#4A154B;margin-right:6px"></i> Slack</div><div class="cred-type">OAuth 2.0</div><div class="cred-exp">Expires in 180 days</div><button class="btn-cred">Renew</button></div>
+      <div class="cred-row"><div class="cred-app"><i class="fa-solid fa-diagram-project" style="color:#F0A500;margin-right:6px"></i> SAP B1</div><div class="cred-type">API Key</div><div class="cred-exp" style="color:#DC3545">Expired 3 days ago</div><button class="btn-cred" style="color:#DC3545">Reconnect</button></div>
+    </div>
+  </div>
+
+  <div class="page-header"><div class="page-title" style="font-size:16px">Recent Errors</div></div>
+  <div class="table-wrap">
+    <div class="error-row">
+      <div class="error-icon"><i class="fa-solid fa-xmark"></i></div>
+      <div class="error-info"><div class="error-title">SAP B1 — Authentication failed</div><div class="error-detail">SAP Invoice Parser · 3 hours ago · Failed at: OAuth token refresh</div></div>
+      <button class="btn-retry">Retry</button>
+    </div>
+    <div class="error-row">
+      <div class="error-icon"><i class="fa-solid fa-xmark"></i></div>
+      <div class="error-info"><div class="error-title">HubSpot — Rate limit exceeded</div><div class="error-detail">HubSpot Contact Sync · 1 hour ago · Failed at: Contact sync step</div></div>
+      <button class="btn-retry">Retry</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

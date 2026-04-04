@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Ops — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F7FAFC;color:#2D3748;font-size:14px}
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 20px;z-index:100;gap:16px}
+.topbar-logo{font-weight:700;font-size:18px;color:#5B50D6}
+.topbar-center{flex:1;display:flex;align-items:center;justify-content:center}
+.domain-pill{display:flex;align-items:center;gap:6px;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:500;cursor:pointer}
+.domain-pill:hover{border-color:#5B50D6}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:18px;color:#718096;padding:6px}
+.avatar{width:32px;height:32px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px}
+.quick-actions{display:flex;align-items:center;gap:10px;padding:12px 24px;background:#fff;border-bottom:1px solid #E2E8F0}
+.btn-action{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+.btn-action.amber{background:#F5A62320;color:#F5A623;border:1px solid #F5A623}
+.btn-action.red{background:#DC354520;color:#DC3545;border:1px solid #DC3545}
+.btn-action.blue{background:#007BFF20;color:#007BFF;border:1px solid #007BFF}
+.btn-action.grey{background:#F7FAFC;color:#718096;border:1px solid #E2E8F0}
+.main{margin-top:120px;padding:32px}
+.pipeline{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:32px;padding:28px;background:#fff;border:1px solid #E2E8F0;border-radius:12px}
+.stage{flex:1;text-align:center;padding:16px 12px;position:relative}
+.stage-name{font-size:13px;font-weight:600;color:#2D3748;margin-bottom:8px}
+.stage-count{font-size:28px;font-weight:700;color:#2D3748}
+.stage-count.amber{color:#F5A623}
+.stage-count.red{color:#DC3545}
+.stage-bar{height:6px;border-radius:3px;margin-top:10px}
+.bar-green{background:#28A745}
+.bar-amber{background:#F5A623}
+.bar-red{background:#DC3545}
+.stage-arrow{color:#E2E8F0;font-size:18px;flex-shrink:0}
+.stage.alert-stage{border:2px solid #F5A623;border-radius:8px;background:#F5A62308}
+.alert-cards{display:flex;gap:16px;margin-bottom:28px}
+.alert-card{flex:1;padding:18px 20px;border-radius:10px;border:1px solid}
+.alert-card.amber{background:#F5A62310;border-color:#F5A623}
+.alert-card.red{background:#DC354510;border-color:#DC3545}
+.alert-card-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.alert-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.amber .alert-icon{background:#F5A62320;color:#F5A623}
+.red .alert-icon{background:#DC354520;color:#DC3545}
+.alert-title{font-weight:600;font-size:14px}
+.alert-sub{font-size:13px;color:#718096;margin-top:4px}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-title{font-size:15px;font-weight:600}
+.table-wrap{background:#fff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 16px;font-size:11px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #E2E8F0;background:#FAFBFC}
+td{padding:12px 16px;font-size:13px;border-bottom:1px solid #F7FAFC;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F7FAFC}
+.stage-badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.sb-green{background:#28A74520;color:#28A745}
+.sb-amber{background:#F5A62320;color:#F5A623}
+.sb-red{background:#DC354520;color:#DC3545}
+.action-btn{background:none;border:none;cursor:pointer;color:#718096;font-size:14px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-logo">⚡ Flow80</div>
+  <div class="topbar-center">
+    <div class="domain-pill"><i class="fa-solid fa-building" style="color:#5B50D6"></i> Finance Ops <i class="fa-solid fa-chevron-down" style="font-size:11px;color:#A0AEC0"></i></div>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn"><i class="fa-solid fa-search"></i></button>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<div class="quick-actions">
+  <button class="btn-action amber"><i class="fa-solid fa-rotate-right"></i> Retry All Failed (3)</button>
+  <button class="btn-action red"><i class="fa-solid fa-arrow-up-right-from-square"></i> Escalate</button>
+  <button class="btn-action blue"><i class="fa-solid fa-list"></i> View Queue</button>
+  <button class="btn-action grey"><i class="fa-solid fa-pause"></i> Pause Workflow</button>
+</div>
+
+<div class="main">
+  <div class="pipeline">
+    <div class="stage">
+      <div class="stage-name">Received</div>
+      <div class="stage-count">142</div>
+      <div class="stage-bar bar-green"></div>
+    </div>
+    <div class="stage-arrow">→</div>
+    <div class="stage alert-stage">
+      <div class="stage-name">Validated</div>
+      <div class="stage-count amber">18</div>
+      <div class="stage-bar bar-amber"></div>
+    </div>
+    <div class="stage-arrow">→</div>
+    <div class="stage">
+      <div class="stage-name">Processing</div>
+      <div class="stage-count">67</div>
+      <div class="stage-bar bar-green"></div>
+    </div>
+    <div class="stage-arrow">→</div>
+    <div class="stage">
+      <div class="stage-name">Complete</div>
+      <div class="stage-count">1,247</div>
+      <div class="stage-bar bar-green"></div>
+    </div>
+  </div>
+
+  <div class="alert-cards">
+    <div class="alert-card amber">
+      <div class="alert-card-header">
+        <div class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="alert-title">3 items stuck at Validate</div>
+      </div>
+      <div class="alert-sub">SAP B1 connection returned validation error — token may be expired</div>
+    </div>
+    <div class="alert-card red">
+      <div class="alert-card-header">
+        <div class="alert-icon"><i class="fa-solid fa-xmark-circle"></i></div>
+        <div class="alert-title">2 items retrying</div>
+      </div>
+      <div class="alert-sub">Automatic retry #2 in progress — DSV API timeout</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Order Queue</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Order ID</th><th>Stage</th><th>Assigned To</th><th>Status</th><th>Time in Stage</th><th></th></tr></thead>
+      <tbody>
+        <tr><td style="font-family:monospace;font-size:12px">#ORD-2026-8841</td><td><span class="stage-badge sb-amber">Validated</span></td><td>—</td><td>Awaiting assignment</td><td>14 min</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td style="font-family:monospace;font-size:12px">#ORD-2026-8839</td><td><span class="stage-badge sb-amber">Validated</span></td><td>—</td><td>Awaiting assignment</td><td>22 min</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td style="font-family:monospace;font-size:12px">#ORD-2026-8837</td><td><span class="stage-badge sb-green">Processing</span></td><td>Lena Nielsen</td><td>In progress</td><td>5 min</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td style="font-family:monospace;font-size:12px">#ORD-2026-8836</td><td><td><span class="stage-badge sb-red">Failed</span></td><td>Jens Tranberg</td><td>Failed 3 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td style="font-family:monospace;font-size:12px">#ORD-2026-8835</td><td><span class="stage-badge sb-green">Processing</span></td><td>Søren Kofod</td><td>In progress</td><td>8 min</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

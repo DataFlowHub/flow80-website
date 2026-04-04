@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F7FAFC;color:#2D3748;font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+
+/* Top Bar */
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 20px;z-index:100;gap:16px}
+.topbar-logo{font-weight:700;font-size:18px;color:#5B50D6;white-space:nowrap}
+.hamburger{background:none;border:none;cursor:pointer;font-size:20px;color:#718096;padding:8px}
+.search-pill{flex:1;max-width:400px;margin:0 auto;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:24px;padding:8px 16px;display:flex;align-items:center;gap:8px;color:#718096;font-size:13px}
+.search-pill:focus-within{border-color:#5B50D6;outline:2px solid #5B50D620}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:18px;color:#718096;position:relative;padding:6px}
+.icon-btn .badge{position:absolute;top:2px;right:2px;width:8px;height:8px;background:#DC3545;border-radius:50%}
+.avatar{width:32px;height:32px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px}
+
+/* Drawer */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:199;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:280px;background:#fff;z-index:200;transform:translateX(-100%);transition:transform 0.25s ease;padding:0}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:16px 20px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between}
+.drawer-logo{font-weight:700;font-size:18px;color:#5B50D6}
+.drawer-close{background:none;border:none;cursor:pointer;font-size:20px;color:#718096}
+.drawer-nav{padding:12px 0}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:#718096;font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s}
+.drawer-item:hover{background:#F7FAFC}
+.drawer-item.active{color:#5B50D6;border-left:3px solid #5B50D6;background:#F0EEFF;padding-left:17px}
+.drawer-item i{width:20px;text-align:center}
+
+/* Main */
+.main{margin-top:60px;max-width:1100px;margin-left:auto;margin-right:auto;padding:40px 24px}
+
+/* Hero */
+.hero{text-align:center;padding:48px 24px 40px}
+.hero h1{font-size:36px;font-weight:700;color:#5B50D6;margin-bottom:8px;letter-spacing:-0.5px}
+.hero p{font-size:16px;color:#718096;margin-bottom:24px}
+.btn-primary{display:inline-block;background:#007BFF;color:#fff;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;border:none}
+.btn-primary:hover{background:#0069D9}
+
+/* Metric Cards */
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.metric-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:20px}
+.metric-card .value{font-size:28px;font-weight:700;color:#2D3748;margin-bottom:4px}
+.metric-card .label{font-size:13px;color:#718096}
+.metric-card .trend{font-size:12px;color:#28A745;margin-top:4px}
+
+/* Section Header */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-title{font-size:16px;font-weight:600;color:#2D3748}
+.section-link{font-size:13px;color:#007BFF}
+
+/* Recent Workflows */
+.workflow-list{background:#fff;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;margin-bottom:32px}
+.workflow-row{display:flex;align-items:center;padding:14px 20px;border-bottom:1px solid #F7FAFC;gap:12px}
+.workflow-row:last-child{border-bottom:none}
+.workflow-row:hover{background:#F7FAFC}
+.workflow-name{flex:1;font-weight:500;font-size:14px}
+.badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-live{background:#28A74520;color:#28A745}
+.badge-draft{background:#71809620;color:#718096}
+.badge-paused{background:#F5A62320;color:#F5A623}
+.badge-error{background:#DC354520;color:#DC3545}
+.workflow-time{font-size:13px;color:#718096;white-space:nowrap}
+.actions-btn{background:none;border:none;cursor:pointer;color:#718096;font-size:16px}
+
+/* Active Runs */
+.runs-feed{background:#fff;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden}
+.run-item{display:flex;align-items:center;padding:12px 20px;border-bottom:1px solid #F7FAFC;gap:12px}
+.run-item:last-child{border-bottom:none}
+.run-item i{color:#5B50D6;font-size:14px}
+.run-name{flex:1;font-size:13px;font-weight:500}
+.run-status{font-size:12px;color:#718096}
+.run-status.running{color:#5B50D6}
+.run-dot{display:inline-block;width:6px;height:6px;background:#5B50D6;border-radius:50%;margin-right:6px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* FAB */
+.fab{position:fixed;bottom:32px;right:32px;width:52px;height:52px;background:#007BFF;border-radius:50%;border:none;cursor:pointer;color:#fff;font-size:22px;box-shadow:0 4px 16px #007BFF40;display:flex;align-items:center;justify-content:center;z-index:50}
+.fab:hover{background:#0069D9;transform:scale(1.05)}
+
+@media(max-width:1024px){
+.metrics-row{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <button class="hamburger" onclick="document.getElementById('drawer-overlay').classList.toggle('open');document.getElementById('drawer').classList.toggle('open')"><i class="fa-solid fa-bars"></i></button>
+  <div class="topbar-logo">Flow80</div>
+  <div class="search-pill"><i class="fa-solid fa-search"></i> Search workflows… <span style="margin-left:auto;font-size:11px;color:#A0AEC0">⌘K</span></div>
+  <div class="topbar-right">
+    <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="badge"></span></button>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<!-- Drawer Overlay -->
+<div id="drawer-overlay" class="drawer-overlay" onclick="this.classList.remove('open');document.getElementById('drawer').classList.remove('open')"></div>
+<div id="drawer" class="drawer">
+  <div class="drawer-header">
+    <div class="drawer-logo">Flow80</div>
+    <button class="drawer-close" onclick="document.getElementById('drawer-overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open')"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <nav class="drawer-nav">
+    <div class="drawer-item active"><i class="fa-solid fa-house"></i> Dashboard</div>
+    <div class="drawer-item"><i class="fa-solid fa-bolt"></i> Workflows</div>
+    <div class="drawer-item"><i class="fa-solid fa-play"></i> Runs</div>
+    <div class="drawer-item"><i class="fa-solid fa-link"></i> Integrations</div>
+    <div class="drawer-item"><i class="fa-solid fa-gear"></i> Settings</div>
+  </nav>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="hero">
+    <h1>First workflow live in 3 days</h1>
+    <p>Enterprise automation velocity</p>
+    <button class="btn-primary">Build a workflow →</button>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="value">12</div>
+      <div class="label">Total Workflows</div>
+      <div class="trend">↑ 2 this week</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">8</div>
+      <div class="label">Active Today</div>
+      <div class="trend">↑ 3 since yesterday</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">97.4%</div>
+      <div class="label">Success Rate (24h)</div>
+      <div class="trend">↑ 0.2%</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">1,842</div>
+      <div class="label">Runs This Week</div>
+      <div class="trend">↑ 12% vs last week</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Recent Workflows</div>
+    <a href="#" class="section-link">View all →</a>
+  </div>
+  <div class="workflow-list">
+    <div class="workflow-row">
+      <i class="fa-solid fa-bolt" style="color:#5B50D6;font-size:14px"></i>
+      <div class="workflow-name">Salesforce Lead → Slack Alert</div>
+      <span class="badge badge-live">Live</span>
+      <div class="workflow-time">2 min ago</div>
+      <button class="actions-btn"><i class="fa-solid fa-ellipsis"></i></button>
+    </div>
+    <div class="workflow-row">
+      <i class="fa-solid fa-bolt" style="color:#5B50D6;font-size:14px"></i>
+      <div class="workflow-name">SAP Invoice Parser</div>
+      <span class="badge badge-draft">Draft</span>
+      <div class="workflow-time">1 hour ago</div>
+      <button class="actions-btn"><i class="fa-solid fa-ellipsis"></i></button>
+    </div>
+    <div class="workflow-row">
+      <i class="fa-solid fa-bolt" style="color:#5B50D6;font-size:14px"></i>
+      <div class="workflow-name">HubSpot Contact Sync</div>
+      <span class="badge badge-live">Live</span>
+      <div class="workflow-time">3 hours ago</div>
+      <button class="actions-btn"><i class="fa-solid fa-ellipsis"></i></button>
+    </div>
+    <div class="workflow-row">
+      <i class="fa-solid fa-bolt" style="color:#5B50D6;font-size:14px"></i>
+      <div class="workflow-name">DSV Shipment Tracker</div>
+      <span class="badge badge-paused">Paused</span>
+      <div class="workflow-time">Yesterday</div>
+      <button class="actions-btn"><i class="fa-solid fa-ellipsis"></i></button>
+    </div>
+    <div class="workflow-row">
+      <i class="fa-solid fa-bolt" style="color:#5B50D6;font-size:14px"></i>
+      <div class="workflow-name">Zendesk Ticket Resolver</div>
+      <span class="badge badge-error">Error</span>
+      <div class="workflow-time">2 days ago</div>
+      <button class="actions-btn"><i class="fa-solid fa-ellipsis"></i></button>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Active Runs</div>
+  </div>
+  <div class="runs-feed">
+    <div class="run-item">
+      <span class="run-dot"></span>
+      <i class="fa-solid fa-play"></i>
+      <div class="run-name">Salesforce Lead → Slack Alert</div>
+      <div class="run-status running">Running since 2 min ago</div>
+    </div>
+    <div class="run-item">
+      <span class="run-dot"></span>
+      <i class="fa-solid fa-play"></i>
+      <div class="run-name">HubSpot Contact Sync</div>
+      <div class="run-status running">Running since 8 min ago</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" title="New Workflow"><i class="fa-solid fa-plus"></i></button>
+
+</body>
+</html>

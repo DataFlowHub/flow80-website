@@ -44,20 +44,35 @@ export default function Footer({ t, locale }: Props) {
   return (
     <>
       {/* CTA Strip */}
-      <div className="container">
-        <div className="footer-cta-strip">
-          <span className="footer-cta-strip__text">{ctaStripHeadline}</span>
+      {isGoLive ? (
+        <div className="footer-cta-strip-go-live">
+          <p className="footer-cta-strip-go-live__headline">Ready to automate?</p>
           <a
             href="#pricing"
-            className="footer-cta-strip__link"
+            className="footer-cta-strip-go-live__btn"
             onClick={ctaScrollHandler}
-            data-cta={isGoLive ? 'footer_cta_go_live' : 'footer_cta'}
+            data-cta="footer_cta_go_live"
             data-cta-position="footer_cta"
           >
             {ctaStripCta}
           </a>
         </div>
-      </div>
+      ) : (
+        <div className="container">
+          <div className="footer-cta-strip">
+            <span className="footer-cta-strip__text">{ctaStripHeadline}</span>
+            <a
+              href="#pricing"
+              className="footer-cta-strip__link"
+              onClick={ctaScrollHandler}
+              data-cta={isGoLive ? 'footer_cta_go_live' : 'footer_cta'}
+              data-cta-position="footer_cta"
+            >
+              {ctaStripCta}
+            </a>
+          </div>
+        </div>
+      )}
 
       <footer className="footer" data-section-name="footer">
         <div className="footer__top">

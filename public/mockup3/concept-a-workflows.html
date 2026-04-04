@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflows — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F7FAFC;color:#2D3748;font-size:14px}
+a{text-decoration:none;color:inherit}
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 20px;z-index:100;gap:16px}
+.topbar-logo{font-weight:700;font-size:18px;color:#5B50D6}
+.hamburger{background:none;border:none;cursor:pointer;font-size:20px;color:#718096;padding:8px}
+.search-pill{flex:1;max-width:400px;margin:0 auto;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:24px;padding:8px 16px;display:flex;align-items:center;gap:8px;color:#718096;font-size:13px}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:18px;color:#718096;position:relative;padding:6px}
+.avatar{width:32px;height:32px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:199;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:280px;background:#fff;z-index:200;transform:translateX(-100%);transition:transform 0.25s;padding:0}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:16px 20px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between}
+.drawer-logo{font-weight:700;font-size:18px;color:#5B50D6}
+.drawer-close{background:none;border:none;cursor:pointer;font-size:20px;color:#718096}
+.drawer-nav{padding:12px 0}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:#718096;font-size:14px;font-weight:500;cursor:pointer}
+.drawer-item:hover{background:#F7FAFC}
+.drawer-item.active{color:#5B50D6;border-left:3px solid #5B50D6;background:#F0EEFF;padding-left:17px}
+.drawer-item i{width:20px;text-align:center}
+.main{margin-top:60px;max-width:1100px;margin-left:auto;margin-right:auto;padding:40px 24px}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px}
+.page-title{font-size:24px;font-weight:700;color:#2D3748;margin-bottom:4px}
+.page-subtitle{font-size:14px;color:#718096}
+.btn-primary{display:inline-block;background:#007BFF;color:#fff;padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;border:none}
+.btn-primary:hover{background:#0069D9}
+.filter-bar{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.filter-select{background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:8px 12px;font-size:13px;color:#2D3748;cursor:pointer}
+.filter-input{background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:8px 12px;font-size:13px;flex:1;min-width:180px}
+.table-wrap{background:#fff;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:12px 20px;font-size:12px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #E2E8F0;background:#FAFBFC}
+td{padding:14px 20px;font-size:14px;border-bottom:1px solid #F7FAFC;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F7FAFC}
+.workflow-name-cell{display:flex;align-items:center;gap:10px}
+.workflow-name-cell i{color:#5B50D6;font-size:13px}
+td .badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-live{background:#28A74520;color:#28A745}
+.badge-draft{background:#71809620;color:#718096}
+.badge-paused{background:#F5A62320;color:#F5A623}
+.badge-error{background:#DC354520;color:#DC3545}
+td .time{font-size:13px;color:#718096}
+td .actions{background:none;border:none;cursor:pointer;color:#718096;font-size:16px}
+.fab{position:fixed;bottom:32px;right:32px;width:52px;height:52px;background:#007BFF;border-radius:50%;border:none;cursor:pointer;color:#fff;font-size:22px;box-shadow:0 4px 16px #007BFF40;display:flex;align-items:center;justify-content:center;z-index:50}
+.fab:hover{background:#0069D9}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="hamburger" onclick="document.getElementById('drawer-overlay').classList.toggle('open');document.getElementById('drawer').classList.toggle('open')"><i class="fa-solid fa-bars"></i></button>
+  <div class="topbar-logo">Flow80</div>
+  <div class="search-pill"><i class="fa-solid fa-search"></i> Search workflows… <span style="margin-left:auto;font-size:11px;color:#A0AEC0">⌘K</span></div>
+  <div class="topbar-right">
+    <button class="icon-btn"><i class="fa-regular fa-bell"></i><span style="position:absolute;top:2px;right:2px;width:8px;height:8px;background:#DC3545;border-radius:50%"></span></button>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<div id="drawer-overlay" class="drawer-overlay" onclick="this.classList.remove('open');document.getElementById('drawer').classList.remove('open')"></div>
+<div id="drawer" class="drawer">
+  <div class="drawer-header">
+    <div class="drawer-logo">Flow80</div>
+    <button class="drawer-close" onclick="document.getElementById('drawer-overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open')"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <nav class="drawer-nav">
+    <div class="drawer-item"><i class="fa-solid fa-house"></i> Dashboard</div>
+    <div class="drawer-item active"><i class="fa-solid fa-bolt"></i> Workflows</div>
+    <div class="drawer-item"><i class="fa-solid fa-play"></i> Runs</div>
+    <div class="drawer-item"><i class="fa-solid fa-link"></i> Integrations</div>
+    <div class="drawer-item"><i class="fa-solid fa-gear"></i> Settings</div>
+  </nav>
+</div>
+
+<div class="main">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Workflows</div>
+      <div class="page-subtitle">Build, manage, and monitor your automations</div>
+    </div>
+    <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Workflow</button>
+  </div>
+
+  <div class="filter-bar">
+    <select class="filter-select"><option>All Status</option><option>Live</option><option>Draft</option><option>Paused</option><option>Error</option></select>
+    <select class="filter-select"><option>All Triggers</option><option>Webhook</option><option>Schedule</option><option>App Event</option></select>
+    <input class="filter-input" type="text" placeholder="Search workflows…">
+    <select class="filter-select"><option>Sort: Last modified</option><option>Most active</option><option>A–Z</option></select>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Workflow</th><th>Status</th><th>Trigger</th><th>Last run</th><th>Success</th><th>Owner</th><th></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="workflow-name-cell"><i class="fa-solid fa-bolt"></i> Salesforce Lead → Slack Alert</div></td>
+          <td><span class="badge badge-live">Live</span></td>
+          <td><i class="fa-solid fa-webhook" style="color:#718096"></i> Webhook</td>
+          <td class="time">2 min ago</td>
+          <td class="time">98.2%</td>
+          <td><div class="avatar" style="width:24px;height:24px;font-size:11px">MW</div></td>
+          <td><button class="actions"><i class="fa-solid fa-ellipsis"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="workflow-name-cell"><i class="fa-solid fa-bolt"></i> SAP Invoice Parser</div></td>
+          <td><span class="badge badge-draft">Draft</span></td>
+          <td><i class="fa-regular fa-clock" style="color:#718096"></i> Schedule</td>
+          <td class="time">—</td>
+          <td class="time">—</td>
+          <td><div class="avatar" style="width:24px;height:24px;font-size:11px">MW</div></td>
+          <td><button class="actions"><i class="fa-solid fa-ellipsis"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="workflow-name-cell"><i class="fa-solid fa-bolt"></i> HubSpot Contact Sync</div></td>
+          <td><span class="badge badge-live">Live</span></td>
+          <td><i class="fa-solid fa-webhook" style="color:#718096"></i> App Event</td>
+          <td class="time">3 hours ago</td>
+          <td class="time">99.1%</td>
+          <td><div class="avatar" style="width:24px;height:24px;font-size:11px">MW</div></td>
+          <td><button class="actions"><i class="fa-solid fa-ellipsis"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="workflow-name-cell"><i class="fa-solid fa-bolt"></i> DSV Shipment Tracker</div></td>
+          <td><span class="badge badge-paused">Paused</span></td>
+          <td><i class="fa-regular fa-clock" style="color:#718096"></i> Schedule</td>
+          <td class="time">Yesterday</td>
+          <td class="time">94.7%</td>
+          <td><div class="avatar" style="width:24px;height:24px;font-size:11px">MW</div></td>
+          <td><button class="actions"><i class="fa-solid fa-ellipsis"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="workflow-name-cell"><i class="fa-solid fa-bolt"></i> Zendesk Ticket Resolver</div></td>
+          <td><span class="badge badge-error">Error</span></td>
+          <td><i class="fa-solid fa-webhook" style="color:#718096"></i> Webhook</td>
+          <td class="time">2 days ago</td>
+          <td class="time">62.3%</td>
+          <td><div class="avatar" style="width:24px;height:24px;font-size:11px">MW</div></td>
+          <td><button class="actions"><i class="fa-solid fa-ellipsis"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<button class="fab"><i class="fa-solid fa-plus"></i></button>
+</body>
+</html>

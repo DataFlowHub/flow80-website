@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Detail — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F7FAFC;color:#2D3748;font-size:14px}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 20px;z-index:100;gap:12px}
+.topbar-logo{font-weight:700;font-size:17px;color:#5B50D6}
+.breadcrumb{font-size:14px;color:#2D3748;font-weight:500}
+.breadcrumb span{color:#A0AEC0;font-weight:400}
+.topbar-center{flex:1;display:flex;align-items:center;justify-content:center}
+.domain-pill{display:flex;align-items:center;gap:6px;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;cursor:pointer}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:16px;color:#718096;padding:6px}
+.avatar{width:28px;height:28px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px}
+.status-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.status-live{background:#28A74520;color:#28A745}
+.status-live::before{content:'';display:inline-block;width:6px;height:6px;background:#28A745;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.main{margin-top:56px;display:flex;height:calc(100vh - 56px)}
+.left-col{flex:1;padding:28px 28px;overflow-y:auto}
+.right-col{width:340px;border-left:1px solid #E2E8F0;background:#fff;overflow-y:auto}
+.page-title{font-size:22px;font-weight:700;margin-bottom:6px}
+.page-subtitle{font-size:13px;color:#718096;margin-bottom:20px}
+.action-row{display:flex;align-items:center;gap:8px;margin-bottom:24px}
+.btn-sm{padding:7px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+.btn-blue{background:#007BFF;color:#fff}
+.btn-blue:hover{background:#0069D9}
+.btn-outline{background:#fff;color:#718096;border:1px solid #E2E8F0}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.kpi-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:16px}
+.kpi-val{font-size:24px;font-weight:700}
+.kpi-lbl{font-size:12px;color:#718096}
+.kpi-val.green{color:#28A745}
+.kpi-val.amber{color:#F5A623}
+.kpi-val.red{color:#DC3545}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.section-title{font-size:14px;font-weight:600}
+.table-wrap{background:#fff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;margin-bottom:20px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 14px;font-size:11px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:0.4px;border-bottom:1px solid #E2E8F0;background:#FAFBFC}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid #F7FAFC}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F7FAFC}
+.chip{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.chip-green{background:#28A74520;color:#28A745}
+.chip-amber{background:#F5A62320;color:#F5A623}
+.chip-red{background:#DC354520;color:#DC3545}
+.col-title{font-size:14px;font-weight:600;padding:16px 20px 10px;border-bottom:1px solid #F7FAFC}
+.prop-row{display:flex;align-items:flex-start;padding:10px 20px;border-bottom:1px solid #F7FAFC;font-size:13px}
+.prop-row:last-child{border-bottom:none}
+.prop-label{width:100px;color:#718096;flex-shrink:0;padding-top:2px}
+.prop-value{flex:1;font-weight:500}
+.prop-value code{background:#F7FAFC;padding:2px 6px;border-radius:4px;font-size:12px;font-family:monospace;color:#5B50D6}
+.right-section{padding:16px 20px;border-bottom:1px solid #F7FAFC}
+.right-section-title{font-size:13px;font-weight:600;margin-bottom:10px;color:#2D3748}
+.log-entry{font-size:12px;padding:7px 0;border-bottom:1px solid #F7FAFC;font-family:monospace;color:#718096}
+.log-entry:last-child{border-bottom:none}
+.log-entry .time{color:#A0AEC0;margin-right:8px}
+.log-entry.ok{color:#28A745}
+.log-entry.err{color:#DC3545}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">⚡ Flow80</div>
+  <div class="breadcrumb">Workflows / <span>Salesforce Lead → Slack Alert</span></div>
+  <div class="topbar-center">
+    <div class="domain-pill"><i class="fa-solid fa-building" style="color:#5B50D6"></i> Finance Ops <i class="fa-solid fa-chevron-down" style="font-size:10px;color:#A0AEC0"></i></div>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn"><i class="fa-solid fa-code"></i></button>
+    <span class="status-pill status-live">Live</span>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="left-col">
+    <div class="page-title">Salesforce Lead → Slack Alert</div>
+    <div class="page-subtitle">Finance Ops · Last modified by Marc Wiese · 2 hours ago</div>
+    <div class="action-row">
+      <button class="btn-sm btn-blue"><i class="fa-solid fa-play"></i> Run Test</button>
+      <button class="btn-sm btn-outline"><i class="fa-solid fa-copy"></i> Duplicate</button>
+      <button class="btn-sm btn-outline"><i class="fa-solid fa-pencil"></i> Edit</button>
+      <button class="btn-sm btn-outline" style="color:#DC3545;border-color:#DC354540"><i class="fa-solid fa-trash"></i></button>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-val green">1,842</div><div class="kpi-lbl">Total runs</div></div>
+      <div class="kpi-card"><div class="kpi-val">98.2%</div><div class="kpi-lbl">Success rate</div></div>
+      <div class="kpi-card"><div class="kpi-val">1.4s</div><div class="kpi-lbl">Avg duration</div></div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">Recent Runs</div>
+      <a href="#" style="font-size:12px;color:#007BFF">View all →</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Run ID</th><th>Status</th><th>Duration</th><th>Trigger</th><th>Started</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:monospace;font-size:12px;color:#5B50D6">#r8f2a1</td><td><span class="chip chip-green">Success</span></td><td>1.2s</td><td>Webhook</td><td>2 min ago</td></tr>
+          <tr><td style="font-family:monospace;font-size:12px;color:#5B50D6">#r8f29e</td><td><span class="chip chip-green">Success</span></td><td>0.8s</td><td>Webhook</td><td>14 min ago</td></tr>
+          <tr><td style="font-family:monospace;font-size:12px;color:#5B50D6">#r8f29d</td><td><span class="chip chip-red">Failed</span></td><td>0.3s</td><td>Webhook</td><td>22 min ago</td></tr>
+          <tr><td style="font-family:monospace;font-size:12px;color:#5B50D6">#r8f29c</td><td><span class="chip chip-green">Success</span></td><td>2.1s</td><td>Webhook</td><td>1 hour ago</td></tr>
+          <tr><td style="font-family:monospace;font-size:12px;color:#5B50D6">#r8f29b</td><td><span class="chip chip-green">Success</span></td><td>1.9s</td><td>Webhook</td><td>2 hours ago</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">Workflow Steps</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Step</th><th>Type</th><th>Duration</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td style="color:#718096;font-size:12px">01</td><td><strong>Salesforce Webhook</strong><br><span style="font-size:12px;color:#718096">new_lead event received</span></td><td><span style="font-size:12px;color:#5B50D6;font-weight:600">TRIGGER</span></td><td>—</td><td><span class="chip chip-green">✓</span></td></tr>
+          <tr><td style="color:#718096;font-size:12px">02</td><td><strong>Format Lead Data</strong><br><span style="font-size:12px;color:#718096">Transform fields</span></td><td><span style="font-size:12px;color:#007BFF;font-weight:600">ACTION</span></td><td>0.3s</td><td><span class="chip chip-green">✓</span></td></tr>
+          <tr><td style="color:#718096;font-size:12px">03</td><td><strong>Lookup Account in HubSpot</strong><br><span style="font-size:12px;color:#718096">CRM lookup</span></td><td><span style="font-size:12px;color:#007BFF;font-weight:600">ACTION</span></td><td>0.6s</td><td><span class="chip chip-green">✓</span></td></tr>
+          <tr><td style="color:#718096;font-size:12px">04</td><td><strong>Is high-value lead?</strong><br><span style="font-size:12px;color:#718096">Filter: revenue > 50k</span></td><td><span style="font-size:12px;color:#F5A623;font-weight:600">LOGIC</span></td><td>0.1s</td><td><span class="chip chip-green">✓</span></td></tr>
+          <tr><td style="color:#718096;font-size:12px">05</td><td><strong>Post to #sales-alerts</strong><br><span style="font-size:12px;color:#718096">Slack notification</span></td><td><span style="font-size:12px;color:#007BFF;font-weight:600">ACTION</span></td><td>0.2s</td><td><span class="chip chip-red">✗</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="right-section">
+      <div class="right-section-title">Configuration</div>
+      <div class="prop-row"><div class="prop-label">Trigger</div><div class="prop-value">Salesforce Webhook</div></div>
+      <div class="prop-row"><div class="prop-label">Schedule</div><div class="prop-value">On demand</div></div>
+      <div class="prop-row"><div class="prop-label">Timeout</div><div class="prop-value">30s</div></div>
+      <div class="prop-row"><div class="prop-label">Retries</div><div class="prop-value">3 attempts</div></div>
+      <div class="prop-row"><div class="prop-label">Owner</div><div class="prop-value">Marc Wiese</div></div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-title">Webhook URL</div>
+      <div class="prop-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <code style="font-size:11px;background:#F0F4FF;padding:6px 10px;border-radius:6px;word-break:break-all;color:#5B50D6">https://hook.flow80.com/wf/7f2a1</code>
+        <button class="btn-sm btn-outline" style="font-size:11px;padding:4px 10px"><i class="fa-regular fa-copy"></i> Copy</button>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-title">Recent Logs</div>
+      <div class="log-entry"><span class="time">14:32</span> Workflow triggered <span class="ok">✓</span></div>
+      <div class="log-entry"><span class="time">14:32</span> Salesforce event received <span class="ok">✓</span></div>
+      <div class="log-entry"><span class="time">14:32</span> Step 2: Format OK <span class="ok">✓</span></div>
+      <div class="log-entry"><span class="time">14:32</span> Step 3: HubSpot lookup <span class="ok">✓</span></div>
+      <div class="log-entry"><span class="time">14:32</span> Step 4: Filter condition met <span class="ok">✓</span></div>
+      <div class="log-entry"><span class="time">14:32</span> Step 5: Slack POST <span class="err">✗ 401 Unauthorized</span></div>
+      <div class="log-entry"><span class="time">14:32</span> Retry 1/3 scheduled <span class="ok">✓</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

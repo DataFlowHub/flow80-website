@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow80 — SAP Invoice Parser</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F7FAFC; color: #718096; font-size: 13px; min-height: 100vh; display: flex; }
+
+    /* ── Sidebar ── */
+    .sidebar { width: 240px; min-height: 100vh; background: #1A1D2E; flex-shrink: 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+    .sb-logo { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sb-logo .logo { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; }
+    .sb-logo .logo span { color: #5B50D6; }
+    .sb-section { padding: 20px 0 8px; }
+    .sb-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); padding: 0 20px; margin-bottom: 4px; }
+    .sb-item { display: flex; align-items: center; gap: 10px; padding: 9px 20px; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.15s; position: relative; }
+    .sb-item i { width: 18px; text-align: center; font-size: 14px; }
+    .sb-item.active { color: #fff; background: #2D3154; border-left: 3px solid #5B50D6; padding-left: 17px; }
+    .sb-item:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.05); }
+    .sb-item .count { margin-left: auto; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 11px; padding: 1px 6px; border-radius: 10px; }
+
+    /* ── Top Bar ── */
+    .topbar { height: 60px; background: #fff; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; padding: 0 24px; gap: 16px; position: fixed; top: 0; left: 240px; right: 0; z-index: 99; }
+    .breadcrumb { font-size: 13px; color: #A0AEC0; font-weight: 500; }
+    .breadcrumb a { color: #718096; text-decoration: none; }
+    .breadcrumb a:hover { color: #5B50D6; }
+    .breadcrumb span { color: #2D3748; font-weight: 600; }
+    .cmd-pill { flex: 1; max-width: 480px; margin: 0 auto; background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 100px; padding: 8px 16px; display: flex; align-items: center; gap: 8px; color: #A0AEC0; font-size: 13px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+    .bell { font-size: 16px; color: #718096; cursor: pointer; }
+    .avatar { width: 30px; height: 30px; border-radius: 50%; background: #5B50D6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .env-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; background: #E6F7EC; color: #28A745; }
+
+    /* ── Main Layout ── */
+    .main { margin-left: 240px; padding-top: 60px; min-height: 100vh; display: flex; flex-direction: column; }
+    .main-top { padding: 20px 32px 0; display: flex; align-items: center; justify-content: space-between; }
+    .page-title { font-size: 20px; font-weight: 700; color: #2D3748; }
+    .action-buttons { display: flex; gap: 10px; align-items: center; }
+    .btn-new { height: 34px; padding: 0 16px; border-radius: 6px; background: #007BFF; color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 6px; }
+    .btn-new:hover { background: #0069d9; }
+    .btn-deploy { height: 34px; padding: 0 14px; border-radius: 6px; background: #fff; color: #718096; border: 1px solid #E2E8F0; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 6px; }
+    .btn-deploy:hover { border-color: #5B50D6; color: #5B50D6; }
+
+    /* ── Three Column Body ── */
+    .body-three { display: grid; grid-template-columns: 280px 1fr 0px; padding: 24px 32px; gap: 24px; transition: all 0.3s; }
+    #panel-toggle { display: none; }
+    #panel-toggle:checked ~ .body-three { grid-template-columns: 280px 1fr 320px; }
+
+    /* Left Panel */
+    .left-panel { }
+    .meta-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .meta-card .wf-title { font-size: 15px; font-weight: 700; color: #2D3748; margin-bottom: 4px; }
+    .meta-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .meta-row:last-child { margin-bottom: 0; }
+    .meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #A0AEC0; font-weight: 600; }
+    .meta-value { font-size: 13px; color: #2D3748; font-weight: 500; text-align: right; }
+    .meta-value.small { font-size: 12px; color: #718096; font-weight: 400; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .badge-green { background: #E6F7EC; color: #28A745; }
+    .badge-amber { background: #FFF4E5; color: #F5A623; }
+    .badge-red { background: #FDECEC; color: #DC3545; }
+    .divider { height: 1px; background: #F0F4F8; margin: 14px 0; }
+
+    /* Center Table */
+    .center-panel { }
+    .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; }
+    .panel-header { padding: 14px 20px; border-bottom: 1px solid #F0F4F8; display: flex; align-items: center; justify-content: space-between; }
+    .panel-title { font-size: 13px; font-weight: 600; color: #2D3748; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { padding: 9px 16px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #A0AEC0; background: #F7FAFC; border-bottom: 1px solid #E2E8F0; cursor: pointer; }
+    thead th:hover { color: #5B50D6; }
+    thead th i { margin-left: 4px; font-size: 10px; }
+    tbody td { padding: 11px 16px; border-bottom: 1px solid #F0F4F8; color: #718096; font-size: 13px; vertical-align: middle; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #FAFBFC; cursor: pointer; }
+    .run-id { font-family: monospace; font-size: 12px; color: #A0AEC0; }
+    .wf-name { font-weight: 500; color: #2D3748; }
+    .duration { font-variant-numeric: tabular-nums; }
+    .action-cell { display: flex; gap: 6px; }
+    .action-cell button { background: none; border: none; cursor: pointer; color: #A0AEC0; font-size: 13px; padding: 4px; border-radius: 4px; transition: all 0.15s; }
+    .action-cell button:hover { color: #5B50D6; background: #F5F3FF; }
+
+    /* Right Slide-out Panel */
+    .right-panel {
+      background: #fff; border-radius: 10px 0 0 10px; box-shadow: -4px 0 16px rgba(0,0,0,0.08);
+      overflow-y: auto; transition: all 0.3s; padding: 24px;
+    }
+    .panel-slide-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .panel-slide-title { font-size: 15px; font-weight: 700; color: #2D3748; }
+    .close-btn { background: none; border: none; font-size: 16px; color: #A0AEC0; cursor: pointer; padding: 4px; }
+    .close-btn:hover { color: #2D3748; }
+    .run-detail-section { margin-bottom: 20px; }
+    .run-detail-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #A0AEC0; font-weight: 600; margin-bottom: 6px; }
+    .run-detail-value { font-size: 13px; color: #2D3748; font-weight: 500; }
+    .code-block { background: #1A1D2E; color: #a5d6a7; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; padding: 12px; border-radius: 6px; overflow-x: auto; white-space: pre; }
+    .error-block { background: #FDECEC; border: 1px solid #F5C6CB; color: #DC3545; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; padding: 12px; border-radius: 6px; overflow-x: auto; white-space: pre; }
+    .btn-rerun { width: 100%; height: 36px; background: #5B50D6; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 16px; }
+    .btn-rerun:hover { background: #4a41c0; }
+
+    @media (max-width: 1280px) {
+      .body-three { grid-template-columns: 240px 1fr; }
+      #panel-toggle:checked ~ .body-three { grid-template-columns: 240px 1fr 300px; }
+    }
+    @media (max-width: 1024px) {
+      .sidebar { transform: translateX(-100%); }
+      .topbar { left: 0; }
+      .main { margin-left: 0; }
+      .body-three { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-logo"><a href="#" class="logo">Flow<span>80</span></a></div>
+  <div class="sb-section">
+    <div class="sb-section-label">Workspace</div>
+    <a href="#" class="sb-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+    <a href="#" class="sb-item active"><i class="fa-solid fa-arrow-right-arrow-left"></i> Workflows</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Connections</div>
+    <a href="#" class="sb-item"><i class="fa-solid fa-plug"></i> Integrations</a>
+    <a href="#" class="sb-item"><i class="fa-solid fa-key"></i> API Keys</a>
+    <a href="#" class="sb-item"><i class="fa-solid fa-code-branch"></i> Webhooks</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Monitor</div>
+    <a href="#" class="sb-item"><i class="fa-solid fa-list"></i> Logs</a>
+    <a href="#" class="sb-item"><i class="fa-solid fa-bell"></i> Alerts</a>
+    <a href="#" class="sb-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Admin</div>
+    <a href="#" class="sb-item"><i class="fa-solid fa-users"></i> Team</a>
+    <a href="#" class="sb-item"><i class="fa-solid fa-shield-halved"></i> Audit Log</a>
+    <a href="#" class="sb-item"><i class="fa-solid fa-gear"></i> Settings</a>
+  </div>
+</nav>
+
+<!-- Top Bar -->
+<header class="topbar">
+  <div class="breadcrumb"><a href="#">Home</a> / <a href="#">Workflows</a> / <span>SAP Invoice Parser</span></div>
+  <div class="cmd-pill">
+    <i class="fa-solid fa-terminal" style="color:#A0AEC0;"></i>
+    <span>Search or jump to…</span>
+    <span style="margin-left:auto;font-size:11px;background:#E2E8F0;padding:2px 6px;border-radius:4px;color:#A0AEC0;">⌘K</span>
+  </div>
+  <div class="topbar-right">
+    <i class="fa-regular fa-bell bell"></i>
+    <div class="avatar">MW</div>
+    <span class="env-badge">prod</span>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="main">
+  <div class="main-top">
+    <div class="page-title">SAP Invoice Parser</div>
+    <div class="action-buttons">
+      <button class="btn-deploy"><i class="fa-solid fa-cloud-arrow-up"></i> Deploy <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:2px;"></i></button>
+      <button class="btn-new"><i class="fa-solid fa-plus"></i> New Workflow</button>
+    </div>
+  </div>
+
+  <input type="checkbox" id="panel-toggle">
+
+  <div class="body-three">
+
+    <!-- Left: Metadata -->
+    <div class="left-panel">
+      <div class="meta-card">
+        <div class="wf-title">SAP Invoice Parser</div>
+        <span class="badge badge-green">Live</span>
+        <div class="divider"></div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Trigger Type</div>
+            <div class="meta-value">Schedule</div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Schedule</div>
+            <div class="meta-value small">Daily at 06:00 UTC</div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Last Run</div>
+            <div class="meta-value small">Today 06:00 · 1.2s</div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Success Rate</div>
+            <div class="meta-value">98.4%</div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Created By</div>
+            <div class="meta-value small">marc@flow80.com</div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Version</div>
+            <div class="meta-value small">v3 · Updated 14 Mar 2026</div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div>
+            <div class="meta-label">Total Runs</div>
+            <div class="meta-value">1,284</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Run History -->
+    <div class="center-panel">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Run History</div>
+          <span style="font-size:12px;color:#A0AEC0;">Last 7 days</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp <i class="fa-solid fa-sort"></i></th>
+              <th>Run ID <i class="fa-solid fa-sort"></i></th>
+              <th>Status <i class="fa-solid fa-sort"></i></th>
+              <th>Duration <i class="fa-solid fa-sort"></i></th>
+              <th>Trigger</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="document.getElementById('panel-toggle').click()">
+              <td>2026-04-01 06:00:12</td>
+              <td class="run-id">#rf_9a1k</td>
+              <td><span class="badge badge-green">Success</span></td>
+              <td class="duration">1.2s</td>
+              <td>Schedule</td>
+              <td class="action-cell">
+                <button title="View"><i class="fa-solid fa-eye"></i></button>
+                <button title="Re-run"><i class="fa-solid fa-rotate-right"></i></button>
+              </td>
+            </tr>
+            <tr onclick="document.getElementById('panel-toggle').click()">
+              <td>2026-03-31 06:00:04</td>
+              <td class="run-id">#rf_8b2j</td>
+              <td><span class="badge badge-green">Success</span></td>
+              <td class="duration">1.4s</td>
+              <td>Schedule</td>
+              <td class="action-cell">
+                <button><i class="fa-solid fa-eye"></i></button>
+                <button><i class="fa-solid fa-rotate-right"></i></button>
+              </td>
+            </tr>
+            <tr onclick="document.getElementById('panel-toggle').click()">
+              <td>2026-03-30 06:01:22</td>
+              <td class="run-id">#rf_7c3h</td>
+              <td><span class="badge badge-amber">Partial</span></td>
+              <td class="duration">3.8s</td>
+              <td>Schedule</td>
+              <td class="action-cell">
+                <button><i class="fa-solid fa-eye"></i></button>
+                <button><i class="fa-solid fa-rotate-right"></i></button>
+              </td>
+            </tr>
+            <tr onclick="document.getElementById('panel-toggle').click()">
+              <td>2026-03-29 06:00:09</td>
+              <td class="run-id">#rf_6d4g</td>
+              <td><span class="badge badge-green">Success</span></td>
+              <td class="duration">1.1s</td>
+              <td>Schedule</td>
+              <td class="action-cell">
+                <button><i class="fa-solid fa-eye"></i></button>
+                <button><i class="fa-solid fa-rotate-right"></i></button>
+              </td>
+            </tr>
+            <tr onclick="document.getElementById('panel-toggle').click()">
+              <td>2026-03-28 06:00:55</td>
+              <td class="run-id">#rf_5e5f</td>
+              <td><span class="badge badge-red">Failed</span></td>
+              <td class="duration">—</td>
+              <td>Schedule</td>
+              <td class="action-cell">
+                <button><i class="fa-solid fa-eye"></i></button>
+                <button><i class="fa-solid fa-rotate-right"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right: Run Detail Slide-out -->
+    <div class="right-panel">
+      <div class="panel-slide-header">
+        <div class="panel-slide-title">Run Detail</div>
+        <label for="panel-toggle" class="close-btn"><i class="fa-solid fa-xmark"></i></label>
+      </div>
+
+      <div class="run-detail-section">
+        <div class="run-detail-label">Run ID</div>
+        <div class="run-detail-value" style="font-family:monospace;font-size:12px;">#rf_9a1k</div>
+      </div>
+      <div class="run-detail-section">
+        <div class="run-detail-label">Status</div>
+        <span class="badge badge-green">Success</span>
+      </div>
+      <div class="run-detail-section">
+        <div class="run-detail-label">Duration</div>
+        <div class="run-detail-value">1.2 seconds</div>
+      </div>
+      <div class="run-detail-section">
+        <div class="run-detail-label">Trigger</div>
+        <div class="run-detail-value">Schedule — 2026-04-01 06:00 UTC</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="run-detail-section">
+        <div class="run-detail-label">Input Payload</div>
+        <div class="code-block">{
+  "invoice_id": "SAP-INV-2026-08471",
+  "vendor": "A.B. Carriers A/S",
+  "amount": 12450.00,
+  "currency": "DKK",
+  "date": "2026-03-31",
+  "plant": "DSV Road Horsens"
+}</div>
+      </div>
+
+      <div class="run-detail-section">
+        <div class="run-detail-label">Output</div>
+        <div class="code-block">{
+  "status": "parsed",
+  "document_id": "doc_8f3a9b",
+  "ledger_entry": "JE-2026-04421",
+  "gl_account": "2400",
+  "validated": true
+}</div>
+      </div>
+
+      <button class="btn-rerun"><i class="fa-solid fa-rotate-right"></i> Re-run Workflow</button>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>

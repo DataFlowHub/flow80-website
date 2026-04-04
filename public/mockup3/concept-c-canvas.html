@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Canvas — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F0F4FF;color:#2D3748;font-size:14px;overflow:hidden}
+canvas-bg{position:fixed;inset:0;background:#F0F4FF}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 20px;z-index:100;gap:12px}
+.topbar-logo{font-weight:700;font-size:17px;color:#5B50D6}
+.breadcrumb{font-size:14px;color:#2D3748;font-weight:500}
+.breadcrumb span{color:#A0AEC0;font-weight:400}
+.topbar-center{flex:1;display:flex;align-items:center;justify-content:center;gap:8px}
+.domain-pill{display:flex;align-items:center;gap:6px;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;cursor:pointer}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:16px;color:#718096;padding:6px}
+.avatar{width:28px;height:28px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px}
+.btn-sm{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none}
+.btn-grey{background:#F7FAFC;color:#718096;border:1px solid #E2E8F0}
+.btn-blue{background:#007BFF;color:#fff}
+.btn-green{background:#28A745;color:#fff}
+.status-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;background:#28A74520;color:#28A745}
+.status-pill::before{content:'';width:6px;height:6px;background:#28A745;border-radius:50%}
+.canvas-wrap{position:fixed;top:56px;left:0;right:0;bottom:0;overflow:auto;background:#F0F4FF;padding:40px}
+.nodes-container{position:relative;min-width:900px;min-height:500px;margin:0 auto;max-width:1100px}
+.node{position:absolute;background:#fff;border:2px solid #E2E8F0;border-radius:12px;padding:16px;min-width:200px;box-shadow:0 2px 8px #00000010}
+.node.trigger{border-color:#5B50D6;border-left-width:4px}
+.node.action{border-color:#007BFF;border-left-width:4px}
+.node.logic{border-color:#F5A623;border-left-width:4px}
+.node-name{font-weight:600;font-size:13px;margin-bottom:4px}
+.node-meta{font-size:12px;color:#718096}
+.node-type{font-size:11px;color:#5B50D6;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px}
+.node-handle{position:absolute;width:10px;height:10px;background:#fff;border:2px solid #E2E8F0;border-radius:50%;top:50%;transform:translateY(-50%)}
+.node-handle.left{left:-6px}
+.node-handle.right{right:-6px}
+.edge{position:absolute;pointer-events:none}
+.toolbar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:10px 16px;box-shadow:0 4px 16px #00000015;z-index:50}
+.toolbar-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:#F7FAFC;color:#718096}
+.toolbar-btn:hover{background:#E2E8F0}
+.toolbar-divider{width:1px;height:24px;background:#E2E8F0}
+.btn-deploy{background:#28A745;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">⚡ Flow80</div>
+  <div class="breadcrumb">Workflows / <span>Salesforce Lead → Slack Alert</span></div>
+  <div class="topbar-center">
+    <div class="domain-pill"><i class="fa-solid fa-building" style="color:#5B50D6"></i> Finance Ops <i class="fa-solid fa-chevron-down" style="font-size:10px;color:#A0AEC0"></i></div>
+  </div>
+  <div class="topbar-right">
+    <span class="status-pill">Live</span>
+    <button class="icon-btn"><i class="fa-solid fa-code"></i></button>
+    <button class="icon-btn"><i class="fa-regular fa-bookmark"></i></button>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<div class="canvas-wrap">
+  <div class="nodes-container">
+    <!-- Trigger node -->
+    <div class="node trigger" style="left:60px;top:180px">
+      <div class="node-type">Trigger</div>
+      <div class="node-name">Salesforce Webhook</div>
+      <div class="node-meta">new_lead event</div>
+      <div class="node-handle right"></div>
+    </div>
+    <!-- Action node 1 -->
+    <div class="node action" style="left:340px;top:100px">
+      <div class="node-type">Action</div>
+      <div class="node-name">Format Lead Data</div>
+      <div class="node-meta">Transform step</div>
+      <div class="node-handle left"></div>
+      <div class="node-handle right"></div>
+    </div>
+    <!-- Action node 2 -->
+    <div class="node action" style="left:340px;top:260px">
+      <div class="node-type">Action</div>
+      <div class="node-name">Lookup Account in HubSpot</div>
+      <div class="node-meta">CRM lookup</div>
+      <div class="node-handle left"></div>
+      <div class="node-handle right"></div>
+    </div>
+    <!-- Logic node -->
+    <div class="node logic" style="left:620px;top:170px">
+      <div class="node-type">Logic</div>
+      <div class="node-name">Is high-value lead?</div>
+      <div class="node-meta">Filter: revenue > 50k</div>
+      <div class="node-handle left"></div>
+      <div class="node-handle right" style="right:-6px"></div>
+    </div>
+    <!-- Action node 3 -->
+    <div class="node action" style="left:880px;top:80px">
+      <div class="node-type">Action</div>
+      <div class="node-name">Post to #sales-alerts</div>
+      <div class="node-meta">Slack channel</div>
+      <div class="node-handle left"></div>
+    </div>
+    <!-- Action node 4 -->
+    <div class="node action" style="left:880px;top:280px">
+      <div class="node-type">Action</div>
+      <div class="node-name">Log to BigQuery</div>
+      <div class="node-meta">Analytics</div>
+      <div class="node-handle left"></div>
+    </div>
+    <!-- Connecting lines (SVG) -->
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible">
+      <line x1="265" y1="200" x2="335" y2="140" stroke="#5B50D6" stroke-width="2" stroke-dasharray="4,3"/>
+      <line x1="265" y1="200" x2="335" y2="300" stroke="#5B50D6" stroke-width="2" stroke-dasharray="4,3"/>
+      <line x1="545" y1="140" x2="615" y2="200" stroke="#007BFF" stroke-width="2"/>
+      <line x1="545" y1="300" x2="615" y2="220" stroke="#007BFF" stroke-width="2"/>
+      <line x1="730" y1="200" x2="875" y2="130" stroke="#F5A623" stroke-width="2"/>
+      <line x1="730" y1="220" x2="875" y2="320" stroke="#F5A623" stroke-width="2"/>
+    </svg>
+  </div>
+</div>
+
+<div class="toolbar">
+  <button class="toolbar-btn"><i class="fa-solid fa-hand-pointer"></i> Select</button>
+  <button class="toolbar-btn"><i class="fa-solid fa-plus"></i> Add Node</button>
+  <button class="toolbar-btn"><i class="fa-solid fa-arrows-alt"></i> Auto-layout</button>
+  <div class="toolbar-divider"></div>
+  <button class="toolbar-btn"><i class="fa-solid fa-undo"></i></button>
+  <button class="toolbar-btn"><i class="fa-solid fa-redo"></i></button>
+  <div class="toolbar-divider"></div>
+  <button class="toolbar-btn"><i class="fa-solid fa-eye"></i> Test</button>
+  <button class="btn-deploy"><i class="fa-solid fa-rocket"></i> Deploy</button>
+</div>
+
+</body>
+</html>

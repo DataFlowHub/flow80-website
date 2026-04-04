@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Center — Flow80</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#F7FAFC;color:#2D3748;font-size:13px}
+a{text-decoration:none;color:inherit}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:#1A1D2E;color:#fff;z-index:100;display:flex;flex-direction:column}
+.sidebar-logo{padding:20px 20px 16px;font-weight:700;font-size:18px;color:#5B50D6;border-bottom:1px solid #2D3154}
+.sidebar-section{padding:16px 0 4px}
+.sidebar-section-label{font-size:10px;font-weight:600;color:#6C7A9C;text-transform:uppercase;letter-spacing:0.8px;padding:0 20px 8px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 20px;color:#A0AEC0;font-size:13px;cursor:pointer;transition:background 0.1s}
+.sidebar-item:hover{background:#252A40;color:#fff}
+.sidebar-item.active{background:#2D3154;color:#fff;border-left:3px solid #5B50D6;padding-left:17px}
+.sidebar-item i{width:16px;text-align:center;font-size:13px}
+.sidebar-item .count{margin-left:auto;background:#2D3154;font-size:11px;padding:2px 7px;border-radius:10px}
+.sidebar-bottom{padding:16px 20px;border-top:1px solid #2D3154;margin-top:auto}
+.topbar{position:fixed;top:0;left:240px;right:0;height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 24px;z-index:99;gap:16px}
+.breadcrumb{font-size:14px;color:#2D3748;font-weight:500}
+.breadcrumb span{color:#A0AEC0;font-weight:400}
+.cmd-bar{flex:1;max-width:500px;margin:0 auto;background:#F7FAFC;border:1.5px solid #E2E8F0;border-radius:24px;padding:8px 16px;display:flex;align-items:center;gap:8px;color:#A0AEC0;font-size:13px;cursor:pointer}
+.cmd-bar:focus-within{border-color:#5B50D6}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:16px;color:#718096;padding:6px}
+.env-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.env-prod{background:#28A74520;color:#28A745}
+.env-staging{background:#F5A62320;color:#F5A623}
+.avatar{width:30px;height:30px;background:#5B50D6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px}
+.main{margin-left:240px;margin-top:60px;padding:28px 32px}
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:16px}
+.kpi-value{font-size:24px;font-weight:700;color:#2D3748;margin-bottom:2px}
+.kpi-label{font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:0.4px}
+.kpi-trend{font-size:11px;color:#28A745;margin-top:4px}
+.kpi-trend.down{color:#DC3545}
+.cmd-pill{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:12px 20px;display:flex;align-items:center;gap:10px;color:#A0AEC0;font-size:13px;margin-bottom:24px;cursor:pointer}
+.cmd-pill i{color:#5B50D6}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-title{font-size:14px;font-weight:600}
+.table-wrap{background:#fff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 16px;font-size:11px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #E2E8F0;background:#FAFBFC}
+td{padding:11px 16px;font-size:13px;border-bottom:1px solid #F7FAFC;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F7FAFC}
+.chip{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.chip-green{background:#28A74520;color:#28A745}
+.chip-amber{background:#F5A62320;color:#F5A623}
+.chip-red{background:#DC354520;color:#DC3545}
+.run-id{font-family:monospace;font-size:12px;color:#5B50D6}
+.action-btn{background:none;border:none;cursor:pointer;color:#718096;font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">⚡ Flow80</div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Workspace</div>
+    <div class="sidebar-item active"><i class="fa-solid fa-house"></i> Dashboard</div>
+    <div class="sidebar-item"><i class="fa-solid fa-bolt"></i> Workflows <span class="count">12</span></div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Connections</div>
+    <div class="sidebar-item"><i class="fa-solid fa-link"></i> Integrations</div>
+    <div class="sidebar-item"><i class="fa-solid fa-key"></i> API Keys</div>
+    <div class="sidebar-item"><i class="fa-solid fa-arrow-up-right-from-square"></i> Webhooks</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Monitor</div>
+    <div class="sidebar-item"><i class="fa-solid fa-list"></i> Logs</div>
+    <div class="sidebar-item"><i class="fa-solid fa-triangle-exclamation"></i> Alerts <span class="count" style="background:#DC3545">2</span></div>
+    <div class="sidebar-item"><i class="fa-solid fa-chart-line"></i> Analytics</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Admin</div>
+    <div class="sidebar-item"><i class="fa-solid fa-users"></i> Team</div>
+    <div class="sidebar-item"><i class="fa-solid fa-shield-halved"></i> Audit Log</div>
+    <div class="sidebar-item"><i class="fa-solid fa-gear"></i> Settings</div>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i> Help & Docs</div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="breadcrumb">Home / <span>Dashboard</span></div>
+  <div class="cmd-bar"><i class="fa-solid fa-terminal"></i> Search or jump to… <span style="margin-left:auto;font-size:11px">⌘K</span></div>
+  <div class="topbar-right">
+    <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+    <span class="env-badge env-prod">● Production</span>
+    <div class="avatar">MW</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-value">8,241</div><div class="kpi-label">Total Runs Today</div><div class="kpi-trend">↑ 14%</div></div>
+    <div class="kpi-card"><div class="kpi-value">97.8%</div><div class="kpi-label">Success Rate</div><div class="kpi-trend">↑ 0.3%</div></div>
+    <div class="kpi-card"><div class="kpi-value">1.4s</div><div class="kpi-label">Avg Runtime</div><div class="kpi-trend down">↑ 0.2s</div></div>
+    <div class="kpi-card"><div class="kpi-value" style="color:#DC3545">14</div><div class="kpi-label">Failed (24h)</div><div class="kpi-trend down">↑ 3</div></div>
+    <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Active Workflows</div><div class="kpi-trend">↑ 2</div></div>
+    <div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">Integrations</div><div class="kpi-trend">↑ 1</div></div>
+  </div>
+
+  <div class="cmd-pill"><i class="fa-solid fa-terminal"></i> Search workflows, runs, integrations… <span style="margin-left:auto;font-size:11px">⌘K</span></div>
+
+  <div class="section-header">
+    <div class="section-title">Recent Activity</div>
+    <a href="#" style="font-size:12px;color:#007BFF">View all →</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Run ID</th><th>Workflow</th><th>Status</th><th>Duration</th><th>Trigger</th><th>Time</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="run-id">#r8f2a1</td><td>Salesforce Lead → Slack Alert</td><td><span class="chip chip-green">Success</span></td><td>1.2s</td><td>Webhook</td><td>2 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td class="run-id">#r8f29f</td><td>SAP Invoice Parser</td><td><span class="chip chip-amber">Stalled</span></td><td>47.3s</td><td>Schedule</td><td>8 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td class="run-id">#r8f29e</td><td>HubSpot Contact Sync</td><td><span class="chip chip-green">Success</span></td><td>0.8s</td><td>App Event</td><td>14 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td class="run-id">#r8f29d</td><td>Zendesk Ticket Resolver</td><td><span class="chip chip-red">Failed</span></td><td>0.3s</td><td>Webhook</td><td>22 min ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td class="run-id">#r8f29c</td><td>DSV Shipment Tracker</td><td><span class="chip chip-green">Success</span></td><td>2.1s</td><td>Schedule</td><td>1 hour ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+        <tr><td class="run-id">#r8f29b</td><td>Ørsted Energy Report</td><td><span class="chip chip-green">Success</span></td><td>5.4s</td><td>Schedule</td><td>2 hours ago</td><td><button class="action-btn"><i class="fa-solid fa-ellipsis"></i></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

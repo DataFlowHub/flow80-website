@@ -15,6 +15,7 @@ import TemplateShowcase from '@/components/TemplateShowcase';
 import Pricing from '@/components/Pricing';
 import CompetitorTable from '@/components/CompetitorTable';
 import TrustSection from '@/components/TrustSection';
+import HeroSection from '@/components/HeroSection';
 import { useScrollReveal } from '@/components/useScrollReveal';
 import { translations, locales, defaultLocale, type Locale } from '@/i18n/translations';
 import {
@@ -61,6 +62,7 @@ export default function LocalePage() {
     return (
       <>
         <main>
+          <HeroSection t={t} />
           <HowItWorks t={t} />
           <TemplateShowcase t={t} />
           <Pricing t={t} />

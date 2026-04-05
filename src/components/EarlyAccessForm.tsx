@@ -32,12 +32,24 @@ export default function EarlyAccessForm({ t, locale }: Props) {
     return e;
   }
 
+  function announceResult(message: string) {
+    const live = document.getElementById('aria-live-region');
+    if (live) {
+      live.textContent = '';
+      // Force screen reader to read the new content
+      requestAnimationFrame(() => {
+        live.textContent = message;
+      });
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormError('');
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
+      announceResult(t.earlyAccess.errorRequired || 'Please correct the errors in the form.');
       return;
     }
     setErrors({});
@@ -57,9 +69,12 @@ export default function EarlyAccessForm({ t, locale }: Props) {
         throw new Error(data.message || 'Failed');
       }
 
+      announceResult(t.earlyAccess.successHeading || 'Application submitted successfully.');
       setStatus('success');
     } catch {
-      setFormError(t.earlyAccess.errorGeneric);
+      const errMsg = t.earlyAccess.errorGeneric || 'Something went wrong. Please try again.';
+      setFormError(errMsg);
+      announceResult(errMsg);
       setStatus('idle');
     }
   }

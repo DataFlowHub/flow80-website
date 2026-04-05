@@ -2,17 +2,17 @@
 
 /* ── Design Tokens ── */
 :root {
-  --color-primary: #2563EB;
-  --color-accent: #F97316;
-  --color-accent-hover: #EA580C;
+  --color-primary: #1D4ED8;
+  --color-accent: #EA580C;
+  --color-accent-hover: #C2410C;
   --color-dark: #0F172A;
-  --color-muted: #64748B;
+  --color-muted: #334155;
   --color-surface: #F8FAFC;
   --color-white: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-success: #16A34A;
-  --color-error: #DC2626;
-  --color-warning: #D97706;
+  --color-border: #CBD5E1;
+  --color-success: #15803D;
+  --color-error: #B91C1C;
+  --color-warning: #B45309;
 
   --text-xs: 12px;
   --text-sm: 14px;
@@ -31,7 +31,7 @@
 
   --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
   --shadow-card-hover: 0 10px 30px rgba(0,0,0,0.10);
-  --shadow-input-focus: 0 0 0 3px rgba(37,99,235,0.2);
+  --shadow-input-focus: 0 0 0 3px rgba(29,78,216,0.25);
 
   --font: 'Inter', system-ui, -apple-system, sans-serif;
 
@@ -108,6 +108,17 @@ input, textarea { font-family: var(--font); }
 }
 
 .nav__link:hover { color: var(--color-dark); }
+
+.nav__link--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+}
 
 .nav__cta {
   font-size: var(--text-sm);
@@ -765,7 +776,7 @@ input, textarea { font-family: var(--font); }
 
 .footer__copyright {
   font-size: 12px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.5);
 }
 
 @media (min-width: 640px) {
@@ -823,6 +834,39 @@ input, textarea { font-family: var(--font); }
 /* ── Feature Flag / Site State ── */
 [data-site-state="pre-launch"] .go-live-only { display: none !important; }
 [data-site-state="go-live"] .pre-launch-only { display: none !important; }
+
+/* ── Skip Navigation Link — WCAG 2.1 AA SC 2.4.1 ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  background: var(--color-primary);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ── High-visibility focus states — WCAG 2.1 AA SC 2.4.7 ── */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Remove default focus ring for mouse users, keep for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
 
 /* ── Utility ── */
 .sr-only {

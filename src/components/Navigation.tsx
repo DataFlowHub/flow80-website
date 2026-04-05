@@ -53,13 +53,13 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
   const ctaDataAttr = isGoLive ? 'nav_start_trial' : 'nav_early_access';
 
   return (
-    <nav className="nav" data-site-state={process.env.NEXT_PUBLIC_SITE_STATE || 'pre-launch'}>
+    <nav className="nav" aria-label="Main navigation" data-site-state={process.env.NEXT_PUBLIC_SITE_STATE || 'pre-launch'}>
       <div className="nav__inner">
-        <a href={`/${locale}`} className="nav__logo">
+        <a href={`/${locale}`} className="nav__logo" aria-label="Flow80 home">
           Flow80
         </a>
 
-        <ul className="nav__links">
+        <ul className="nav__links" role="list">
           {isGoLive ? (
             // Go-Live nav
             <>
@@ -98,9 +98,13 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
                 </a>
               </li>
               <li>
-                <a href="#" className="nav__link" onClick={(e) => { e.preventDefault(); }}>
-                  <span style={{ opacity: 0.5 }}>{t.nav.pricing} (coming soon)</span>
-                </a>
+                <button
+                  className="nav__link nav__link--disabled"
+                  aria-disabled="true"
+                  tabIndex={-1}
+                >
+                  {t.nav.pricing} (coming soon)
+                </button>
               </li>
             </>
           )}
@@ -108,6 +112,7 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
             <button
               className="nav__cta"
               onClick={ctaScrollHandler}
+              aria-label={ctaLabel}
               data-cta={ctaDataAttr}
               data-cta-position="nav"
             >
@@ -118,13 +123,14 @@ export default function Navigation({ t, locale, onLocaleChange }: Props) {
 
         {/* Mobile: just show CTA + lang switcher */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div className="nav__lang">
+          <div className="nav__lang" role="group" aria-label="Language switcher">
             {locales.map((l) => (
               <button
                 key={l}
                 className={`nav__lang-btn${locale === l ? ' active' : ''}`}
                 onClick={() => handleLangChange(l)}
                 aria-label={`Switch to ${l.toUpperCase()}`}
+                aria-pressed={locale === l}
               >
                 {l.toUpperCase()}
               </button>

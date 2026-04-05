@@ -30,12 +30,23 @@ export default function NewsletterForm({ t, locale }: Props) {
     return e;
   }
 
+  function announceResult(message: string) {
+    const live = document.getElementById('aria-live-region');
+    if (live) {
+      live.textContent = '';
+      requestAnimationFrame(() => {
+        live.textContent = message;
+      });
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormError('');
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
+      announceResult(t.newsletter.errorRequired || 'Please correct the errors in the form.');
       return;
     }
     setErrors({});
@@ -56,9 +67,12 @@ export default function NewsletterForm({ t, locale }: Props) {
       }
 
       trackNewsletterSignupCompleted('inline');
+      announceResult(t.newsletter.successHeading || 'Subscribed successfully.');
       setStatus('success');
     } catch (err) {
-      setFormError(t.newsletter.errorGeneric);
+      const errMsg = t.newsletter.errorGeneric || 'Something went wrong. Please try again.';
+      setFormError(errMsg);
+      announceResult(errMsg);
       setStatus('idle');
     }
   }

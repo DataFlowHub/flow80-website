@@ -44,7 +44,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* Skip navigation — WCAG 2.1 AA SC 2.4.1 */}
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+        {/* Screen reader live region for dynamic content announcements — WCAG 2.1 AA SC 4.1.3 */}
+        <div
+          aria-live="polite"
+          aria-atomic="true"
+          className="sr-only"
+          id="aria-live-region"
+        />
+        {children}
+      </body>
     </html>
   );
 }

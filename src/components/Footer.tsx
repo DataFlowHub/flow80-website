@@ -104,9 +104,17 @@ export default function Footer({ t, locale }: Props) {
           ) : (
             // Pre-launch footer links
             <ul className="footer__links">
-              <li><a href="#" className="footer__link">{t.footer.links.about}</a></li>
-              <li><a href="#" className="footer__link footer__link--disabled" title="Coming soon">{t.footer.links.howItWorks} (coming)</a></li>
-              <li><a href="#" className="footer__link footer__link--disabled" title="Coming soon">{t.footer.links.pricing} (coming)</a></li>
+              <li><a href="/about" className="footer__link">{t.footer.links.about}</a></li>
+              <li>
+                <span className="footer__link footer__link--disabled" aria-disabled="true">
+                  {t.footer.links.howItWorks} (coming)
+                </span>
+              </li>
+              <li>
+                <span className="footer__link footer__link--disabled" aria-disabled="true">
+                  {t.footer.links.pricing} (coming)
+                </span>
+              </li>
               <li><a href="/privacy" className="footer__link">{t.footer.links.privacy}</a></li>
               <li><a href="/terms" className="footer__link">{t.footer.links.terms}</a></li>
             </ul>

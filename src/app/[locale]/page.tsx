@@ -61,7 +61,7 @@ export default function LocalePage() {
   if (isGoLive) {
     return (
       <>
-        <main>
+        <main id="main-content">
           <HeroSection t={t} />
           <HowItWorks t={t} />
           <TemplateShowcase t={t} />
@@ -76,7 +76,7 @@ export default function LocalePage() {
   return (
     <>
       <Navigation t={t} locale={locale} onLocaleChange={handleLocaleChange} />
-      <main>
+      <main id="main-content">
         <Hero t={t} locale={locale} />
         <ProblemSection t={t} />
         <WhatsComingSection t={t} />

@@ -20,21 +20,21 @@ export default function CompetitorTable({ t }: Props) {
       <div className="container">
         <h2 className="competitor-table__title reveal">{ct.sectionTitle}</h2>
         <div className="competitor-table__wrap reveal">
-          <table className="competitor-table__table">
+          <table className="competitor-table__table" aria-label={ct.sectionTitle}>
             <thead>
               <tr>
-                <th></th>
-                <th className="competitor-table__header-cell--flow80">{ct.flow80}</th>
-                <th>{ct.hubspotStarter}</th>
-                <th>{ct.hubspotPro}</th>
-                <th>{ct.monday}</th>
-                <th>{ct.activepieces}</th>
+                <th scope="col"></th>
+                <th scope="col" className="competitor-table__header-cell--flow80">{ct.flow80}</th>
+                <th scope="col">{ct.hubspotStarter}</th>
+                <th scope="col">{ct.hubspotPro}</th>
+                <th scope="col">{ct.monday}</th>
+                <th scope="col">{ct.activepieces}</th>
               </tr>
             </thead>
             <tbody>
               {ct.rows.map((row, i) => (
                 <tr key={i}>
-                  <td>{row.feature}</td>
+                  <th scope="row">{row.feature}</th>
                   {row.cells.map((cell, j) => (
                     <td
                       key={j}

@@ -24,3 +24,8 @@ npm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+node_modules/

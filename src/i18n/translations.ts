@@ -257,9 +257,9 @@ const en: Translations = {
     cta: 'Start Free Trial →',
   },
   pricing: {
-    sectionTitle: 'One price. Everything included.',
-    leadIn: 'No per-user fees. No per-run charges. No tiers to decode. One team, one price, unlimited workflows.',
-    price: '€149',
+    sectionTitle: 'Simple, transparent pricing.',
+    leadIn: 'Choose the plan that fits your team. All plans include core automation features — no surprise charges.',
+    price: 'From €19',
     period: '/ month',
     tagline: 'Everything included. No hidden extras.',
     features: [
@@ -286,7 +286,7 @@ const en: Translations = {
     monday: 'monday.com',
     activepieces: 'Activepieces',
     rows: [
-      { feature: 'Price', cells: ['€149/mo flat', '$75/user/mo', '~€1,300/mo', '€9–26/user/mo', '€25/mo flat'] },
+      { feature: 'Price', cells: ['From €19/mo', '$75/user/mo', '~€1,300/mo', '€9–26/user/mo', '€25/mo flat'] },
       { feature: 'Unlimited workflows', cells: ['check', 'cross', 'check', 'cross', 'check'] },
       { feature: 'No per-user pricing', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
       { feature: 'Flat rate (no surprises)', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
@@ -296,7 +296,7 @@ const en: Translations = {
       { feature: 'For ops teams (not marketers)', cells: ['check', 'cross', 'cross', 'partial', 'partial'] },
       { feature: 'GDPR compliant', cells: ['check', 'check', 'check', 'check', 'partial'] },
     ],
-    bottomLine: 'Flow80 is the only flat-rate option built specifically for ops teams who need real integrations and reliable execution — not just a pretty Kanban board.',
+    bottomLine: 'Flow80 is the only option built specifically for ops teams who need real integrations and reliable execution — starting at just €19/mo.',
   },
   trust: {
     sectionTitle: 'Teams already running better.',
@@ -530,9 +530,9 @@ const da: Translations = {
     cta: 'Start gratis prøveperiode →',
   },
   pricing: {
-    sectionTitle: 'Én pris. Alt inkluderet.',
-    leadIn: 'Ingen brugergebyrer. Ingen kørselsgebyrer. Ingen niveauer at tyde. Ét team, én pris, ubegrænsede workflows.',
-    price: '€149',
+    sectionTitle: 'Simpel, gennemsigtig prisstruktur.',
+    leadIn: 'Vælg den plan der passer til dit team. Alle planer inkluderer kernefunktionalitet til automation — ingen overraskelser.',
+    price: 'Fra €19',
     period: '/ md.',
     tagline: 'Alt inkluderet. Ingen skjulte gebyrer.',
     features: [
@@ -559,7 +559,7 @@ const da: Translations = {
     monday: 'monday.com',
     activepieces: 'Activepieces',
     rows: [
-      { feature: 'Pris', cells: ['€149/md. flat', '$75/bruger/md.', '~€1.300/md.', '€9–26/bruger/md.', '€25/md. flat'] },
+      { feature: 'Pris', cells: ['Fra €19/md.', '$75/bruger/md.', '~€1.300/md.', '€9–26/bruger/md.', '€25/md. flat'] },
       { feature: 'Ubegrænsede workflows', cells: ['check', 'cross', 'check', 'cross', 'check'] },
       { feature: 'Ingen brugerbaseret prissætning', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
       { feature: 'Fast pris (ingen overraskelser)', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
@@ -569,7 +569,7 @@ const da: Translations = {
       { feature: 'Til ops-teams (ikke marketing)', cells: ['check', 'cross', 'cross', 'partial', 'partial'] },
       { feature: 'GDPR-compliant', cells: ['check', 'check', 'check', 'check', 'partial'] },
     ],
-    bottomLine: 'Flow80 er den eneste flat-rate løsning bygget specifikt til ops-teams der har brug for rigtige integrationer og pålidelig udførelse — ikke bare et pænt Kanban-board.',
+    bottomLine: 'Flow80 er den eneste løsning bygget specifikt til ops-teams der har brug for rigtige integrationer og pålidelig udførelse — fra kun €19/md.',
   },
   trust: {
     sectionTitle: 'Teams der allerede kører bedre.',
@@ -795,9 +795,9 @@ const sv: Translations = {
     cta: 'Starta gratis provperiod →',
   },
   pricing: {
-    sectionTitle: 'Ett pris. Allt inkluderat.',
-    leadIn: 'Inga användaravgifter. Inga körningsavgifter. Inga nivåer att tyda. Ett team, ett pris, obegränsade arbetsflöden.',
-    price: '€149',
+    sectionTitle: 'Enkel, transparent prisstruktur.',
+    leadIn: 'Välj den plan som passar ditt team. Alla planer inkluderar kärnfunktionalitet för automation — inga överraskningar.',
+    price: 'Från €19',
     period: '/ mån',
     tagline: 'Allt inkluderat. Inga dolda avgifter.',
     features: [
@@ -824,7 +824,7 @@ const sv: Translations = {
     monday: 'monday.com',
     activepieces: 'Activepieces',
     rows: [
-      { feature: 'Pris', cells: ['€149/mån flat', '$75/anv/mån', '~€1.300/mån', '€9–26/anv/mån', '€25/mån flat'] },
+      { feature: 'Pris', cells: ['Från €19/mån', '$75/anv/mån', '~€1.300/mån', '€9–26/anv/mån', '€25/mån flat'] },
       { feature: 'Obegränsade arbetsflöden', cells: ['check', 'cross', 'check', 'cross', 'check'] },
       { feature: 'Ingen användarbaserad prissättning', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
       { feature: 'Fast pris (inga överraskningar)', cells: ['check', 'cross', 'cross', 'cross', 'check'] },
@@ -834,7 +834,7 @@ const sv: Translations = {
       { feature: 'För ops-team (inte marknadsföring)', cells: ['check', 'cross', 'cross', 'partial', 'partial'] },
       { feature: 'GDPR-kompatibelt', cells: ['check', 'check', 'check', 'check', 'partial'] },
     ],
-    bottomLine: 'Flow80 är det enda flat-rate alternativet byggt specifikt för ops-team som behöver riktiga integrationer och pålitlig körning — inte bara en snygg Kanban-tavla.',
+    bottomLine: 'Flow80 är det enda alternativet byggt specifikt för ops-team som behöver riktiga integrationer och pålitlig körning — från bara €19/mån.',
   },
   trust: {
     sectionTitle: 'Team som redan fungerar bättre.',

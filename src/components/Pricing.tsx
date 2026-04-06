@@ -9,7 +9,6 @@ type Props = {
 export default function Pricing({ t }: Props) {
   const scrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Scroll to top or open mailto — in production this would link to a contact form
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -20,52 +19,44 @@ export default function Pricing({ t }: Props) {
         <p className="pricing-section__lead reveal">{t.pricing.leadIn}</p>
 
         <div className="pricing-section__grid reveal-stagger">
-          {/* ── Starter ── */}
+          {/* ── Starter — €19 ── */}
           <div className="pricing-card">
             <div className="pricing-card__header">
               <div className="pricing-card__tier-label">Starter</div>
-              <div className="pricing-card__tagline">For small ops teams getting started</div>
+              <div className="pricing-card__tagline">For solo operators and small teams</div>
             </div>
             <div className="pricing-card__price">
-              <span className="pricing-card__amount">€149</span>
+              <span className="pricing-card__amount">€19</span>
               <span className="pricing-card__period">/ month</span>
             </div>
             <ul className="pricing-card__features">
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>Up to 10</strong> users</span>
+                <span><strong>Up to 5</strong> users</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>Up to 25</strong> workflows</span>
+                <span><strong>Up to 10</strong> workflows</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>100k</strong> API calls / month</span>
+                <span><strong>10k</strong> API calls / month</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>10 GB</strong> storage</span>
+                <span><strong>1 GB</strong> storage</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>5 hrs</strong> Docker / month</span>
+                <span>Core integrations</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>All standard integrations</span>
+                <span>Basic monitoring</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>Real-time monitoring & logs</span>
-              </li>
-              <li className="pricing-card__feature">
-                <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>Smart exception handling</span>
-              </li>
-              <li className="pricing-card__feature pricing-card__feature--muted">
-                <svg className="pricing-card__check pricing-card__check--muted" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>Email support (24h response)</span>
+                <span>Email support</span>
               </li>
             </ul>
             <button
@@ -77,7 +68,7 @@ export default function Pricing({ t }: Props) {
             </button>
           </div>
 
-          {/* ── Pro (highlighted) ── */}
+          {/* ── Pro — €49 (highlighted) ── */}
           <div className="pricing-card pricing-card--highlight">
             <div className="pricing-card__badge">Most Popular</div>
             <div className="pricing-card__header">
@@ -85,29 +76,25 @@ export default function Pricing({ t }: Props) {
               <div className="pricing-card__tagline">For growing teams that need more power</div>
             </div>
             <div className="pricing-card__price">
-              <span className="pricing-card__amount">€299</span>
+              <span className="pricing-card__amount">€49</span>
               <span className="pricing-card__period">/ month</span>
             </div>
             <ul className="pricing-card__features">
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>Up to 50</strong> users</span>
+                <span><strong>Up to 20</strong> users</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>Up to 100</strong> workflows</span>
+                <span><strong>Up to 50</strong> workflows</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>500k</strong> API calls / month</span>
+                <span><strong>100k</strong> API calls / month</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>50 GB</strong> storage</span>
-              </li>
-              <li className="pricing-card__feature">
-                <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>25 hrs</strong> Docker / month</span>
+                <span><strong>10 GB</strong> storage</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -123,7 +110,7 @@ export default function Pricing({ t }: Props) {
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check pricing-card__check--accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>Priority email support</span>
+                <span>Priority email support (8h response)</span>
               </li>
             </ul>
             <button
@@ -135,19 +122,20 @@ export default function Pricing({ t }: Props) {
             </button>
           </div>
 
-          {/* ── Enterprise ── */}
+          {/* ── Scale — €129 ── */}
           <div className="pricing-card">
             <div className="pricing-card__header">
-              <div className="pricing-card__tier-label">Enterprise</div>
-              <div className="pricing-card__tagline">For organizations with complex needs</div>
+              <div className="pricing-card__tier-label">Scale</div>
+              <div className="pricing-card__tagline">For teams that need serious scale</div>
             </div>
             <div className="pricing-card__price">
-              <span className="pricing-card__amount">Custom</span>
+              <span className="pricing-card__amount">€129</span>
+              <span className="pricing-card__period">/ month</span>
             </div>
             <ul className="pricing-card__features">
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>Unlimited</strong> users</span>
+                <span><strong>Up to 100</strong> users</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -155,15 +143,11 @@ export default function Pricing({ t }: Props) {
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>2M+</strong> API calls / month</span>
+                <span><strong>1M</strong> API calls / month</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>200 GB</strong> storage</span>
-              </li>
-              <li className="pricing-card__feature">
-                <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span><strong>100 hrs</strong> Docker / month</span>
+                <span><strong>100 GB</strong> storage</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -171,7 +155,7 @@ export default function Pricing({ t }: Props) {
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>Advanced monitoring</span>
+                <span>Advanced monitoring & alerting</span>
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -179,16 +163,16 @@ export default function Pricing({ t }: Props) {
               </li>
               <li className="pricing-card__feature">
                 <svg className="pricing-card__check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                <span>Dedicated support + 99.9% SLA</span>
+                <span>Dedicated support (4h response) + SLA</span>
               </li>
             </ul>
             <button
               className="pricing-card__cta pricing-card__cta--outline"
               onClick={scrollToContact}
-              data-cta="pricing_enterprise"
+              data-cta="pricing_scale"
               data-cta-position="pricing"
             >
-              Contact Us
+              Start Free Trial
             </button>
           </div>
         </div>

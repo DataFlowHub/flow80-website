@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 Features — Workflow Automation Without Code</title>
+<meta name="description" content="Every feature Flow80 ships with — visual workflow builder, error handling, real-time monitoring, templates, integrations, and more. Built for ops teams who need real automation.">
+<meta property="og:title" content="Flow80 Features — Workflow Automation Without Code">
+<meta property="og:description" content="Every feature Flow80 ships with. Built for ops teams who need real automation.">
+<meta property="og:type" content="website">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1c1005; color: #fff; line-height: 1.6; overflow-x: hidden; }
+  .warm-bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(217,119,6,0.2) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 20%, rgba(180,83,9,0.15) 0%, transparent 60%), radial-gradient(ellipse 100% 80% at 50% 100%, rgba(251,146,60,0.12) 0%, transparent 60%), #1c1005; }
+  nav { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(28,16,5,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(251,146,60,0.1); }
+  .nav-logo { display: flex; align-items: center; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; gap: 8px; }
+  .nav-logo img { height: 28px; width: auto; }
+  .nav-logo span { color: #fb923c; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a.active { color: #fb923c; }
+  .nav-links a:hover { color: #fff; }
+  .lang-switcher { position: relative; margin-left: 28px; }
+  .lang-switcher-btn { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; }
+  .lang-switcher-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(251,146,60,0.3); color: #fff; }
+  .lang-switcher-btn .flag { font-size: 16px; }
+  .lang-switcher-btn .arrow { font-size: 10px; opacity: 0.5; }
+  .lang-switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: rgba(20,12,4,0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 8px; min-width: 160px; z-index: 10000; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lang-switcher-dropdown.open { display: block; }
+  .lang-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.15s; cursor: pointer; }
+  .lang-option:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .lang-option.active { color: #fb923c; background: rgba(251,146,60,0.1); }
+  .lang-option .flag { font-size: 16px; }
+  .lang-option .lang-name { font-weight: 600; }
+  .lang-option .lang-native { font-size: 11px; opacity: 0.6; }
+  .nav-links a.cta-nav { color: #fb923c; font-weight: 600; }
+  .breadcrumb { position: relative; z-index: 10; padding: 20px 48px 0; font-size: 13px; color: rgba(255,255,255,0.3); }
+  .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .breadcrumb a:hover { color: #fb923c; }
+  .hero { position: relative; z-index: 10; padding: 40px 48px 40px; text-align: center; max-width: 900px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.25); color: #fb923c; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+  .hero h1 { font-size: 44px; font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .features-section { position: relative; z-index: 10; padding: 40px 48px; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fb923c; margin-bottom: 12px; }
+  .section-title { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 32px; letter-spacing: -0.5px; }
+  .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; align-items: center; }
+  .feature-row.reverse { direction: rtl; }
+  .feature-row.reverse > * { direction: ltr; }
+  .feature-visual { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px; min-height: 240px; display: flex; align-items: center; justify-content: center; }
+  .feature-copy h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .feature-copy p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 16px; }
+  .feature-list { list-style: none; }
+  .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+  .feature-list li::before { content: '✓'; color: #34d399; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .visual-icon { font-size: 64px; margin-bottom: 12px; }
+  .visual-label { font-size: 13px; color: rgba(255,255,255,0.3); text-align: center; }
+  .mini-workflow { width: 100%; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; position: relative; }
+  .mw-node { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; margin-bottom: 8px; font-size: 12px; color: rgba(255,255,255,0.6); }
+  .mw-node.trigger { border-color: rgba(251,146,60,0.4); background: rgba(251,146,60,0.1); color: #fb923c; }
+  .mw-node.success { border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.1); color: #34d399; }
+  .mw-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .mw-dot.orange { background: #fb923c; }
+  .mw-dot.green { background: #34d399; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; text-align: left; transition: all 0.3s; }
+  .grid-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(251,146,60,0.15); transform: translateY(-2px); }
+  .grid-card .gc-icon { font-size: 32px; margin-bottom: 12px; }
+  .grid-card .gc-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .grid-card .gc-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+  .integrations-section { position: relative; z-index: 10; padding: 40px 48px; text-align: center; border-top: 1px solid rgba(251,146,60,0.06); border-bottom: 1px solid rgba(251,146,60,0.06); background: rgba(0,0,0,0.2); }
+  .integrations-section p { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 20px; }
+  .logo-cloud { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .logo-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); padding: 8px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; }
+  .logo-item .icon { font-size: 18px; }
+  .cta-section { position: relative; z-index: 10; padding: 60px 48px; text-align: center; }
+  .cta-section h2 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -1px; }
+  .cta-section p { font-size: 15px; color: rgba(255,255,255,0.4); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .btn-primary { display: inline-block; background: #ea580c; color: #fff; padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(234,88,12,0.3); }
+  .btn-primary:hover { background: #c2410c; box-shadow: 0 6px 28px rgba(234,88,12,0.4); transform: translateY(-1px); }
+  footer { position: relative; z-index: 10; background: rgba(0,0,0,0.3); color: rgba(255,255,255,0.2); text-align: center; padding: 28px 48px; font-size: 12px; backdrop-filter: blur(10px); border-top: 1px solid rgba(251,146,60,0.06); }
+  @media (max-width: 900px) { .feature-row { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } nav { padding: 14px 20px; } .nav-links { display: none; } .hero, .features-section, .cta-section { padding: 40px 20px; } .integrations-section { padding: 24px 20px; } }
+
+  .ea-modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+  .ea-modal-overlay.open { display: flex; }
+  .ea-modal { background: #1a1008; border: 1px solid rgba(251,146,60,0.2); border-radius: 20px; padding: 36px; max-width: 480px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+  .ea-modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 24px; cursor: pointer; }
+  .ea-modal-close:hover { color: #fff; }
+  .ea-modal h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .ea-modal .ea-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.6; }
+  .ea-form-group { margin-bottom: 14px; text-align: left; }
+  .ea-form-group label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 6px; letter-spacing: 0.5px; }
+  .ea-form-group input, .ea-form-group select, .ea-form-group textarea { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+  .ea-form-group input:focus, .ea-form-group select:focus, .ea-form-group textarea:focus { border-color: rgba(251,146,60,0.5); }
+  .ea-form-group textarea { resize: vertical; min-height: 80px; }
+  .ea-form-group select option { background: #1a1008; }
+  .ea-submit { width: 100%; background: #ea580c; color: #fff; padding: 13px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+  .ea-submit:hover { background: #c2410c; }
+  .ea-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ea-success { display: none; text-align: center; padding: 20px 0; }
+  .ea-success.show { display: block; }
+  .ea-success-icon { font-size: 48px; margin-bottom: 12px; }
+  .ea-success h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .ea-success p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .ea-error { display: none; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #fca5a5; margin-top: 8px; }
+  .ea-error.show { display: block; }
+  .ea-form-body { }
+</style>
+</head>
+<body>
+<div class="warm-bg"></div>
+<nav>
+  <div class="nav-logo"><img src="/img/logo.png" alt="Flow80"> Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="/en">Home</a>
+    <a href="/en/features" class="active">Features</a>
+    <a href="/en/why" class="">Why Flow80</a>
+    <a href="/en/how-it-works" class="">How It Works</a>
+    <a href="#" onclick="openEaModal();return false" class="cta-nav">Get Early Access →</a>
+  </div>
+  <div class="lang-switcher" id="langSwitcher">
+    <button class="lang-switcher-btn" onclick="toggleLangMenu()" aria-label="Change language">
+      <span class="flag">🇬🇧</span>
+      <span class="lang-code">EN</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="lang-switcher-dropdown" id="langDropdown">
+      <a href="/en" class="lang-option active" onclick="switchLang('en')"><span class="flag">🇬🇧</span><span><span class="lang-name">English</span><span class="lang-native">English</span></span></a>
+      <a href="/da" class="lang-option" onclick="switchLang('da')"><span class="flag">🇩🇰</span><span><span class="lang-name">Danish</span><span class="lang-native">Dansk</span></span></a>
+      <a href="/de" class="lang-option" onclick="switchLang('de')"><span class="flag">🇩🇪</span><span><span class="lang-name">German</span><span class="lang-native">Deutsch</span></span></a>
+      <a href="/it" class="lang-option" onclick="switchLang('it')"><span class="flag">🇮🇹</span><span><span class="lang-name">Italian</span><span class="lang-native">Italiano</span></span></a>
+      <a href="/sv" class="lang-option" onclick="switchLang('sv')"><span class="flag">🇸🇪</span><span><span class="lang-name">Swedish</span><span class="lang-native">Svenska</span></span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="breadcrumb"><a href="/en">Home</a> / Features</div>
+<section class="hero">
+  <div class="hero-badge">What's inside</div>
+  <h1>Everything you need to automate your operations.</h1>
+  <p>Flow80 ships with every tool your ops team needs to build, run, and monitor automated workflows — without writing a single line of code.</p>
+</section>
+<section class="features-section">
+  <div class="section-label">Core Platform</div>
+  <div class="section-title">Built for real operations work.</div>
+  <div class="feature-row">
+    <div class="feature-copy">
+      <h3>Visual workflow builder.</h3>
+      <p>Build automated workflows by connecting steps visually. No code required. See your entire process at a glance, spot bottlenecks, and adjust in seconds.</p>
+      <ul class="feature-list">
+        <li>Drag-and-drop step connection</li>
+        <li>Conditional branching — different steps for different conditions</li>
+        <li>Parallel execution — steps run simultaneously when possible</li>
+        <li>Version history — revert any workflow to a previous version</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <div style="text-align:center">
+        <div class="visual-icon">🔗</div>
+        <div class="mini-workflow">
+          <div class="mw-node trigger"><span class="mw-dot orange"></span> API Trigger — New Order</div>
+          <div class="mw-node"><span class="mw-dot green"></span> Validate Data</div>
+          <div class="mw-node"><span class="mw-dot green"></span> Transform → SAP Format</div>
+          <div class="mw-node success"><span class="mw-dot green"></span> Export to SAP</div>
+        </div>
+        <div class="visual-label" style="margin-top:12px">Visual workflow builder</div>
+      </div>
+    </div>
+  </div>
+  <div class="feature-row reverse">
+    <div class="feature-copy">
+      <h3>Smart error handling.</h3>
+      <p>When something fails, Flow80 doesn't just stop. It evaluates the error, retries intelligently, and escalates to you only when it genuinely needs human input.</p>
+      <ul class="feature-list">
+        <li>Automatic retry with exponential backoff</li>
+        <li>Dead letter queue — failed jobs wait for you to decide</li>
+        <li>Custom fallback paths — route around broken steps</li>
+        <li>Smart alerting — you get notified only when action is needed</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <div style="text-align:center">
+        <div class="visual-icon">⚡</div>
+        <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:16px;margin-top:12px">
+          <div style="font-size:12px;color:#fb923c;margin-bottom:8px">⚠ Step failed: SAP unreachable</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px">Flow80 automatically:</div>
+          <div style="font-size:11px;color:#34d399;margin-bottom:4px">1. Retrying in 30s...</div>
+          <div style="font-size:11px;color:#34d399;margin-bottom:4px">2. Backing up payload</div>
+          <div style="font-size:11px;color:#34d399;">3. Alerting you if retries exhausted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="feature-row">
+    <div class="feature-copy">
+      <h3>Real-time monitoring.</h3>
+      <p>See every workflow run as it happens. Know exactly what data moved, what succeeded, and what needs attention — before it becomes a customer problem.</p>
+      <ul class="feature-list">
+        <li>Live run dashboard with step-by-step progress</li>
+        <li>Input/output data inspection for every step</li>
+        <li>Success ratio tracking over time</li>
+        <li>Exportable run logs for compliance and audits</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <div style="text-align:center">
+        <div class="visual-icon">📊</div>
+        <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:16px;margin-top:12px;width:100%">
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <div style="flex:1;background:rgba(52,211,153,0.15);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:20px;font-weight:800;color:#34d399">99.7%</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4)">Success rate</div>
+            </div>
+            <div style="flex:1;background:rgba(251,146,60,0.15);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:20px;font-weight:800;color:#fb923c">847</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4)">Runs today</div>
+            </div>
+            <div style="flex:1;background:rgba(34,211,238,0.15);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:20px;font-weight:800;color:#34d3e0">0</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4)">Requires attention</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.3)">Last 24 hours across all workflows</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="features-section">
+  <div class="section-label">Integrations & Data</div>
+  <div class="section-title">Connect everything your team already uses.</div>
+  <div class="grid-3">
+    <div class="grid-card">
+      <div class="gc-icon">🔌</div>
+      <div class="gc-title">REST API</div>
+      <div class="gc-desc">Connect to any HTTP API. Authenticate with API keys, Bearer tokens, or OAuth 2.0. Map request/response data to your workflow steps.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">🪝</div>
+      <div class="gc-title">Webhooks</div>
+      <div class="gc-desc">Receive real-time events from any system. Flow80 acts as a webhook receiver and triggers workflows instantly when data arrives.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">🗄️</div>
+      <div class="gc-title">Databases</div>
+      <div class="gc-desc">Connect to MySQL, PostgreSQL, SQL Server, or MongoDB. Read, write, and query your data directly from workflow steps.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">📧</div>
+      <div class="gc-title">Email</div>
+      <div class="gc-desc">Send templated emails via SMTP or Microsoft Graph (Office 365). Trigger on inbound emails or use as workflow notification steps.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">📁</div>
+      <div class="gc-title">File Storage</div>
+      <div class="gc-desc">Read and write files to AWS S3, Google Cloud Storage, Azure Blob, or SFTP servers. Process CSV, XML, JSON, and PDF files in workflows.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">📊</div>
+      <div class="gc-title">Power BI & BI Tools</div>
+      <div class="gc-desc">Push workflow results directly to Power BI datasets or other BI tools. Automate reporting pipelines without manual exports.</div>
+    </div>
+  </div>
+</section>
+<section class="features-section">
+  <div class="section-label">Templates & Getting Started</div>
+  <div class="section-title">Start from something that already works.</div>
+  <div class="grid-3">
+    <div class="grid-card">
+      <div class="gc-icon">📦</div>
+      <div class="gc-title">Order Processing</div>
+      <div class="gc-desc">Incoming orders from Shopify, WooCommerce, or any API → validate → transform → push to ERP. Automate the full order-to-fulfillment pipeline.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">🧾</div>
+      <div class="gc-title">Invoice Processing</div>
+      <div class="gc-desc">Receive invoices via email or webhook → extract data with transforms → export to SAP, E-conomic, or any accounting system.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">🔔</div>
+      <div class="gc-title">Alert & Notification</div>
+      <div class="gc-desc">Monitor any data source and send alerts when thresholds are breached. Route alerts via email, Slack, Teams, or SMS.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">🔄</div>
+      <div class="gc-title">Data Synchronization</div>
+      <div class="gc-desc">Keep two systems in sync automatically. Run on schedule or trigger on change. Handle conflicts gracefully.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">📈</div>
+      <div class="gc-title">Reporting Pipelines</div>
+      <div class="gc-desc">Combine data from multiple sources, transform it, and push to your BI tool on a schedule. Fully automated reporting — no manual work.</div>
+    </div>
+    <div class="grid-card">
+      <div class="gc-icon">🛡️</div>
+      <div class="gc-title">Compliance & Audit</div>
+      <div class="gc-desc">Automated audit logs for every workflow run. Export run history with full input/output data. GDPR-ready from day one.</div>
+    </div>
+  </div>
+</section>
+<div class="integrations-section">
+  <p>Connects with the tools you already use</p>
+  <div class="logo-cloud">
+    <div class="logo-item"><span class="icon">🔌</span> REST API</div>
+    <div class="logo-item"><span class="icon">🪝</span> Webhooks</div>
+    <div class="logo-item"><span class="icon">🗄️</span> Databases</div>
+    <div class="logo-item"><span class="icon">📧</span> Email</div>
+    <div class="logo-item"><span class="icon">📁</span> File Storage</div>
+    <div class="logo-item"><span class="icon">📊</span> PowerBI</div>
+    <div class="logo-item"><span class="icon">📦</span> WooCommerce</div>
+    <div class="logo-item"><span class="icon">🛒</span> Shopify</div>
+    <div class="logo-item"><span class="icon">📄</span> PDF</div>
+  </div>
+</div>
+<section class="cta-section" id="waitlist">
+  <h2>Ready to see it in action?</h2>
+  <p>Apply for early access and get Flow80 before the public launch.</p>
+  <a href="/en#waitlist"><button class="btn-primary" onclick="openEaModal()">Request Early Access →</button></a>
+</section>
+
+<!-- Early Access Modal -->
+<div class="ea-modal-overlay" id="eaOverlay" onclick="if(event.target===this)closeEaModal()">
+  <div class="ea-modal">
+    <button class="ea-modal-close" onclick="closeEaModal()" aria-label="Close">×</button>
+    <div id="eaFormContainer">
+      <h2>Request Early Access</h2>
+      <p class="ea-sub">Tell us about your team and we'll get you set up before launch.</p>
+      <form id="eaForm" onsubmit="submitEaForm(event)">
+        <div class="ea-form-group">
+          <label>Your name</label>
+          <input type="text" name="name" placeholder="Anders Jensen" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Work email</label>
+          <input type="email" name="email" placeholder="anders@company.dk" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Company</label>
+          <input type="text" name="company" placeholder="Acme Logistics A/S" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Language</label>
+          <select name="language">
+            <option value="en">English</option>
+            <option value="da">Dansk</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="sv">Svenska</option>
+          </select>
+        </div>
+        <div class="ea-form-group">
+          <label>What do you want to automate? <span style="font-weight:400;opacity:0.6">(optional)</span></label>
+          <textarea name="challenge" placeholder="e.g. Sync orders from our webshop to our ERP automatically..."></textarea>
+        </div>
+        <div class="ea-error" id="eaError"></div>
+        <button type="submit" class="ea-submit" id="eaSubmit">Request Early Access →</button>
+      </form>
+    </div>
+    <div class="ea-success" id="eaSuccess">
+      <div class="ea-success-icon">✓</div>
+      <h3>You're on the list!</h3>
+      <p>We'll be in touch before launch. Check your inbox — we'll send a confirmation to the email you provided.</p>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <p>© 2026 Sikker IT. All rights reserved.</p><p>Flow80 is a product by <strong>Sikker IT</strong></p>
+  <p>Built by <strong>Sikker IT</strong> — for ops teams who are tired of manual work.</p>
+  <div style="display:flex;gap:20px;justify-content:center;font-size:11px;color:rgba(255,255,255,0.3);margin-top:12px">
+    🇪🇺 GDPR Compliant · 🇩🇰 Built in Denmark · Secure by design
+  </div>
+</footer>
+
+<script>
+function toggleLangMenu() {
+  var dropdown = document.getElementById('langDropdown');
+  dropdown.classList.toggle('open');
+  event.stopPropagation();
+}
+function switchLang(lang) {
+  document.getElementById('langDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  var dropdown = document.getElementById('langDropdown');
+  var btn = document.querySelector('.lang-switcher-btn');
+  if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove('open');
+  }
+});
+(function() {
+  var path = window.location.pathname;
+  var lang = 'en';
+  if (path.startsWith('/da')) lang = 'da';
+  else if (path.startsWith('/de')) lang = 'de';
+  else if (path.startsWith('/it')) lang = 'it';
+  else if (path.startsWith('/sv')) lang = 'sv';
+  var flags = { en: '🇬🇧', da: '🇩🇰', de: '🇩🇪', it: '🇮🇹', sv: '🇸🇪' };
+  var names = { en: 'EN', da: 'DA', de: 'DE', it: 'IT', sv: 'SV' };
+  var btn = document.querySelector('.lang-switcher-btn');
+  if (btn) { btn.querySelector('.flag').textContent = flags[lang]; btn.querySelector('.lang-code').textContent = names[lang]; }
+  document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.remove('active'); });
+  var active = document.querySelector('.lang-option[href="/' + lang + '"]');
+  if (active) active.classList.add('active');
+})();
+</script>
+<script>
+function openEaModal() { document.getElementById('eaOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeEaModal() { document.getElementById('eaOverlay').classList.remove('open'); document.body.style.overflow=''; }
+async function submitEaForm(e) {
+  e.preventDefault();
+  var form = document.getElementById('eaForm');
+  var btn = document.getElementById('eaSubmit');
+  var err = document.getElementById('eaError');
+  var data = { name: form.name.value, email: form.email.value, company: form.company.value, language: form.language.value, challenge: form.challenge.value };
+  btn.disabled = true; btn.textContent = 'Sending...'; err.classList.remove('show');
+  try {
+    var res = await fetch('/api/early-access/apply', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (res.ok) {
+      document.getElementById('eaFormContainer').style.display='none';
+      document.getElementById('eaSuccess').classList.add('show');
+      setTimeout(closeEaModal, 3000);
+    } else {
+      var j = await res.json(); err.textContent = j.message || 'Something went wrong. Please try again.'; err.classList.add('show');
+    }
+  } catch(err2) { err.textContent = 'Connection error. Please try again.'; err.classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Request Early Access →';
+}</script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Concept L: Terminal</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    background: #0a0e14;
+    color: #b3e5a0;
+    line-height: 1.7;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  @keyframes scanline { 0%{top:0} 100%{top:100%} }
+  @keyframes typeIn { from{width:0} to{width:100%} }
+
+  /* Scanline effect */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(179,229,160,0.04);
+    animation: scanline 8s linear infinite;
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    background: #080c10;
+    border-bottom: 1px solid #1a2e18;
+  }
+  .nav-logo { font-size: 18px; font-weight: 700; color: #b3e5a0; letter-spacing: -0.5px; }
+  .nav-logo span { color: #4ade80; }
+  .nav-links a { text-decoration: none; color: #5a8a58; font-size: 13px; margin-left: 24px; font-weight: 500; }
+  .nav-links a.cta-nav { color: #4ade80; font-weight: 700; }
+  .nav-links a:hover { color: #b3e5a0; }
+
+  /* Hero */
+  .hero {
+    padding: 48px 32px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .terminal-bar {
+    background: #0d1319;
+    border: 1px solid #1a2e18;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+  }
+  .tb-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .tb-dot.r { background: #ef4444; }
+  .tb-dot.y { background: #eab308; }
+  .tb-dot.g { background: #22c55e; }
+  .tb-title { margin-left: 8px; font-size: 12px; color: #3d6b38; }
+  .terminal-body {
+    background: #0a0e14;
+    border: 1px solid #1a2e18;
+    border-radius: 0 0 8px 8px;
+    padding: 24px 24px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .t-line { margin-bottom: 4px; }
+  .t-prompt { color: #4ade80; margin-right: 8px; }
+  .t-cmd { color: #e2f0d8; }
+  .t-out { color: #5a8a58; padding-left: 16px; }
+  .t-out.ok { color: #4ade80; }
+  .t-out.warn { color: #fbbf24; }
+  .t-out.err { color: #f87171; }
+  .t-comment { color: #3d6b38; }
+  .t-head { color: #86efac; font-weight: 700; }
+  .t-val { color: #fbbf24; }
+  .t-highlight { color: #4ade80; font-weight: 700; }
+  .t-dim { color: #2d4a2a; }
+  .blink-cursor { display: inline-block; width: 8px; height: 14px; background: #4ade80; animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
+
+  /* Spacer between terminals */
+  .term-gap { height: 20px; }
+
+  /* Mini workflow monitor */
+  .workflow-monitor {
+    max-width: 900px;
+    margin: 24px auto 0;
+    background: #0a0e14;
+    border: 1px solid #1a2e18;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .wm-header { background: #0d1319; padding: 10px 16px; border-bottom: 1px solid #1a2e18; display: flex; align-items: center; justify-content: space-between; }
+  .wm-title { font-size: 12px; color: #4ade80; font-weight: 700; }
+  .wm-live { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #4ade80; }
+  .wm-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: blink 1.5s ease-in-out infinite; }
+  .wm-body { padding: 16px; }
+  .wm-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #0d1319; font-size: 12px; }
+  .wm-row:last-child { border-bottom: none; }
+  .wm-status { width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; flex-shrink: 0; }
+  .wm-status.run { background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.5); }
+  .wm-status.ok { background: #3d6b38; }
+  .wm-status.warn { background: #fbbf24; }
+  .wm-name { color: #b3e5a0; flex: 1; }
+  .wm-meta { color: #3d6b38; margin-left: 16px; font-size: 11px; }
+  .wm-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; margin-left: 12px; }
+  .wb-run { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+  .wb-ok { background: rgba(61,107,56,0.2); color: #4ade80; }
+  .wb-warn { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+
+  /* Stats bar */
+  .stats-bar {
+    max-width: 900px;
+    margin: 16px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .stat-tile { background: #0a0e14; border: 1px solid #1a2e18; border-radius: 8px; padding: 16px 14px; }
+  .st-label { font-size: 10px; color: #3d6b38; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .st-val { font-size: 24px; font-weight: 700; color: #4ade80; letter-spacing: -1px; }
+  .st-val.y { color: #fbbf24; }
+  .st-val.w { color: #b3e5a0; }
+  .st-val.r { color: #f87171; }
+  .st-sub { font-size: 10px; color: #2d4a2a; margin-top: 2px; }
+
+  /* Teaser */
+  .teaser { max-width: 900px; margin: 48px auto 0; padding: 0 32px 48px; }
+  .teaser-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4ade80; margin-bottom: 12px; }
+  .teaser h2 { font-size: 22px; font-weight: 700; color: #b3e5a0; margin-bottom: 16px; }
+  .teaser p { font-size: 13px; color: #5a8a58; max-width: 560px; line-height: 1.8; margin-bottom: 28px; }
+  .t-cta { display: inline-block; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ade80; padding: 12px 24px; border-radius: 6px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .t-cta:hover { background: rgba(74,222,128,0.18); }
+
+  /* Footer */
+  footer { border-top: 1px solid #1a2e18; padding: 20px 32px; text-align: center; font-size: 11px; color: #2d4a2a; }
+
+  @media (max-width: 700px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 32px 20px 28px; }
+    .terminal-body { padding: 16px; font-size: 12px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .teaser { padding: 0 20px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<nav>
+  <div class="nav-logo">Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="#">How It Works</a>
+    <a href="#">Pricing</a>
+    <a href="#" class="cta-nav">Get Early Access →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="terminal-bar">
+    <span class="tb-dot r"></span>
+    <span class="tb-dot y"></span>
+    <span class="tb-dot g"></span>
+    <span class="tb-title">flow80@ops:~/dashboard</span>
+  </div>
+  <div class="terminal-body">
+    <div class="t-line"><span class="t-comment"># Flow80 Operations Dashboard v2.4.1</span></div>
+    <div class="t-line"><span class="t-comment"># GDPR Compliant · Built in Denmark</span></div>
+    <div class="t-line">&nbsp;</div>
+    <div class="t-line">
+      <span class="t-prompt">→</span>
+      <span class="t-cmd">flow80 status --all</span>
+    </div>
+    <div class="t-line t-out ok">✓ System operational</div>
+    <div class="t-line t-out">✓ Connected: ACME Logistics API · ACME ERP · SAP · Slack</div>
+    <div class="t-line">&nbsp;</div>
+    <div class="t-line">
+      <span class="t-prompt">→</span>
+      <span class="t-cmd">flow80 workflows --active</span>
+    </div>
+    <div class="t-line t-out">⚡ Running: Order Sync — ACME Logistics → ACME ERP (247 orders)</div>
+    <div class="t-line t-out ok">✓ Invoice Processing — SAP Export (100% success)</div>
+    <div class="t-line t-out ok">✓ Supplier Alert — Auto-resolved (14:32)</div>
+    <div class="t-line t-out ok">✓ Finance Report — Scheduled (tomorrow 08:00)</div>
+    <div class="t-line">&nbsp;</div>
+    <div class="t-line">
+      <span class="t-prompt">→</span>
+      <span class="t-cmd">flow80 metrics --today</span>
+    </div>
+    <div class="t-line t-out">
+      <span class="t-head">TASKS_AUTOMATED</span> <span class="t-val">2,841</span> <span class="t-dim">|</span>
+      <span class="t-head">HOURS_SAVED</span> <span class="t-val">94h</span> <span class="t-dim">|</span>
+      <span class="t-head">SUCCESS_RATE</span> <span class="t-val" style="color:#4ade80">99.7%</span>
+    </div>
+    <div class="t-line">&nbsp;</div>
+    <div class="t-line">
+      <span class="t-prompt">→</span>
+      <span class="t-cmd">flow80 get "Your data. Your workflows. Finally under control."</span>
+      <span class="blink-cursor"></span>
+    </div>
+    <div class="t-line t-out t-highlight">✓ All systems operational. Zero manual intervention required.</div>
+  </div>
+</section>
+
+<div class="term-gap"></div>
+
+<!-- Workflow monitor -->
+<div class="workflow-monitor">
+  <div class="wm-header">
+    <span class="wm-title">PROCESS MONITOR — LIVE</span>
+    <span class="wm-live"><span class="wm-live-dot"></span> 24 workflows · 14 active</span>
+  </div>
+  <div class="wm-body">
+    <div class="wm-row">
+      <span class="wm-status run"></span>
+      <span class="wm-name">order_sync_acme-logistics_erp</span>
+      <span class="wm-meta">247 orders · 2 min ago</span>
+      <span class="wm-badge wb-run">● RUNNING</span>
+    </div>
+    <div class="wm-row">
+      <span class="wm-status run"></span>
+      <span class="wm-name">invoice_processing_sap</span>
+      <span class="wm-meta">processing now</span>
+      <span class="wm-badge wb-run">● RUNNING</span>
+    </div>
+    <div class="wm-row">
+      <span class="wm-status ok"></span>
+      <span class="wm-name">supplier_alert_auto_resolve</span>
+      <span class="wm-meta">14:32 · resolved</span>
+      <span class="wm-badge wb-ok">✓ HEALTHY</span>
+    </div>
+    <div class="wm-row">
+      <span class="wm-status ok"></span>
+      <span class="wm-name">finance_report_weekly</span>
+      <span class="wm-meta">scheduled 08:00</span>
+      <span class="wm-badge wb-ok">✓ READY</span>
+    </div>
+    <div class="wm-row">
+      <span class="wm-status ok"></span>
+      <span class="wm-name">shipment_tracking_acme</span>
+      <span class="wm-meta">18 min ago · 100%</span>
+      <span class="wm-badge wb-ok">✓ HEALTHY</span>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-tile">
+    <div class="st-label">Tasks Today</div>
+    <div class="st-val">2,841</div>
+    <div class="st-sub">↑ 147 from yesterday</div>
+  </div>
+  <div class="stat-tile">
+    <div class="st-label">Success Rate</div>
+    <div class="st-val" style="color:#4ade80">99.7%</div>
+    <div class="st-sub">0 errors this session</div>
+  </div>
+  <div class="stat-tile">
+    <div class="st-label">Hours Saved</div>
+    <div class="st-val y">94h</div>
+    <div class="st-sub">this week alone</div>
+  </div>
+  <div class="stat-tile">
+    <div class="st-label">Errors</div>
+    <div class="st-val" style="color:#4ade80">0</div>
+    <div class="st-sub">auto-resolved: 3</div>
+  </div>
+</div>
+
+<section class="teaser">
+  <div class="teaser-label">// CAPABILITIES</div>
+  <h2>> Automate everything. Miss nothing.</h2>
+  <p>Flow80 connects your systems via a clean command interface. Define your workflows once. Run them forever. No developers, no babysitting, no surprises.</p>
+  <a href="#" class="t-cta">> flow80 init --start</a>
+</section>
+
+<footer>
+  <p>© 2026 Flow80. All rights reserved. · Built for ops teams who are tired of manual work. · flow80 v2.4.1</p>
+</footer>
+</body>
+</html>

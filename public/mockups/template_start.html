@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Intelligent Operations Automation</title>
+<meta name="description" content="See exactly how Flow80 eliminates manual work in your operations — from order processing to supplier alerts to financial reporting.">
+<meta property="og:title" content="How Flow80 Reduces Manual Work">
+<meta property="og:description" content="Flow80 eliminates manual ops work. See how it works.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1c1005; color: #fff; line-height: 1.6; overflow-x: hidden; }
+  .warm-bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(217,119,6,0.2) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 20%, rgba(180,83,9,0.15) 0%, transparent 60%), radial-gradient(ellipse 100% 80% at 50% 100%, rgba(251,146,60,0.12) 0%, transparent 60%), #1c1005; }
+  nav { position: relative; z-index: 10001; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(28,16,5,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(251,146,60,0.1); }
+  .nav-logo { display: flex; align-items: center; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; gap: 8px; }
+  .nav-logo img { height: 28px; width: auto; }
+  .nav-logo span { color: #fb923c; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a:hover { color: #fff; }
+  .lang-switcher { position: relative; margin-left: 28px; }
+  .lang-switcher-btn { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; }
+  .lang-switcher-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(251,146,60,0.3); color: #fff; }
+  .lang-switcher-btn .flag { font-size: 16px; }
+  .lang-switcher-btn .arrow { font-size: 10px; opacity: 0.5; }
+  .lang-switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: rgba(20,12,4,0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 8px; min-width: 160px; z-index: 10000; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lang-switcher-dropdown.open { display: block; }
+  .lang-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.15s; cursor: pointer; }
+  .lang-option:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .lang-option.active { color: #fb923c; background: rgba(251,146,60,0.1); }
+  .lang-option .flag { font-size: 16px; }
+  .lang-option .lang-name { font-weight: 600; display: block; }
+  .lang-option .lang-native { font-size: 11px; opacity: 0.6; }
+  .nav-links a.cta-nav { color: #fb923c; font-weight: 600; }
+  nav .nav-links a.active { color: #fb923c; }
+  .breadcrumb { position: relative; z-index: 10; padding: 20px 48px 0; font-size: 13px; color: rgba(255,255,255,0.3); }
+  .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .breadcrumb a:hover { color: #fb923c; }
+  .hero { position: relative; z-index: 10; padding: 40px 48px 60px; text-align: center; max-width: 900px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.25); color: #fb923c; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+  .hero h1 { font-size: 44px; font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .problem-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .problem-section h2 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
+  .problem-section p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 16px; }
+  .problem-section .highlight { color: #fb923c; font-weight: 600; }
+  .manual-list { margin-top: 28px; }
+  .manual-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .manual-item:last-child { border-bottom: none; }
+  .manual-icon { font-size: 24px; flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 8px; }
+  .manual-text strong { display: block; font-size: 15px; color: #fff; margin-bottom: 4px; }
+  .manual-text span { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .manual-text .time { color: #fb923c; font-weight: 600; }
+  .how-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 1000px; margin: 0 auto; }
+  .how-section .section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fb923c; margin-bottom: 12px; text-align: center; }
+  .how-section h2 { font-size: 28px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 48px; }
+  .step-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin-bottom: 32px; }
+  .step-content h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .step-content p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+  .step-number { width: 56px; height: 56px; border-radius: 50%; background: rgba(251,146,60,0.15); border: 2px solid rgba(251,146,60,0.3); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #fb923c; flex-shrink: 0; }
+  .step-arrow { font-size: 24px; color: rgba(255,255,255,0.1); text-align: center; }
+  .step-visual { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+  .step-visual-inner { text-align: center; }
+  .step-visual .icon { font-size: 40px; margin-bottom: 8px; }
+  .step-visual .label { font-size: 12px; color: rgba(255,255,255,0.3); }
+  .workflow-demo { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .workflow-demo h2 { font-size: 26px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 12px; }
+  .workflow-demo .sub { font-size: 14px; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 36px; }
+  .workflow-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; }
+  .wf-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .wf-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .wf-badge { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
+  .wf-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .wf-step { display: flex; align-items: center; gap: 16px; padding: 10px 0; position: relative; z-index: 1; }
+  .wf-step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(251,146,60,0.15); border: 1px solid rgba(251,146,60,0.3); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fb923c; flex-shrink: 0; }
+  .wf-step.done .wf-step-num { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.3); color: #34d399; }
+  .wf-step.trigger .wf-step-num { background: rgba(251,146,60,0.25); border-color: rgba(251,146,60,0.5); color: #fb923c; }
+  .wf-step-content { flex: 1; }
+  .wf-step-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
+  .wf-step.detail { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .wf-connector { position: absolute; left: 13px; top: 38px; width: 2px; height: 12px; background: rgba(255,255,255,0.08); }
+  .wf-time { font-size: 11px; color: rgba(255,255,255,0.2); white-space: nowrap; }
+  .wf-time .saved { color: #34d399; font-weight: 600; }
+  .wf-summary { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; gap: 24px; }
+  .wf-summary-item { text-align: center; }
+  .wf-summary-val { font-size: 22px; font-weight: 800; color: #34d399; }
+  .wf-summary-label { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .example-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .example-section h2 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .example-section .sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 32px; }
+  .example-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .example-tab { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); cursor: pointer; }
+  .example-tab.active { background: rgba(251,146,60,0.15); border-color: rgba(251,146,60,0.3); color: #fb923c; }
+  .example-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; }
+  .ec-before { margin-bottom: 20px; }
+  .ec-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 8px; }
+  .ec-steps { display: flex; flex-direction: column; gap: 6px; }
+  .ec-step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.4); padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .ec-step .num { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,0.3); flex-shrink: 0; }
+  .ec-after { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .ec-arrow { font-size: 16px; color: #34d399; margin-bottom: 12px; }

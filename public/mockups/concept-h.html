@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Concept H: Less</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    color: #111;
+    line-height: 1.5;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 64px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .nav-logo { font-size: 20px; font-weight: 800; color: #111; letter-spacing: -0.5px; }
+  .nav-logo span { color: #111; }
+  .nav-links a { text-decoration: none; color: #999; font-size: 14px; margin-left: 36px; font-weight: 500; letter-spacing: 0.2px; }
+  .nav-links a.cta-nav { color: #111; font-weight: 600; }
+  .nav-links a:hover { color: #111; }
+
+  .hero {
+    padding: 100px 64px 80px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .hero-rule { width: 48px; height: 2px; background: #111; margin-bottom: 40px; }
+  .hero h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    color: #111;
+    line-height: 1.0;
+    letter-spacing: -4px;
+    margin-bottom: 40px;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .line.indent { padding-left: 120px; }
+  .hero-sub {
+    font-size: 18px;
+    color: #666;
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+  .cta-group { display: flex; gap: 20px; align-items: center; }
+  .btn-primary { background: #111; color: #fff; padding: 16px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; letter-spacing: 0.2px; }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary { color: #666; font-size: 15px; font-weight: 500; text-decoration: none; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+  .btn-secondary:hover { color: #111; border-color: #111; }
+
+  /* Big statement section */
+  .big-statement {
+    padding: 80px 64px;
+    background: #f8f8f8;
+    text-align: center;
+  }
+  .big-statement-text {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 800;
+    color: #111;
+    line-height: 1.15;
+    letter-spacing: -2px;
+    max-width: 800px;
+    margin: 0 auto 32px;
+  }
+  .big-statement-text .italic { font-style: italic; font-weight: 700; color: #555; }
+  .big-statement-sub { font-size: 16px; color: #888; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+  /* Three words */
+  .three-words {
+    padding: 80px 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: #111;
+  }
+  .tw-item { background: #111; padding: 48px 40px; text-align: left; }
+  .tw-num { font-size: 72px; font-weight: 800; color: rgba(255,255,255,0.06); line-height: 1; margin-bottom: 20px; letter-spacing: -4px; }
+  .tw-word { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
+  .tw-desc { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+
+  /* Minimal features */
+  .min-features {
+    padding: 80px 64px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .mf-row {
+    display: flex;
+    gap: 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: baseline;
+  }
+  .mf-row:last-child { border-bottom: none; }
+  .mf-num { font-size: 13px; font-weight: 700; color: #ccc; flex-shrink: 0; width: 32px; padding-top: 2px; }
+  .mf-text { font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.5px; line-height: 1.3; }
+  .mf-sub { font-size: 14px; color: #999; margin-top: 6px; line-height: 1.6; }
+
+  /* Footer */
+  footer { background: #111; color: rgba(255,255,255,0.25); text-align: center; padding: 40px 64px; font-size: 13px; }
+
+  @media (max-width: 700px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 24px 48px; }
+    .hero h1 .line.indent { padding-left: 0; }
+    .hero-rule { margin-bottom: 28px; }
+    .cta-group { flex-direction: column; align-items: flex-start; }
+    .big-statement { padding: 60px 24px; }
+    .three-words { grid-template-columns: 1fr; gap: 2px; padding: 0; }
+    .tw-item { padding: 32px 24px; }
+    .min-features { padding: 48px 24px; }
+    .mf-row { flex-direction: column; gap: 8px; }
+    footer { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="#">How It Works</a>
+    <a href="#">Pricing</a>
+    <a href="#" class="cta-nav">Get Early Access →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-rule"></div>
+  <h1>
+    <span class="line">Your data.</span>
+    <span class="line">Your workflows.</span>
+    <span class="line indent">Finally under control.</span>
+  </h1>
+  <p class="hero-sub">Flow80 connects your systems and automates your operations — no developers needed, no complicated setup.</p>
+  <div class="cta-group">
+    <button class="btn-primary">Get Early Access →</button>
+    <a href="#" class="btn-secondary">See how it works</a>
+  </div>
+</section>
+
+<section class="big-statement">
+  <div class="big-statement-text">
+    You set it up <span class="italic">once.</span><br>
+    It works. Every time.
+  </div>
+  <div class="big-statement-sub">
+    No developers. No agency on retainer. No watching spreadsheets update manually at 11pm.
+  </div>
+</section>
+
+<section class="three-words">
+  <div class="tw-item">
+    <div class="tw-num">01</div>
+    <div class="tw-word">Connect</div>
+    <div class="tw-desc">Pick the systems you already use. ACME Logistics, SAP, ACME ERP, email, Slack — whatever runs your ops.</div>
+  </div>
+  <div class="tw-item">
+    <div class="tw-num">02</div>
+    <div class="tw-word">Automate</div>
+    <div class="tw-desc">Tell Flow80 what should happen. When X, do Y. Click. Done. No code required.</div>
+  </div>
+  <div class="tw-item">
+    <div class="tw-num">03</div>
+    <div class="tw-word">Relax</div>
+    <div class="tw-desc">Flow80 runs it. Handles errors, retries, edge cases. Every time, reliably.</div>
+  </div>
+</section>
+
+<section class="min-features">
+  <div class="mf-row">
+    <span class="mf-num">01</span>
+    <div>
+      <div class="mf-text">40+ hours saved every week.</div>
+      <div class="mf-sub">Per operations team. Automatically. Without anyone watching.</div>
+    </div>
+  </div>
+  <div class="mf-row">
+    <span class="mf-num">02</span>
+    <div>
+      <div class="mf-text">99.8% workflow reliability.</div>
+      <div class="mf-sub">Errors handled. Retries automatic. Alerts sent only when something needs your attention.</div>
+    </div>
+  </div>
+  <div class="mf-row">
+    <span class="mf-num">03</span>
+    <div>
+      <div class="mf-text">Up and running in minutes.</div>
+      <div class="mf-sub">No developer required. No 6-week implementation project. Pick a workflow, go.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Flow80. All rights reserved. · Built for ops teams who are tired of manual work.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Concept I: Data River</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+  }
+
+  @keyframes flowRight {
+    0% { stroke-dashoffset: 40; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes flowDown {
+    0% { stroke-dashoffset: 40; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes nodeAppear {
+    0% { opacity: 0; transform: scale(0.7); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(88,166,255,0.4)); }
+    50% { filter: drop-shadow(0 0 12px rgba(88,166,255,0.8)); }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(13,17,23,0.9);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav-logo { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .nav-logo span { color: #58a6ff; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.4); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a.cta-nav { color: #58a6ff; font-weight: 600; }
+  .nav-links a:hover { color: #fff; }
+
+  /* Hero */
+  .hero {
+    padding: 60px 48px 40px;
+    text-align: center;
+  }
+  .hero-badge { display: inline-block; background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.2); color: #58a6ff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 24px; }
+  .hero h1 { font-size: 48px; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+  .hero h1 .accent { color: #58a6ff; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.45); max-width: 560px; margin: 0 auto 36px; line-height: 1.7; }
+  .cta-group { display: flex; gap: 14px; justify-content: center; margin-bottom: 28px; }
+  .btn-primary { background: #1f6feb; color: #fff; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: #388bfd; }
+  .btn-secondary { background: transparent; color: #58a6ff; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid rgba(88,166,255,0.3); cursor: pointer; }
+  .btn-secondary:hover { border-color: #58a6ff; }
+  .trust-badges { display: flex; gap: 24px; justify-content: center; }
+  .trust-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.3); font-weight: 500; }
+  .trust-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #3fb950; display: inline-block; }
+
+  /* Data flow SVG diagram */
+  .flow-diagram {
+    max-width: 900px;
+    margin: 40px auto 0;
+    position: relative;
+  }
+  .flow-diagram svg { width: 100%; height: auto; }
+
+  .flow-node { cursor: default; }
+  .fn-box { fill: rgba(22,27,34,0.95); stroke: rgba(88,166,255,0.2); stroke-width: 1; rx: 10; }
+  .fn-box.active { stroke: rgba(88,166,255,0.5); animation: pulseGlow 3s ease-in-out infinite; }
+  .fn-label { fill: #e6edf3; font-size: 12px; font-weight: 600; font-family: monospace; }
+  .fn-sub { fill: rgba(230,237,243,0.4); font-size: 9px; font-family: monospace; }
+  .fn-icon { fill: #58a6ff; font-size: 14px; }
+
+  .flow-path { fill: none; stroke-width: 1.5; stroke-linecap: round; }
+  .fp-blue { stroke: rgba(88,166,255,0.4); stroke-dasharray: 6 4; animation: flowRight 1.5s linear infinite; }
+  .fp-green { stroke: rgba(63,185,80,0.4); stroke-dasharray: 6 4; animation: flowRight 2s linear infinite; }
+  .fp-purple { stroke: rgba(188,140,255,0.4); stroke-dasharray: 6 4; animation: flowRight 1.8s linear infinite; }
+  .fp-cyan { stroke: rgba(34,211,238,0.4); stroke-dasharray: 4 3; animation: flowDown 1.2s linear infinite; }
+
+  /* Data packet dots that travel along paths */
+  .data-dot { fill: #58a6ff; opacity: 0; animation: dotTravel 3s ease-in-out infinite; }
+  .data-dot.g { fill: #3fb950; animation: dotTravel 3.5s ease-in-out infinite 0.5s; }
+  .data-dot.p { fill: #bc8cff; animation: dotTravel 2.8s ease-in-out infinite 1s; }
+  @keyframes dotTravel { 0% { opacity:0 } 10% { opacity:1 } 90% { opacity:1 } 100% { opacity:0 } }
+
+  /* Teaser */
+  .teaser { padding: 60px 48px; background: #0d1117; border-top: 1px solid rgba(255,255,255,0.04); }
+  .teaser-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #58a6ff; text-align: center; margin-bottom: 12px; }
+  .teaser h2 { font-size: 26px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 36px; }
+  .flow-steps { display: flex; gap: 16px; max-width: 900px; margin: 0 auto; }
+  .fs-step { flex: 1; background: rgba(22,27,34,0.8); border: 1px solid rgba(88,166,255,0.12); border-radius: 12px; padding: 24px 20px; }
+  .fs-num { font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px; margin-bottom: 10px; }
+  .fs-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .fs-desc { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+  .fs-icon { font-size: 28px; margin-bottom: 12px; }
+
+  footer { background: #010409; color: rgba(255,255,255,0.2); text-align: center; padding: 28px 48px; font-size: 12px; border-top: 1px solid rgba(88,166,255,0.08); }
+
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 40px 20px 30px; }
+    .hero h1 { font-size: 30px; }
+    .cta-group { flex-direction: column; align-items: center; }
+    .teaser { padding: 40px 20px; }
+    .flow-steps { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="#">How It Works</a>
+    <a href="#">Pricing</a>
+    <a href="#" class="cta-nav">Get Early Access →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🚀 Built in Denmark · GDPR Compliant</div>
+  <h1>Your data. Your workflows.<br><span class="accent">Finally under control.</span></h1>
+  <p>Flow80 connects your systems and automates your operations — no developers needed, no complicated setup. Get started in minutes, not months.</p>
+  <div class="cta-group">
+    <button class="btn-primary">Get Early Access →</button>
+    <button class="btn-secondary">See How It Works ↓</button>
+  </div>
+  <div class="trust-badges">
+    <span class="trust-badge"><span class="dot"></span> Built in Denmark</span>
+    <span class="trust-badge"><span class="dot"></span> GDPR Compliant</span>
+    <span class="trust-badge"><span class="dot"></span> Secure by design</span>
+  </div>
+
+  <!-- Data flow SVG diagram -->
+  <div class="flow-diagram">
+    <svg viewBox="0 0 900 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Flow paths -->
+      <!-- Row 1: Sources → Transform hub -->
+      <path class="flow-path fp-blue" d="M 140 70 Q 240 70 300 120" />
+      <path class="flow-path fp-green" d="M 140 190 Q 200 190 260 155" />
+      <path class="flow-path fp-purple" d="M 140 310 Q 220 310 260 200" />
+
+      <!-- Transform hub → Output nodes -->
+      <path class="flow-path fp-blue" d="M 420 120 Q 480 90 540 90" />
+      <path class="flow-path fp-green" d="M 420 120 Q 500 120 540 160" />
+      <path class="flow-path fp-cyan" d="M 420 120 Q 460 120 500 200" />
+
+      <!-- Output nodes → Final -->
+      <path class="flow-path fp-blue" d="M 660 90 Q 720 60 780 80" />
+      <path class="flow-path fp-green" d="M 660 160 Q 730 150 780 130" />
+      <path class="flow-path fp-purple" d="M 660 230 Q 720 210 780 170" />
+
+      <!-- Data dots (animated along paths) -->
+      <circle class="data-dot" r="4" />
+      <animateMotion dur="3s" repeatCount="indefinite" begin="0s">
+        <mpath href="#path1"/>
+      </animateMotion>
+      <circle class="data-dot g" r="4" />
+      <circle class="data-dot p" r="4" />
+
+      <!-- SOURCE NODES (left) -->
+      <g class="flow-node" transform="translate(50, 40)">
+        <rect class="fn-box" width="90" height="60" rx="10"/>
+        <text class="fn-icon" x="10" y="18">📦</text>
+        <text class="fn-label" x="30" y="20">ACME Logistics API</text>
+        <text class="fn-sub" x="10" y="38">Orders · Shipments</text>
+        <text class="fn-sub" x="10" y="50">247 today</text>
+      </g>
+
+      <g class="flow-node" transform="translate(50, 160)">
+        <rect class="fn-box" width="90" height="60" rx="10"/>
+        <text class="fn-icon" x="10" y="18">🗄️</text>
+        <text class="fn-label" x="30" y="20">ACME ERP</text>
+        <text class="fn-sub" x="10" y="38">Finance · Orders</text>
+        <text class="fn-sub" x="10" y="50">Connected</text>
+      </g>
+
+      <g class="flow-node" transform="translate(50, 280)">
+        <rect class="fn-box" width="90" height="60" rx="10"/>
+        <text class="fn-icon" x="10" y="18">📊</text>
+        <text class="fn-label" x="30" y="20">SAP</text>
+        <text class="fn-sub" x="10" y="38">Reports · Invoices</text>
+        <text class="fn-sub" x="10" y="50">847 records</text>
+      </g>
+
+      <!-- TRANSFORM HUB (center) -->
+      <g class="flow-node" transform="translate(300, 75)" style="animation: nodeAppear 0.5s ease-out both 0.2s">
+        <rect class="fn-box active" width="120" height="90" rx="12"/>
+        <text x="60" y="24" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700" font-family="monospace">⚡ FLOW80</text>
+        <line x1="15" y1="34" x2="105" y2="34" stroke="rgba(88,166,255,0.15)" stroke-width="1"/>
+        <text class="fn-label" x="60" y="50" text-anchor="middle">Transform</text>
+        <text class="fn-sub" x="60" y="64" text-anchor="middle">Map · Filter · Merge</text>
+        <text class="fn-sub" x="60" y="76" text-anchor="middle" fill="#3fb950">✓ Validated</text>
+      </g>
+
+      <!-- OUTPUT NODES (right) -->
+      <g class="flow-node" transform="translate(540, 60)">
+        <rect class="fn-box" width="120" height="60" rx="10"/>
+        <text class="fn-icon" x="10" y="18">💰</text>
+        <text class="fn-label" x="30" y="20">ACME ERP</text>
+        <text class="fn-sub" x="10" y="38">Updated · 2s ago</text>
+        <text class="fn-sub" x="10" y="50" fill="#3fb950">✓ Synced</text>
+      </g>
+
+      <g class="flow-node" transform="translate(540, 130)">
+        <rect class="fn-box" width="120" height="60" rx="10"/>
+        <text class="fn-icon" x="10" y="18">📨</text>
+        <text class="fn-label" x="30" y="20">Email</text>
+        <text class="fn-sub" x="10" y="38">Reports · Alerts</text>
+        <text class="fn-sub" x="10" y="50" fill="#3fb950">✓ Sent</text>
+      </g>
+
+      <g class="flow-node" transform="translate(540, 200)">
+        <rect class="fn-box" width="120" height="60" rx="10"/>
+        <text class="fn-icon" x="10" y="18">💬</text>
+        <text class="fn-label" x="30" y="20">Slack</text>
+        <text class="fn-sub" x="10" y="38">#ops · Notifications</text>
+        <text class="fn-sub" x="10" y="50" fill="#3fb950">✓ Delivered</text>
+      </g>
+
+      <!-- FINAL DESTINATIONS (far right) -->
+      <g class="flow-node" transform="translate(780, 50)">
+        <rect class="fn-box active" width="100" height="60" rx="10"/>
+        <text x="50" y="20" text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="700" font-family="monospace">✓ COMPLETE</text>
+        <text class="fn-label" x="50" y="38" text-anchor="middle" fill="#e6edf3">Order #29381</text>
+        <text class="fn-sub" x="50" y="52" text-anchor="middle">Total: 2.4s</text>
+      </g>
+
+      <g class="flow-node" transform="translate(780, 120)">
+        <rect class="fn-box" width="100" height="50" rx="10"/>
+        <text class="fn-label" x="50" y="20" text-anchor="middle">Finance</text>
+        <text class="fn-sub" x="50" y="36" text-anchor="middle">Invoice #4821</text>
+      </g>
+
+      <g class="flow-node" transform="translate(780, 180)">
+        <rect class="fn-box" width="100" height="50" rx="10"/>
+        <text class="fn-label" x="50" y="20" text-anchor="middle">Ops Team</text>
+        <text class="fn-sub" x="50" y="36" text-anchor="middle">Alert resolved</text>
+      </g>
+
+      <!-- Animated data packet along paths -->
+      <circle r="5" fill="#58a6ff" opacity="0.9">
+        <animateMotion dur="2s" repeatCount="indefinite" path="M 140 70 Q 240 70 300 120"/>
+      </circle>
+      <circle r="5" fill="#3fb950" opacity="0.9">
+        <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.8s" path="M 140 190 Q 200 190 260 155"/>
+      </circle>
+      <circle r="5" fill="#bc8cff" opacity="0.9">
+        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.4s" path="M 140 310 Q 220 310 260 200"/>
+      </circle>
+      <circle r="4" fill="#58a6ff" opacity="0.8">
+        <animateMotion dur="1.5s" repeatCount="indefinite" begin="0.5s" path="M 420 120 Q 480 90 540 90"/>
+      </circle>
+      <circle r="4" fill="#3fb950" opacity="0.8">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.2s" path="M 660 90 Q 720 60 780 80"/>
+      </circle>
+    </svg>
+  </div>
+</section>
+
+<section class="teaser">
+  <div class="teaser-label">How it works</div>
+  <h2>Your data, flowing automatically from source to destination.</h2>
+  <div class="flow-steps">
+    <div class="fs-step">
+      <div class="fs-icon">🔌</div>
+      <div class="fs-num">STEP 01</div>
+      <div class="fs-title">Connect your sources</div>
+      <div class="fs-desc">Link ACME Logistics, SAP, ACME ERP, REST APIs — whatever your systems are. Flow80 speaks all of them.</div>
+    </div>
+    <div class="fs-step">
+      <div class="fs-icon">🧩</div>
+      <div class="fs-num">STEP 02</div>
+      <div class="fs-title">Define the flow</div>
+      <div class="fs-desc">Map how data moves. Filter what matters. Transform what needs transforming. Click, not code.</div>
+    </div>
+    <div class="fs-step">
+      <div class="fs-icon">🚀</div>
+      <div class="fs-num">STEP 03</div>
+      <div class="fs-title">Watch it run</div>
+      <div class="fs-desc">Flow80 runs your workflows 24/7. Handles errors automatically. You get the results, not the work.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Flow80. All rights reserved. · Built for ops teams who are tired of manual work.</p>
+</footer>
+</body>
+</html>

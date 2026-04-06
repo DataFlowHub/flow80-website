@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Intelligent Operations Automation</title>
+<meta name="description" content="Vedi esattamente come Flow80 elimina il lavoro manuale nelle tue operazioni — dall'elaborazione degli ordini agli avvisi ai fornitori fino alla reportistica finanziaria.">
+<meta property="og:title" content="How Flow80 Reduces Manual Work">
+<meta property="og:description" content="Flow80 elimina il lavoro operativo manuale. Vedi come funziona.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1c1005; color: #fff; line-height: 1.6; overflow-x: hidden; }
+  .warm-bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(217,119,6,0.2) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 20%, rgba(180,83,9,0.15) 0%, transparent 60%), radial-gradient(ellipse 100% 80% at 50% 100%, rgba(251,146,60,0.12) 0%, transparent 60%), #1c1005; }
+  nav { position: relative; z-index: 10001; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(28,16,5,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(251,146,60,0.1); }
+  .nav-logo { display: flex; align-items: center; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; gap: 8px; }
+  .nav-logo img { height: 28px; width: auto; }
+  .nav-logo span { color: #fb923c; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a:hover { color: #fff; }
+  .lang-switcher { position: relative; margin-left: 28px; }
+  .lang-switcher-btn { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; }
+  .lang-switcher-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(251,146,60,0.3); color: #fff; }
+  .lang-switcher-btn .flag { font-size: 16px; }
+  .lang-switcher-btn .arrow { font-size: 10px; opacity: 0.5; }
+  .lang-switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: rgba(20,12,4,0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 8px; min-width: 160px; z-index: 10000; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lang-switcher-dropdown.open { display: block; }
+  .lang-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.15s; cursor: pointer; }
+  .lang-option:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .lang-option.active { color: #fb923c; background: rgba(251,146,60,0.1); }
+  .lang-option .flag { font-size: 16px; }
+  .lang-option .lang-name { font-weight: 600; display: block; }
+  .lang-option .lang-native { font-size: 11px; opacity: 0.6; }
+  .nav-links a.cta-nav { color: #fb923c; font-weight: 600; }
+  nav .nav-links a.active { color: #fb923c; }
+  .breadcrumb { position: relative; z-index: 10; padding: 20px 48px 0; font-size: 13px; color: rgba(255,255,255,0.3); }
+  .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .breadcrumb a:hover { color: #fb923c; }
+  .hero { position: relative; z-index: 10; padding: 40px 48px 60px; text-align: center; max-width: 900px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.25); color: #fb923c; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+  .hero h1 { font-size: 44px; font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .problem-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .problem-section h2 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
+  .problem-section p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 16px; }
+  .problem-section .highlight { color: #fb923c; font-weight: 600; }
+  .manual-list { margin-top: 28px; }
+  .manual-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .manual-item:last-child { border-bottom: none; }
+  .manual-icon { font-size: 24px; flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 8px; }
+  .manual-text strong { display: block; font-size: 15px; color: #fff; margin-bottom: 4px; }
+  .manual-text span { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .manual-text .time { color: #fb923c; font-weight: 600; }
+  .how-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 1000px; margin: 0 auto; }
+  .how-section .section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fb923c; margin-bottom: 12px; text-align: center; }
+  .how-section h2 { font-size: 28px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 48px; }
+  .step-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin-bottom: 32px; }
+  .step-content h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .step-content p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+  .step-number { width: 56px; height: 56px; border-radius: 50%; background: rgba(251,146,60,0.15); border: 2px solid rgba(251,146,60,0.3); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #fb923c; flex-shrink: 0; }
+  .step-arrow { font-size: 24px; color: rgba(255,255,255,0.1); text-align: center; }
+  .step-visual { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+  .step-visual-inner { text-align: center; }
+  .step-visual .icon { font-size: 40px; margin-bottom: 8px; }
+  .step-visual .label { font-size: 12px; color: rgba(255,255,255,0.3); }
+  .workflow-demo { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .workflow-demo h2 { font-size: 26px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 12px; }
+  .workflow-demo .sub { font-size: 14px; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 36px; }
+  .workflow-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; }
+  .wf-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .wf-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .wf-badge { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
+  .wf-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .wf-step { display: flex; align-items: center; gap: 16px; padding: 10px 0; position: relative; z-index: 1; }
+  .wf-step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(251,146,60,0.15); border: 1px solid rgba(251,146,60,0.3); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fb923c; flex-shrink: 0; }
+  .wf-step.done .wf-step-num { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.3); color: #34d399; }
+  .wf-step.trigger .wf-step-num { background: rgba(251,146,60,0.25); border-color: rgba(251,146,60,0.5); color: #fb923c; }
+  .wf-step-content { flex: 1; }
+  .wf-step-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
+  .wf-step.detail { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .wf-connector { position: absolute; left: 13px; top: 38px; width: 2px; height: 12px; background: rgba(255,255,255,0.08); }
+  .wf-time { font-size: 11px; color: rgba(255,255,255,0.2); white-space: nowrap; }
+  .wf-time .saved { color: #34d399; font-weight: 600; }
+  .wf-summary { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; gap: 24px; }
+  .wf-summary-item { text-align: center; }
+  .wf-summary-val { font-size: 22px; font-weight: 800; color: #34d399; }
+  .wf-summary-label { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .example-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .example-section h2 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .example-section .sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 32px; }
+  .example-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .example-tab { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); cursor: pointer; }
+  .example-tab.active { background: rgba(251,146,60,0.15); border-color: rgba(251,146,60,0.3); color: #fb923c; }
+  .example-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; }
+  .ec-before { margin-bottom: 20px; }
+  .ec-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 8px; }
+  .ec-steps { display: flex; flex-direction: column; gap: 6px; }
+  .ec-step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.4); padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .ec-step .num { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,0.3); flex-shrink: 0; }
+  .ec-after { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .ec-arrow { font-size: 16px; color: #34d399; margin-bottom: 12px; }
+  .ec-auto { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #34d399; padding: 8px 12px; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.15); border-radius: 6px; }
+  .cta-section { position: relative; z-index: 10; padding: 60px 48px; text-align: center; }
+  .cta-section h2 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -1px; }
+  .cta-section p { font-size: 15px; color: rgba(255,255,255,0.4); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .btn-primary { display: inline-block; background: #ea580c; color: #fff; padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(234,88,12,0.3); }
+  .btn-primary:hover { background: #c2410c; box-shadow: 0 6px 28px rgba(234,88,12,0.4); transform: translateY(-1px); }
+  footer { position: relative; z-index: 10; background: rgba(0,0,0,0.3); color: rgba(255,255,255,0.2); text-align: center; padding: 28px 48px; font-size: 12px; backdrop-filter: blur(10px); border-top: 1px solid rgba(251,146,60,0.06); }
+
+  .nav-hamburger { display: none; cursor: pointer; padding: 8px; background: none; border: none; flex-direction: column; gap: 5px; margin-left: auto; position: relative; z-index: 101; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+  .nav-mobile-overlay.open { display: block; }
+  .nav-mobile-menu { display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 280px; max-width: 85vw; background: #1a1008; z-index: 10000; padding: 80px 24px 32px; overflow-y: auto; border-left: 1px solid rgba(251,146,60,0.15); transform: translateX(100%); transition: transform 0.3s ease; }
+  .nav-mobile-menu.open { display: block; transform: translateX(0); }
+  .nav-mobile-menu a { display: block; padding: 14px 0; font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; }
+  .nav-mobile-menu a:hover { color: #fb923c; }
+  .nav-mobile-menu a.cta { color: #fb923c; font-weight: 700; }
+  .nav-mobile-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 28px; cursor: pointer; padding: 4px; }
+  .nav-mobile-close:hover { color: #fff; }
+  .nav-mobile-lang { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .nav-mobile-lang-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
+  .nav-mobile-lang a { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: none; }
+  .nav-mobile-lang a.active { color: #fb923c; }
+  .nav-mobile-lang a .flag { font-size: 18px; }
+  @media (max-width: 900px) { .step-row { grid-template-columns: 1fr; } .step-arrow { display: none; } nav { padding: 14px 20px; z-index: 10001; } .nav-links { display: none; } .nav-hamburger { display: flex !important; } .hero, .problem-section, .how-section, .workflow-demo, .example-section, .cta-section { padding: 40px 20px; } }
+
+  .ea-modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+  .ea-modal-overlay.open { display: flex; }
+  .ea-modal { background: #1a1008; border: 1px solid rgba(251,146,60,0.2); border-radius: 20px; padding: 36px; max-width: 480px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+  .ea-modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 24px; cursor: pointer; }
+  .ea-modal-close:hover { color: #fff; }
+  .ea-modal h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .ea-modal .ea-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.6; }
+  .ea-form-group { margin-bottom: 14px; text-align: left; }
+  .ea-form-group label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 6px; letter-spacing: 0.5px; }
+  .ea-form-group input, .ea-form-group select, .ea-form-group textarea { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+  .ea-form-group input:focus, .ea-form-group select:focus, .ea-form-group textarea:focus { border-color: rgba(251,146,60,0.5); }
+  .ea-form-group textarea { resize: vertical; min-height: 80px; }
+  .ea-form-group select option { background: #1a1008; }
+  .ea-submit { width: 100%; background: #ea580c; color: #fff; padding: 13px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+  .ea-submit:hover { background: #c2410c; }
+  .ea-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ea-success { display: none; text-align: center; padding: 20px 0; }
+  .ea-success.show { display: block; }
+  .ea-success-icon { font-size: 48px; margin-bottom: 12px; }
+  .ea-success h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .ea-success p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .ea-error { display: none; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #fca5a5; margin-top: 8px; }
+  .ea-error.show { display: block; }
+  .ea-form-body { }
+</style>
+</head>
+<body>
+<div class="warm-bg"></div>
+<nav>
+  <div class="nav-logo"><img src="/img/logo.png" alt="Flow80"> Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="/en">Home</a>
+    <a href="/en/features">Funzioni</a>
+    <a href="/en/why">Perché Flow80</a>
+    <a href="/en/how-it-works" class="active">Come funziona</a>
+    <a href="#" onclick="openEaModal();return false" class="cta-nav">Accesso anticipato →</a>
+  </div>
+  <div class="lang-switcher" id="langSwitcher">
+    <button class="lang-switcher-btn" onclick="toggleLangMenu()" aria-label="Change language">
+      <span class="flag">🇬🇧</span>
+      <span class="lang-code">EN</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="lang-switcher-dropdown" id="langDropdown">
+      <a href="/en" class="lang-option active" onclick="switchLang('en')"><span class="flag">🇬🇧</span><span><span class="lang-name">English</span><span class="lang-native">English</span></span></a>
+      <a href="/da" class="lang-option" onclick="switchLang('da')"><span class="flag">🇩🇰</span><span><span class="lang-name">Danish</span><span class="lang-native">Dansk</span></span></a>
+      <a href="/de" class="lang-option" onclick="switchLang('de')"><span class="flag">🇩🇪</span><span><span class="lang-name">German</span><span class="lang-native">Deutsch</span></span></a>
+      <a href="/it" class="lang-option" onclick="switchLang('it')"><span class="flag">🇮🇹</span><span><span class="lang-name">Italian</span><span class="lang-native">Italiano</span></span></a>
+      <a href="/sv" class="lang-option" onclick="switchLang('sv')"><span class="flag">🇸🇪</span><span><span class="lang-name">Swedish</span><span class="lang-native">Svenska</span></span></a>
+    </div>
+  </div>
+
+  <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-mobile-overlay" onclick="closeMobileMenu()"></div>
+  <div class="nav-mobile-menu">
+    <button class="nav-mobile-close" onclick="closeMobileMenu()" aria-label="Close">×</button>
+    <a href="/en" onclick="closeMobileMenu()">Home</a>
+    <a href="/en/features" onclick="closeMobileMenu()">Funzioni</a>
+    <a href="/en/why" onclick="closeMobileMenu()">Perché Flow80</a>
+    <a href="/en/how-it-works" onclick="closeMobileMenu()">Come funziona</a>
+    <a href="#" onclick="openEaModal();closeMobileMenu();return false" class="cta">Accesso anticipato →</a>
+    <div class="nav-mobile-lang">
+      <div class="nav-mobile-lang-label">Lingua</div>
+      <a href="/en" class="active"><span class="flag">🇬🇧</span> English</a>
+      <a href="/da"><span class="flag">🇩🇰</span> Dansk</a>
+      <a href="/de"><span class="flag">🇩🇪</span> Deutsch</a>
+      <a href="/it"><span class="flag">🇮🇹</span> Italiano</a>
+      <a href="/sv"><span class="flag">🇸🇪</span> Svenska</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-badge">Come funziona</div>
+  <h1>Meno lavoro manuale.<br>Più lavoro vero.</h1>
+  <p>Flow80 automatizza le attività ripetitive che divorano la giornata del tuo team — così possono concentrarsi sul lavoro che richiede davvero una persona.</p>
+</section>
+<section class="problem-section">
+  <h2>Il problema del lavoro manuale.</h2>
+  <p>Nella maggior parte dei team operativi, le persone passano una parte significativa della giornata a fare lavoro che un computer ben configurato dovrebbe fare: <span class="highlight">copiare dati da un sistema all'altro, riformattare file, inviare email di follow-up, controllare se qualcosa è successo, generare report.</span></p>
+  <p>This work is tedious, error-prone, and — critically — it keeps your best people from doing有价值的工作. The person who knows your suppliers best is spending 2 hours a day copying purchase orders into your ERP.</p>
+  <p>Non è che questo lavoro sia difficile. È che <span class="highlight">non è ancora stato automatizzato</span> — perché gli strumenti per farlo richiedevano sviluppatori per costruirlo e mantenerlo.</p>
+  <p>Flow80 cambia questo.</p>
+  <div class="manual-list">
+    <div class="manual-item">
+      <div class="manual-icon">📋</div>
+      <div class="manual-text"><strong>Inserimento ordini</strong><span>Inserire manualmente ordini da webshop, email o telefono nel tuo ERP — <span class="time">60–90 min/giorno</span></span></div>
+    </div>
+    <div class="manual-item">
+      <div class="manual-icon">🧾</div>
+      <div class="manual-text"><strong>Elaborazione fatture</strong><span>Riformattare le fatture dei fornitori per adeguarle al tuo sistema contabile — <span class="time">30–60 min/giorno</span></span></div>
+    </div>
+    <div class="manual-item">
+      <div class="manual-icon">📊</div>
+      <div class="manual-text"><strong>Generazione report</strong><span>Estrarre dati da più sistemi e creare report settimanali manualmente — <span class="time">2–3 ore/settimana</span></span></div>
+    </div>
+    <div class="manual-item">
+      <div class="manual-icon">📬</div>
+      <div class="manual-text"><strong>Follow-up fornitori</strong><span>Controllare se gli ordini sono stati ricevuti, se le fatture sono state pagate, se le spedizioni sono in corso — <span class="time">30 min/giorno</span></span></div>
+    </div>
+    <div class="manual-item">
+      <div class="manual-icon">🔄</div>
+      <div class="manual-text"><strong>Reinserimento dati</strong><span>Copiare gli stessi dati tra sistemi che "dovrebbero" parlare tra loro — <span class="time">Varia, sempre troppo</span></span></div>
+    </div>
+  </div>
+</section>
+<section class="how-section">
+  <div class="section-label">Il processo</div>
+  <h2>Tre passi per il tuo primo workflow automatizzato.</h2>
+  <div class="step-row">
+    <div class="step-content">
+      <h3>1. Collega i tuoi sistemi.</h3>
+      <p>Dimmi a Flow80 dove si trovano i tuoi dati — il tuo ERP, il tuo webshop, il tuo database, la tua email. Configurazione una tantum per sistema.</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-visual">
+      <div class="step-visual-inner">
+        <div class="icon">🔗</div>
+        <div class="label">API · Database · File · Email</div>
+      </div>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-visual">
+      <div class="step-visual-inner">
+        <div class="icon">🎨</div>
+        <div class="label">Editor visivo di workflow</div>
+      </div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-content">
+      <h3>2. Disegna il tuo workflow.</h3>
+      <p>Collega i tuoi passaggi visivamente. Dimmi a Flow80: quando succede questo, fai questo. Se questi dati sembrano così, gestiscili in modo diverso.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-content">
+      <h3>3. Attiva e vai via.</h3>
+      <p>Accendilo. Flow80 lo esegue. Verrai notificato se qualcosa richiede la tua attenzione — e solo allora.</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-visual">
+      <div class="step-visual-inner">
+        <div class="icon">⚡</div>
+        <div class="label">Automatizzato · Monitorato · Auto-correttivo</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="workflow-demo">
+  <h2>Esempio: Elaborazione automatizzata degli ordini.</h2>
+  <p class="sub">Ciò che richiedeva 90 minuti di lavoro manuale ogni mattina — ora viene eseguito in secondi.</p>
+  <div class="workflow-card">
+    <div class="wf-header">
+      <span class="wf-title">Ordine: WooCommerce → SAP</span>
+      <span class="wf-badge">Attivo · In esecuzione</span>
+    </div>
+    <div class="wf-steps">
+      <div class="wf-step trigger">
+        <div class="wf-step-num">1</div>
+        <div class="wf-step-content">
+          <div class="wf-step-name">Webhook: New order from WooCommerce</div>
+          <div class="wf-step detail">Received 2026-03-30 08:14:22 · Order #4821</div>
+        </div>
+        <div class="wf-time"><span class="saved">Instant</span></div>
+      </div>
+      <div class="wf-connector"></div>
+      <div class="wf-step done">
+        <div class="wf-step-num">✓</div>
+        <div class="wf-step-content">
+          <div class="wf-step-name">Validate order data</div>
+          <div class="wf-step detail">All required fields present</div>
+        </div>
+        <div class="wf-time">0.2s</div>
+      </div>
+      <div class="wf-connector"></div>
+      <div class="wf-step done">
+        <div class="wf-step-num">✓</div>
+        <div class="wf-step-content">
+          <div class="wf-step-name">Transform → SAP format</div>
+          <div class="wf-step detail">Mapping 14 fields</div>
+        </div>
+        <div class="wf-time">0.4s</div>
+      </div>
+      <div class="wf-connector"></div>
+      <div class="wf-step done">
+        <div class="wf-step-num">✓</div>
+        <div class="wf-step-content">
+          <div class="wf-step-name">Export to SAP</div>
+          <div class="wf-step detail">Sales order #SO-29471 created</div>
+        </div>
+        <div class="wf-time">1.1s</div>
+      </div>
+      <div class="wf-connector"></div>
+      <div class="wf-step done">
+        <div class="wf-step-num">✓</div>
+        <div class="wf-step-content">
+          <div class="wf-step-name">Send confirmation email to customer</div>
+          <div class="wf-step detail">Delivered to customer@company.com</div>
+        </div>
+        <div class="wf-time">0.8s</div>
+      </div>
+    </div>
+    <div class="wf-summary">
+      <div class="wf-summary-item">
+        <div class="wf-summary-val">2.5s</div>
+        <div class="wf-summary-label">Tempo totale di esecuzione</div>
+      </div>
+      <div class="wf-summary-item">
+        <div class="wf-summary-val">5</div>
+        <div class="wf-summary-label">Passaggi completati</div>
+      </div>
+      <div class="wf-summary-item">
+        <div class="wf-summary-val">0</div>
+        <div class="wf-summary-label">Errors</div>
+      </div>
+      <div class="wf-summary-item">
+        <div class="wf-summary-val">90min</div>
+        <div class="wf-summary-label">Tempo manuale risparmiato</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="example-section">
+  <h2>Before and after: Elaborazione fatture.</h2>
+  <p class="sub">Ciò che questo workflow sostituisce in pratica.</p>
+  <div class="example-card">
+    <div class="ec-before">
+      <div class="ec-label">Prima di Flow80 — cosa fa manualmente il tuo team</div>
+      <div class="ec-steps">
+        <div class="ec-step"><span class="num">1</span> Receive invoice from supplier via email</div>
+        <div class="ec-step"><span class="num">2</span> Open the attached PDF or look at the email</div>
+        <div class="ec-step"><span class="num">3</span> Copy supplier name, invoice number, amount, date into a spreadsheet</div>
+        <div class="ec-step"><span class="num">4</span> Convert to your company's required format (or re-type)</div>
+        <div class="ec-step"><span class="num">5</span> Open your accounting system</div>
+        <div class="ec-step"><span class="num">6</span> Paste the data into the invoice entry form</div>
+        <div class="ec-step"><span class="num">7</span> Attach the original file</div>
+        <div class="ec-step"><span class="num">8</span> Submit for approval</div>
+        <div class="ec-step"><span class="num">9</span> Repeat for next invoice. And the next. And the next.</div>
+      </div>
+    </div>
+    <div class="ec-after">
+      <div class="ec-arrow">↓ Con Flow80 — cosa succede automaticamente</div>
+      <div class="ec-auto">⚡ Invoice received → Flow80 extracts the data → transforms it to your format → enters it in your accounting system → notifies the approver. Done in 4 seconds.</div>
+    </div>
+  </div>
+</section>
+<section class="cta-section" id="waitlist">
+  <h2>Pronto a eliminare il lavoro manuale?</h2>
+  <p>Candidati per l'accesso anticipato e vedi cosa Flow80 può automatizzare per il tuo team.</p>
+  <a href="/en#waitlist"><button class="btn-primary" onclick="openEaModal()">Richiedi accesso anticipato →</button></a>
+</section>
+
+<!-- Early Access Modal -->
+<div class="ea-modal-overlay" id="eaOverlay" onclick="if(event.target===this)closeEaModal()">
+  <div class="ea-modal">
+    <button class="ea-modal-close" onclick="closeEaModal()" aria-label="Close">×</button>
+    <div id="eaFormContainer">
+      <h2>Richiedi accesso anticipato</h2>
+      <p class="ea-sub">Raccontaci del tuo team e ti configuriamo prima del lancio.</p>
+      <form id="eaForm" onsubmit="submitEaForm(event)">
+        <div class="ea-form-group">
+          <label>Il tuo nome</label>
+          <input type="text" name="name" placeholder="Anders Jensen" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Email di lavoro</label>
+          <input type="email" name="email" placeholder="anders@company.dk" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Azienda</label>
+          <input type="text" name="company" placeholder="Acme Logistics A/S" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Lingua</label>
+          <select name="language">
+            <option value="en">English</option>
+            <option value="da">Dansk</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="sv">Svenska</option>
+          </select>
+        </div>
+        <div class="ea-form-group">
+          <label>Cosa vuoi automatizzare? <span style="font-weight:400;opacity:0.6">(opzionale)</span></label>
+          <textarea name="challenge" placeholder="es. Sincronizzare gli ordini dal nostro webshop al nostro ERP automaticamente..."></textarea>
+        </div>
+        <div class="ea-error" id="eaError"></div>
+        <button type="submit" class="ea-submit" id="eaSubmit">Richiedi accesso anticipato →</button>
+      </form>
+    </div>
+    <div class="ea-success" id="eaSuccess">
+      <div class="ea-success-icon">✓</div>
+      <h3>Sei nella lista!</h3>
+      <p>Ti contatteremo prima del lancio. Controlla la tua casella — ti invieremo una conferma all'email che hai fornito.</p>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <p>© 2026 Sikker IT. Tutti i diritti riservati.</p><p>Flow80 is a product by <strong>Sikker IT</strong></p>
+  <p>Built by <strong>Sikker IT</strong> — for ops teams who are tired of manual work.</p>
+  <div style="display:flex;gap:20px;justify-content:center;font-size:11px;color:rgba(255,255,255,0.3);margin-top:12px">
+    🇪🇺 GDPR Compliant · 🇩🇰 Built in Denmark · Secure by design
+  </div>
+</footer>
+
+<script>
+function toggleLangMenu() {
+  var dropdown = document.getElementById('langDropdown');
+  dropdown.classList.toggle('open');
+  event.stopPropagation();
+}
+function switchLang(lang) {
+  document.getElementById('langDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  var dropdown = document.getElementById('langDropdown');
+  var btn = document.querySelector('.lang-switcher-btn');
+  if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove('open');
+  }
+});
+(function() {
+  var path = window.location.pathname;
+  var lang = 'en';
+  if (path.startsWith('/da')) lang = 'da';
+  else if (path.startsWith('/de')) lang = 'de';
+  else if (path.startsWith('/it')) lang = 'it';
+  else if (path.startsWith('/sv')) lang = 'sv';
+  var flags = { en: '🇬🇧', da: '🇩🇰', de: '🇩🇪', it: '🇮🇹', sv: '🇸🇪' };
+  var names = { en: 'EN', da: 'DA', de: 'DE', it: 'IT', sv: 'SV' };
+  var btn = document.querySelector('.lang-switcher-btn');
+  if (btn) { btn.querySelector('.flag').textContent = flags[lang]; btn.querySelector('.lang-code').textContent = names[lang]; }
+  document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.remove('active'); });
+  var active = document.querySelector('.lang-option[href="/' + lang + '"]');
+  if (active) active.classList.add('active');
+})();
+</script>
+<script>
+function openEaModal() { document.getElementById('eaOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeEaModal() { document.getElementById('eaOverlay').classList.remove('open'); document.body.style.overflow=''; }
+async function submitEaForm(e) {
+  e.preventDefault();
+  var form = document.getElementById('eaForm');
+  var btn = document.getElementById('eaSubmit');
+  var err = document.getElementById('eaError');
+  var data = { name: form.name.value, email: form.email.value, company: form.company.value, language: form.language.value, challenge: form.challenge.value };
+  btn.disabled = true; btn.textContent = 'Sending...'; err.classList.remove('show');
+  try {
+    var res = await fetch('/api/early-access/apply', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (res.ok) {
+      document.getElementById('eaFormContainer').style.display='none';
+      document.getElementById('eaSuccess').classList.add('show');
+      setTimeout(closeEaModal, 3000);
+    } else {
+      var j = await res.json(); err.textContent = j.message || 'Qualcosa è andato storto. Riprova.'; err.classList.add('show');
+    }
+  } catch(err2) { err.textContent = 'Errore di connessione. Riprova.'; err.classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Richiedi accesso anticipato →';
+}</script>
+</body>
+</html><script>
+// Inject hamburger for mobile nav
+document.addEventListener('DOMContentLoaded', function() {
+  var nav = document.querySelector('nav');
+  if (!nav) return;
+  var existing = nav.querySelector('.mobile-hamburger');
+  if (existing) return;
+  var hamburger = document.createElement('button');
+  hamburger.className = 'mobile-hamburger';
+  hamburger.setAttribute('aria-label', 'Toggle menu');
+  hamburger.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="8" x2="21" y2="8"/><line x1="3" y1="16" x2="21" y2="16"/></svg>';
+  hamburger.onclick = function() {
+    var links = nav.querySelector('.nav-links');
+    if (links) links.classList.toggle('mobile-open');
+  };
+  var navRight = nav.querySelector('.nav-right');
+  if (!navRight) {
+    navRight = document.createElement('div');
+    navRight.className = 'nav-right';
+    nav.appendChild(navRight);
+  }
+  navRight.appendChild(hamburger);
+});
+</script>
+<style>
+.mobile-hamburger { display: none; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: rgba(255,255,255,0.6); padding: 6px; cursor: pointer; margin-left: 8px; transition: all 0.15s; }
+.mobile-hamburger:hover { border-color: rgba(251,146,60,0.3); color: #fb923c; }
+@media (max-width: 900px) {
+  .mobile-hamburger { display: flex; align-items: center; justify-content: center; }
+  .nav-links { display: none !important; }
+  .nav-links.mobile-open { display: flex !important; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20,12,4,0.98); border-bottom: 1px solid rgba(251,146,60,0.1); padding: 12px 20px; z-index: 1000; }
+  .nav-links.mobile-open a { margin: 8px 0; font-size: 15px; }
+}
+</style>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Concept B: Before / After</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f0f1a;
+    color: #fff;
+    line-height: 1.6;
+  }
+
+  /* ── Navigation ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: #818cf8; }
+  .nav-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.4);
+    font-size: 14px;
+    margin-left: 28px;
+    font-weight: 500;
+  }
+  .nav-links a.cta-nav { color: #818cf8; font-weight: 600; }
+  .nav-links a:hover { color: #fff; }
+
+  /* ── Hero Split ── */
+  .hero {
+    display: flex;
+    min-height: 520px;
+  }
+
+  /* LEFT — Chaos */
+  .chaos-side {
+    flex: 1;
+    background: linear-gradient(160deg, #7f1d1d 0%, #991b1b 40%, #b91c1c 100%);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .chaos-side::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(0,0,0,0.08) 20px,
+      rgba(0,0,0,0.08) 21px
+    );
+  }
+  .chaos-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+    z-index: 1;
+    position: relative;
+  }
+  .chaos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    z-index: 1;
+    position: relative;
+  }
+  .email-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 12px;
+    border-left: 3px solid #fca5a5;
+  }
+  .email-card:nth-child(even) { border-left-color: #fbbf24; }
+  .email-from {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 4px;
+  }
+  .email-subject {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .email-error {
+    background: rgba(220,38,38,0.3);
+    border: 1px solid rgba(220,38,38,0.5);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 16px;
+    font-size: 11px;
+    color: #fca5a5;
+    z-index: 1;
+    position: relative;
+  }
+  .chaos-stats {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    right: 32px;
+    z-index: 1;
+  }
+  .chaos-stat {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+  .chaos-stat span { color: #fca5a5; font-weight: 700; }
+
+  /* RIGHT — Calm */
+  .calm-side {
+    flex: 1;
+    background: linear-gradient(160deg, #1e1b4b 0%, #312e81 100%);
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .calm-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 24px;
+  }
+  .calm-dashboard {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .calm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .calm-row:last-child { border-bottom: none; }
+  .calm-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    flex-shrink: 0;
+  }
+  .calm-dot.run { background: #818cf8; }
+  .calm-text { font-size: 12px; color: rgba(255,255,255,0.7); }
+  .calm-meta { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .calm-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+  .badge-green { background: rgba(16,185,129,0.15); color: #10b981; }
+  .badge-blue { background: rgba(99,102,241,0.2); color: #818cf8; }
+
+  /* Divider */
+  .hero-divider {
+    width: 2px;
+    background: linear-gradient(to bottom, #fca5a5, #818cf8);
+    position: relative;
+  }
+  .divider-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 36px;
+    background: #0f0f1a;
+    border: 2px solid #818cf8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 2;
+  }
+
+  /* Tagline below */
+  .tagline-section {
+    background: #0f0f1a;
+    padding: 48px 48px 40px;
+    text-align: center;
+  }
+  .tagline-section h1 {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .tagline-section h1 .highlight-before {
+    color: #f87171;
+    text-decoration: line-through;
+    text-decoration-color: rgba(248,113,113,0.4);
+  }
+  .tagline-section h1 .highlight-after {
+    background: linear-gradient(90deg, #818cf8, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .tagline-section p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.5);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+  .cta-group {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .btn-primary {
+    background: #6366f1;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: #4f46e5; }
+  .btn-secondary {
+    background: transparent;
+    color: #a78bfa;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid rgba(167,139,250,0.3);
+    cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: #a78bfa; }
+
+  /* ── Teaser: 3-Step ── */
+  .teaser {
+    background: #0f0f1a;
+    padding: 60px 48px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .teaser-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #818cf8;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .teaser h2 {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 48px;
+  }
+  .steps-row {
+    display: flex;
+    gap: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .steps-row::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 80px;
+    right: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #a78bfa, #10b981);
+    z-index: 0;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .step-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .step:nth-child(1) .step-circle { background: #6366f1; }
+  .step:nth-child(2) .step-circle { background: #7c3aed; }
+  .step:nth-child(3) .step-circle { background: #10b981; }
+  .step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    padding: 0 16px;
+  }
+  .step-time {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #818cf8;
+    background: rgba(99,102,241,0.12);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    background: #0a0a14;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+    padding: 28px 48px;
+    font-size: 12px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { flex-direction: column; min-height: auto; }
+    .chaos-side, .calm-side { padding: 32px 20px; }
+    .hero-divider { width: 100%; height: 2px; }
+    .divider-arrow { transform: translate(-50%, -50%) rotate(90deg); }
+    .tagline-section { padding: 36px 20px 30px; }
+    .tagline-section h1 { font-size: 28px; }
+    .cta-group { flex-direction: column; align-items: center; }
+    .teaser { padding: 40px 20px; }
+    .steps-row { flex-direction: column; gap: 32px; }
+    .steps-row::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="#">How It Works</a>
+    <a href="#">Pricing</a>
+    <a href="#" class="cta-nav">Get Early Access →</a>
+  </div>
+</nav>
+
+<!-- Hero: Split -->
+<section class="hero">
+  <!-- Chaos Side -->
+  <div class="chaos-side">
+    <div class="chaos-label">❌ Without Flow80</div>
+    <div class="chaos-grid">
+      <div class="email-card">
+        <div class="email-from">it@company.dk</div>
+        <div class="email-subject">RE: Automation request... (waiting 3 weeks)</div>
+      </div>
+      <div class="email-card">
+        <div class="email-from"> supplier@dsv.com</div>
+        <div class="email-subject">Missing data in order #29381</div>
+      </div>
+      <div class="email-card">
+        <div class="email-from"> finance@company.dk</div>
+        <div class="email-subject">Invoice sync failed again</div>
+      </div>
+      <div class="email-card">
+        <div class="email-from"> manager@company.dk</div>
+        <div class="email-subject">Who manually updated the spreadsheet?!</div>
+      </div>
+    </div>
+    <div class="email-error">⚠ Error: Manual step required — no automation path defined.</div>
+    <div class="chaos-stats">
+      <div class="chaos-stat"><span>12</span> tools, none connected</div>
+      <div class="chaos-stat"><span>40+</span> hours/week on manual copy-paste</div>
+      <div class="chaos-stat"><span>7</span> errors caught per week (too late)</div>
+    </div>
+  </div>
+
+  <div class="hero-divider">
+    <div class="divider-arrow">→</div>
+  </div>
+
+  <!-- Calm Side -->
+  <div class="calm-side">
+    <div class="calm-label">✓ With Flow80</div>
+    <div class="calm-dashboard">
+      <div class="calm-row">
+        <span class="calm-dot run"></span>
+        <div>
+          <div class="calm-text">Order Sync — DSV → Navision</div>
+          <div class="calm-meta">Running right now</div>
+        </div>
+        <span class="calm-badge badge-blue">● Live</span>
+      </div>
+      <div class="calm-row">
+        <span class="calm-dot"></span>
+        <div>
+          <div class="calm-text">Invoice Processing — SAP Export</div>
+          <div class="calm-meta">Last run: 14 min ago · 100% success</div>
+        </div>
+        <span class="calm-badge badge-green">✓ Healthy</span>
+      </div>
+      <div class="calm-row">
+        <span class="calm-dot"></span>
+        <div>
+          <div class="calm-text">Supplier Alert — DSV delay detected</div>
+          <div class="calm-meta">Auto-resolved · Customer notified</div>
+        </div>
+        <span class="calm-badge badge-green">✓ Done</span>
+      </div>
+      <div class="calm-row">
+        <span class="calm-dot"></span>
+        <div>
+          <div class="calm-text">Finance Report — Weekly summary</div>
+          <div class="calm-meta">Scheduled · tomorrow 08:00</div>
+        </div>
+        <span class="calm-badge badge-green">✓ Ready</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tagline -->
+<div class="tagline-section">
+  <h1>
+    Stop <span class="highlight-before">manually</span> connecting your tools.<br>
+    <span class="highlight-after">Let Flow80 do it.</span>
+  </h1>
+  <p>Flow80 connects your systems and automates your operations — no developers needed, no complicated setup. Get started in minutes, not months.</p>
+  <div class="cta-group">
+    <button class="btn-primary">Get Early Access →</button>
+    <button class="btn-secondary">See How It Works ↓</button>
+  </div>
+</div>
+
+<!-- Teaser: 3 Steps -->
+<section class="teaser">
+  <div class="teaser-label">How it works</div>
+  <h2>Three steps. That's it.</h2>
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-circle">1</div>
+      <div class="step-title">Connect your tools</div>
+      <div class="step-desc">Pick the systems you already use — DSV, SAP, Navision, email, Slack, whatever runs your ops.</div>
+      <span class="step-time">~5 minutes</span>
+    </div>
+    <div class="step">
+      <div class="step-circle">2</div>
+      <div class="step-title">Define the workflow</div>
+      <div class="step-desc">Tell Flow80 what should happen: when X happens, do Y. Drag. Click. Done.</div>
+      <span class="step-time">~10 minutes</span>
+    </div>
+    <div class="step">
+      <div class="step-circle">3</div>
+      <div class="step-title">Walk away</div>
+      <div class="step-desc">Flow80 runs it. Every time. Handles the errors, retries, and edge cases so you don't have to.</div>
+      <span class="step-time">No more babysitting</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 Flow80. All rights reserved. · Built for ops teams who are tired of manual work.</p>
+</footer>
+
+</body>
+</html>

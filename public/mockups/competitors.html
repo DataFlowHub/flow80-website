@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Competitors Fail — Flow80</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1c1005;
+    --amber: #fb923c;
+    --amber-dim: rgba(251,146,60,0.15);
+    --amber-border: rgba(251,146,60,0.2);
+    --orange: #ea580c;
+    --text-primary: #fff;
+    --text-secondary: rgba(255,255,255,0.5);
+    --text-tertiary: rgba(255,255,255,0.3);
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-border-hover: rgba(251,146,60,0.2);
+    --red: #ef4444;
+    --green: #34d399;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .warm-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(217,119,6,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(180,83,9,0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(251,146,60,0.10) 0%, transparent 60%),
+      #1c1005;
+    pointer-events: none;
+  }
+
+  /* ── SECTION CONTAINER ── */
+  .competitors-section {
+    position: relative;
+    z-index: 10;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 52px;
+  }
+
+  .section-header .overline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+
+  .section-header h2 {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+
+  .section-header h2 .strike {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255,255,255,0.2);
+  }
+
+  .section-header p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* ── COMPETITOR TABLE ── */
+  .competitor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 64px;
+  }
+
+  .competitor-table thead tr {
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .competitor-table thead th {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 0 0 14px;
+    text-align: left;
+  }
+
+  .competitor-table thead th:last-child {
+    text-align: right;
+  }
+
+  .competitor-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+
+  .competitor-table tbody tr:hover {
+    background: rgba(255,255,255,0.025);
+  }
+
+  .competitor-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .competitor-table tbody td {
+    padding: 18px 0;
+    vertical-align: top;
+  }
+
+  .competitor-table tbody td:first-child {
+    padding-right: 24px;
+  }
+
+  .competitor-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .competitor-verdict {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-width: 360px;
+  }
+
+  .competitor-proof {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    font-style: italic;
+    max-width: 260px;
+    margin-left: auto;
+  }
+
+  .competitor-proof strong {
+    color: var(--text-secondary);
+    font-style: normal;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--glass-border);
+    margin: 0 0 64px;
+  }
+
+  /* ── FLOW80 DIFFERENCE (HERO CALLOUT) ── */
+  .difference-hero {
+    background: linear-gradient(135deg, rgba(234,88,12,0.12) 0%, rgba(251,146,60,0.06) 100%);
+    border: 1px solid rgba(251,146,60,0.25);
+    border-radius: 24px;
+    padding: 40px 44px;
+    margin-bottom: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .difference-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(251,146,60,0.5), transparent);
+  }
+
+  .difference-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(251,146,60,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .difference-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .difference-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .difference-headline {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    max-width: 640px;
+  }
+
+  .difference-headline .them {
+    color: var(--text-tertiary);
+    font-weight: 600;
+  }
+
+  .difference-headline .us {
+    color: var(--amber);
+  }
+
+  .difference-copy {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 580px;
+    margin-bottom: 24px;
+  }
+
+  .difference-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .diff-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .diff-pill .icon {
+    font-size: 13px;
+  }
+
+  /* ── FOUNDER STORY ── */
+  .founder-story {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .founder-story::before {
+    content: '\201C';
+    position: absolute;
+    top: -10px;
+    left: 28px;
+    font-size: 100px;
+    color: rgba(251,146,60,0.08);
+    line-height: 1;
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+
+  .founder-quote {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.85;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .founder-quote strong {
+    color: var(--text-primary);
+  }
+
+  .founder-attribution {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .founder-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(234,88,12,0.3), rgba(251,146,60,0.2));
+    border: 1px solid rgba(251,146,60,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .founder-info .founder-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .founder-info .founder-role {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 1px;
+  }
+
+  .founder-cred {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .founder-cred span {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .competitors-section {
+      padding: 50px 20px;
+    }
+
+    .section-header h2 {
+      font-size: 26px;
+    }
+
+    .competitor-table tbody td {
+      display: block;
+      padding: 12px 0 4px;
+    }
+
+    .competitor-table tbody td:first-child {
+      padding-right: 0;
+    }
+
+    .competitor-table thead {
+      display: none;
+    }
+
+    .competitor-proof {
+      text-align: left;
+      max-width: 100%;
+      margin-left: 0;
+      padding-bottom: 14px;
+    }
+
+    .competitor-table tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 0;
+      display: block;
+    }
+
+    .difference-hero {
+      padding: 28px 24px;
+    }
+
+    .difference-headline {
+      font-size: 20px;
+    }
+
+    .founder-story {
+      padding: 28px 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="warm-bg"></div>
+
+<section class="competitors-section">
+
+  <!-- ── SECTION HEADER ── -->
+  <div class="section-header">
+    <div class="overline">The honest comparison</div>
+    <h2>The automation industry has a <span class="strike">problem</span>.</h2>
+    <p>Every platform sells you the same promise: drag a few blocks, automate your whole operation, no code required. That promise holds for exactly as long as your workflow stays a two-step toy example.</p>
+  </div>
+
+  <!-- ── COMPETITOR TABLE ── -->
+  <table class="competitor-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>The verdict</th>
+        <th>The proof</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="competitor-name">Zapier</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Best-in-class first-run experience — that falls apart the moment your workflow does.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">The 2-step Zap takes 15–30 minutes. Zapier's own learning platform is 36 hours of content. <strong>That's how much complexity they're hiding.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">Make</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">The most powerful template library in the category, buried under a UI that takes 1–3 months to navigate confidently.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">7,500+ pre-built templates exist. Community reports put actual automation proficiency at <strong>1–3 months of practice.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">n8n</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Open-source flexibility that assumes you have a developer on staff to maintain it.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">60% of non-technical users abandon n8n before reaching a working workflow. <strong>Docker and JSON expressions are the documented failure points.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">Power Automate</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Microsoft's answer to workflow automation, buried under licensing complexity and a UI users are actively fleeing.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">The early-2026 UI redesign is the subject of widespread Reddit criticism. <strong>"Gave up" posts are routine.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">UiPath</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Enterprise-grade RPA built for a team of engineers, not an ops manager with a problem to solve this week.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">Getting a reliable business process running takes 2–6 weeks of learning. <strong>Recovery-from-failure is a documented pain point even for trained users.</strong></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="section-divider">
+
+  <!-- ── THE FLOW80 DIFFERENCE ── -->
+  <div class="difference-hero">
+    <div class="difference-label">The difference that matters</div>
+    <div class="difference-headline">
+      <span class="them">Competitors win the first 20 minutes.</span><br>
+      <span class="us">Flow80 wins the first 20 hours.</span>
+    </div>
+    <div class="difference-copy">
+      When Zapier silently fails a webhook overnight. When n8n starts throwing JSON errors. When UiPath needs a developer to fix the unattended bot. That's when automation actually matters — and that's exactly where Flow80 was designed to work.
+    </div>
+    <div class="difference-copy" style="margin-bottom:0">
+      Flow80 was built with a different assumption: that ops work matters most when things go wrong at 2am. Circuit breakers. Per-job MongoDB logging. Automatic retry logic. A failing job tells you exactly what broke and why — it doesn't silently disappear.
+    </div>
+    <div class="difference-pills">
+      <div class="diff-pill"><span class="icon">⚡</span> Circuit breakers</div>
+      <div class="diff-pill"><span class="icon">🪵</span> Per-job MongoDB logging</div>
+      <div class="diff-pill"><span class="icon">↺</span> Automatic retry logic</div>
+      <div class="diff-pill"><span class="icon">🔍</span> Exact error context</div>
+      <div class="diff-pill"><span class="icon">🇩🇰</span> Built in Denmark</div>
+    </div>
+  </div>
+
+  <!-- ── FOUNDER STORY ── -->
+  <div class="founder-story">
+    <p class="founder-quote">
+      "I stopped trusting Zapier the first time a workflow silently failed overnight and I didn't find out until a customer called. I moved to n8n and spent more time maintaining Docker than automating anything. I looked at UiPath and realized it was built for a team, not a person."
+    </p>
+    <p class="founder-quote" style="margin-bottom:24px">
+      <strong>Marc Wiese</strong> spent 18 years in IT operations — at DSV Road, LEGO, TV2, and enterprise environments across logistics, finance, and media. He built Flow80 because he lived the problem: every automation platform worked beautifully in the demo and fell apart in production.
+    </p>
+    <div class="founder-attribution">
+      <div class="founder-avatar">👨‍💻</div>
+      <div class="founder-info">
+        <div class="founder-name">Marc Wiese</div>
+        <div class="founder-role">Founder, Flow80</div>
+        <div class="founder-cred">
+          <span>DSV Road</span>
+          <span>LEGO</span>
+          <span>TV2</span>
+          <span>18 years IT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>

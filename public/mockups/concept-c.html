@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Concept C: The Scandinavian Workplace</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: #faf8f5;
+    color: #2c2416;
+    line-height: 1.7;
+  }
+
+  /* ── Navigation ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 64px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav-logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c2416;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: #c8965a; }
+  .nav-links a {
+    text-decoration: none;
+    color: #6b5d4d;
+    font-size: 14px;
+    margin-left: 32px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+  }
+  .nav-links a.cta-nav { color: #c8965a; font-weight: 600; }
+  .nav-links a:hover { color: #2c2416; }
+
+  /* ── Hero: Full-Width Image ── */
+  .hero {
+    position: relative;
+    height: 580px;
+    overflow: hidden;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55) saturate(0.8);
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(20,15,8,0.1) 0%,
+      rgba(20,15,8,0.3) 50%,
+      rgba(20,15,8,0.7) 100%
+    );
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 100px 32px 0;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #d4a96a;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 17px;
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+  .cta-group {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+  }
+  .btn-primary {
+    background: #c8965a;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .btn-primary:hover { background: #b07d45; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.7); }
+
+  /* Trust strip */
+  .trust-strip {
+    position: absolute;
+    bottom: 28px;
+    left: 0; right: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
+  .trust-item {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+  .trust-item::before {
+    content: '✦';
+    color: #d4a96a;
+    font-size: 8px;
+  }
+
+  /* ── Credibility Bar ── */
+  .cred-bar {
+    background: #fff;
+    border-bottom: 1px solid #ede9e1;
+    padding: 28px 64px;
+    display: flex;
+    justify-content: center;
+    gap: 56px;
+  }
+  .cred-item {
+    text-align: center;
+  }
+  .cred-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2c2416;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .cred-label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 12px;
+    color: #8a7d6b;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── Teaser ── */
+  .teaser {
+    padding: 80px 64px;
+    background: #faf8f5;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .teaser-quote {
+    font-size: 28px;
+    font-style: italic;
+    color: #3d3225;
+    line-height: 1.5;
+    margin-bottom: 28px;
+    letter-spacing: -0.5px;
+  }
+  .teaser-quote .accent {
+    color: #c8965a;
+    font-style: normal;
+    font-weight: 700;
+  }
+  .teaser-rule {
+    width: 48px;
+    height: 3px;
+    background: #c8965a;
+    border-radius: 2px;
+    margin: 0 auto 28px;
+  }
+  .teaser-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    color: #6b5d4d;
+    line-height: 1.8;
+    max-width: 540px;
+    margin: 0 auto 40px;
+  }
+  .teaser-stat-box {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #e8e0d4;
+    border-radius: 16px;
+    padding: 32px 48px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  }
+  .teaser-stat-number {
+    font-size: 64px;
+    font-weight: 800;
+    color: #c8965a;
+    letter-spacing: -4px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .teaser-stat-label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    color: #8a7d6b;
+    font-weight: 500;
+  }
+  .teaser-stat-sub {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 12px;
+    color: #b5a898;
+    margin-top: 6px;
+  }
+  .teaser-reassure {
+    margin-top: 32px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 13px;
+    color: #8a7d6b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .teaser-reassure span { color: #c8965a; }
+
+  /* ── Footer ── */
+  footer {
+    background: #2c2416;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 36px 64px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 13px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { height: 480px; }
+    .hero h1 { font-size: 34px; letter-spacing: -1px; }
+    .hero-content { padding: 80px 20px 0; }
+    .cta-group { flex-direction: column; align-items: center; }
+    .trust-strip { flex-wrap: wrap; gap: 12px; }
+    .cred-bar { padding: 24px 20px; gap: 24px; flex-wrap: wrap; }
+    .teaser { padding: 48px 20px; }
+    .teaser-stat-box { padding: 24px 32px; }
+    footer { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="#">How It Works</a>
+    <a href="#">Pricing</a>
+    <a href="#" class="cta-nav">Get Early Access →</a>
+  </div>
+</nav>
+
+<!-- Hero: Full-Width Image -->
+<section class="hero">
+  <img
+    class="hero-img"
+    src="https://picsum.photos/seed/flowoffice3/1600/900"
+    alt="Scandinavian office"
+  >
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Flow80 · Built in Denmark</div>
+    <h1>Your team runs on manual work.<br>We fix that.</h1>
+    <p>Flow80 connects your systems and automates your operations — no developers needed, no complicated setup. Get started in minutes, not months.</p>
+    <div class="cta-group">
+      <button class="btn-primary">Get Early Access →</button>
+      <button class="btn-secondary">See How It Works ↓</button>
+    </div>
+  </div>
+  <div class="trust-strip">
+    <div class="trust-item">Built in Denmark</div>
+    <div class="trust-item">GDPR Compliant</div>
+    <div class="trust-item">Secure by design</div>
+    <div class="trust-item">No credit card required</div>
+  </div>
+</section>
+
+<!-- Credibility Bar -->
+<div class="cred-bar">
+  <div class="cred-item">
+    <div class="cred-number">40+</div>
+    <div class="cred-label">hours saved per team per week</div>
+  </div>
+  <div class="cred-item">
+    <div class="cred-number">99.8%</div>
+    <div class="cred-label">workflow reliability</div>
+  </div>
+  <div class="cred-item">
+    <div class="cred-number">&lt;5min</div>
+    <div class="cred-label">to set up your first workflow</div>
+  </div>
+</div>
+
+<!-- Teaser -->
+<section class="teaser">
+  <div class="teaser-quote">
+    "You set it up once.
+    <span class="accent">It works.</span>
+    You move on."
+  </div>
+  <div class="teaser-rule"></div>
+  <p class="teaser-body">
+    Flow80 is built for real operations work — the kind that actually matters in your business. It connects to the systems you already use, handles the logic, and runs reliably without you watching it. No IT department required. No agency on retainer.
+  </p>
+  <div class="teaser-stat-box">
+    <div class="teaser-stat-number">40+</div>
+    <div class="teaser-stat-label">hours saved every week</div>
+    <div class="teaser-stat-sub">per operations team — automatically</div>
+  </div>
+  <div class="teaser-reassure">
+    <span>✓</span> No hidden fees. No per-user charges. One flat price.
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 Flow80. All rights reserved. · Built for ops teams who are tired of manual work.</p>
+</footer>
+
+</body>
+</html>

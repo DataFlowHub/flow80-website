@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Automatisering utan kodning</title>
+<meta name="description" content="Flow80 ansluter dina system och automatiserar dina operationer — inga utvecklare behövs, ingen komplicerad setup. Kom igång på minuter, inte månader. Utvecklat i Danmark. GDPR-kompatibelt.">
+<meta property="og:title" content="Flow80 — Automatisering utan kodning">
+<meta property="og:description" content="Zapier kopplar ihop dina appar. Flow80 gör jobbet. Ingen kodning behövs. Utvecklat i Danmark.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0A1E46;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .warm-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(93,156,236,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,212,255,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(93,156,236,0.12) 0%, transparent 60%),
+      #0A1E46;
+  }
+
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(28,16,5,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(93,156,236,0.1);
+  }
+  .nav-logo { display: flex; align-items: center; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; gap: 8px; }
+  .nav-logo img { height: 28px; width: auto; }
+  .nav-logo span { color: #5D9CEC; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a.cta-nav { color: #5D9CEC; font-weight: 600; }
+  .nav-links a:hover { color: #fff; }
+  .lang-switcher { position: relative; margin-left: 28px; }
+  .lang-switcher-btn { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; }
+  .lang-switcher-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(93,156,236,0.3); color: #fff; }
+  .lang-switcher-btn .flag { font-size: 16px; }
+  .lang-switcher-btn .arrow { font-size: 10px; opacity: 0.5; }
+  .lang-switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: rgba(20,12,4,0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 8px; min-width: 160px; z-index: 10000; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lang-switcher-dropdown.open { display: block; }
+  .lang-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.15s; cursor: pointer; }
+  .lang-option:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .lang-option.active { color: #5D9CEC; background: rgba(93,156,236,0.1); }
+  .lang-option .flag { font-size: 16px; }
+  .lang-option .lang-name { font-weight: 600; }
+  .lang-option .lang-native { font-size: 11px; opacity: 0.6; }
+
+  .hero {
+    position: relative;
+    z-index: 10;
+    padding: 80px 48px 60px;
+    text-align: center;
+    background: rgba(28,16,5,0.95);
+  }
+  .hero-badge { display: inline-block; background: rgba(93,156,236,0.12); border: 1px solid rgba(93,156,236,0.25); color: #5D9CEC; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 24px; }
+  .hero h1 { font-size: 52px; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .hero h1 .accent { color: #5D9CEC; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.5); max-width: 560px; margin: 0 auto 36px; line-height: 1.7; }
+  .cta-group { display: flex; gap: 14px; justify-content: center; margin-bottom: 28px; }
+  .btn-primary { background: #4A8AD9; color: #fff; padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(234,88,12,0.3); }
+  .btn-primary:hover { background: #4A8AD9; box-shadow: 0 6px 28px rgba(234,88,12,0.4); transform: translateY(-1px); }
+  .btn-secondary { background: rgba(255,255,255,0.06); color: #fdba74; padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid rgba(93,156,236,0.2); cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s; }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(93,156,236,0.4); }
+  .trust-badges { display: flex; gap: 24px; justify-content: center; }
+  .trust-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 500; }
+  .trust-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; display: inline-block; }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+    align-items: center;
+  }
+  .hero-copy { text-align: left; }
+  .hero-visual { position: relative; }
+
+  .product-mockup {
+    background: #0a0a0f;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(93,156,236,0.1);
+  }
+  .mockup-bar { background: rgba(255,255,255,0.04); padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-dot.red { background: #ef4444; }
+  .mockup-dot.yellow { background: #eab308; }
+  .mockup-dot.green { background: #22c55e; }
+  .mockup-content { padding: 16px; display: flex; gap: 12px; }
+  .mockup-sidebar { width: 140px; flex-shrink: 0; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; }
+  .mockup-sidebar-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; margin-bottom: 4px; font-size: 11px; color: rgba(255,255,255,0.5); }
+  .mockup-sidebar-item.active { background: rgba(93,156,236,0.15); color: #5D9CEC; }
+  .mockup-sidebar-item .icon { font-size: 14px; }
+  .mockup-canvas { flex: 1; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; min-height: 200px; position: relative; }
+  .mockup-node { position: absolute; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 12px; font-size: 10px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 6px; }
+  .mockup-node.trigger { border-color: rgba(93,156,236,0.4); background: rgba(93,156,236,0.1); color: #5D9CEC; }
+  .mockup-node.success { border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.1); color: #34d399; }
+  .mockup-node .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .mockup-node .dot.green { background: #34d399; }
+  .mockup-node .dot.orange { background: #5D9CEC; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .mockup-line { position: absolute; top: 30px; left: 60px; width: 120px; height: 2px; background: linear-gradient(90deg, rgba(93,156,236,0.4), rgba(52,211,153,0.4)); }
+  .mockup-label { position: absolute; bottom: 8px; right: 12px; font-size: 10px; color: rgba(255,255,255,0.2); }
+
+  .integrations {
+    position: relative;
+    z-index: 10;
+    padding: 32px 48px;
+    text-align: center;
+    border-top: 1px solid rgba(93,156,236,0.06);
+    border-bottom: 1px solid rgba(93,156,236,0.06);
+    background: rgba(0,0,0,0.2);
+  }
+  .integrations p { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 20px; }
+  .logo-cloud { display: flex; gap: 32px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .logo-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); padding: 8px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; transition: all 0.2s; }
+  .logo-item:hover { color: rgba(255,255,255,0.6); border-color: rgba(93,156,236,0.2); }
+  .logo-item .icon { font-size: 18px; }
+
+  .glass-row { display: flex; gap: 16px; max-width: 900px; margin: 40px auto 0; justify-content: center; flex-wrap: wrap; }
+  .glass-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 28px 24px;
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    opacity: 0.35;
+  }
+  .glass-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(93,156,236,0.3), transparent); }
+  .glass-card .glass-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+  .glass-card .glass-value { font-size: 36px; font-weight: 800; color: rgba(255,255,255,0.3); letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
+  .glass-card .glass-sub { font-size: 12px; color: rgba(255,255,255,0.25); }
+  .glass-card .coming-soon { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; margin-top: 6px; }
+
+  .glass-workflow {
+    max-width: 900px;
+    margin: 16px auto 0;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 24px 28px;
+    opacity: 0.35;
+  }
+  .gw-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .gw-title { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.4); }
+  .gw-badge { background: rgba(52,211,153,0.12); color: rgba(52,211,153,0.5); border: 1px solid rgba(52,211,153,0.2); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
+  .gw-rows { display: flex; flex-direction: column; gap: 10px; }
+  .gw-row { display: flex; align-items: center; gap: 12px; }
+  .gw-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .gw-dot.green { background: rgba(52,211,153,0.5); }
+  .gw-dot.orange { background: rgba(93,156,236,0.5); }
+  .gw-dot.cyan { background: rgba(34,211,238,0.5); }
+  .gw-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); }
+  .gw-meta { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 1px; }
+  .gw-status { margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+  .gs-ok { background: rgba(52,211,153,0.12); color: rgba(52,211,153,0.5); border: 1px solid rgba(52,211,153,0.2); }
+  .gs-run { background: rgba(93,156,236,0.12); color: rgba(93,156,236,0.5); border: 1px solid rgba(93,156,236,0.2); }
+
+  .problem { position: relative; z-index: 10; padding: 60px 48px; max-width: 760px; margin: 0 auto; }
+  .problem h2 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
+  .problem p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 16px; }
+  .problem .highlight { color: #5D9CEC; font-weight: 600; }
+
+  .features { position: relative; z-index: 10; padding: 60px 48px; }
+  .features-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #5D9CEC; text-align: center; margin-bottom: 12px; }
+  .features h2 { font-size: 26px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 36px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 900px; margin: 0 auto; }
+  .feature-card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: left;
+    transition: all 0.3s;
+  }
+  .feature-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(93,156,236,0.15); transform: translateY(-2px); }
+  .feature-card .f-icon { font-size: 28px; margin-bottom: 12px; }
+  .feature-card .f-name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .feature-card .f-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+  .pricing { position: relative; z-index: 10; padding: 60px 48px; text-align: center; }
+  .pricing h2 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .pricing .sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+  .pricing .price { font-size: 48px; font-weight: 800; color: #5D9CEC; letter-spacing: -2px; margin-bottom: 8px; }
+  .pricing .price-sub { font-size: 13px; color: rgba(255,255,255,0.3); margin-bottom: 28px; }
+  .pricing .note { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 16px; }
+
+  .footer-cta { position: relative; z-index: 10; padding: 60px 48px; text-align: center; }
+  .footer-cta h2 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -1px; }
+  .footer-cta p { font-size: 15px; color: rgba(255,255,255,0.4); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+
+  footer { position: relative; z-index: 10; background: rgba(0,0,0,0.3); color: rgba(255,255,255,0.2); text-align: center; padding: 28px 48px; font-size: 12px; backdrop-filter: blur(10px); border-top: 1px solid rgba(93,156,236,0.06); }
+  footer p { margin-bottom: 8px; }
+  .footer-badges { display: flex; gap: 20px; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 12px; }
+
+  .nav-hamburger { display: none; cursor: pointer; padding: 8px; background: none; border: none; flex-direction: column; gap: 5px; margin-left: auto; position: relative; z-index: 101; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 900px) {
+    .hero-layout { display: flex !important; flex-direction: column !important; gap: 24px; grid-template-columns: unset !important; }
+    .hero-copy { text-align: center; width: 100%; }
+    .hero-visual { width: 100%; }
+    .glass-row { display: none !important; }
+  }
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .lang-switcher { margin-left: auto; }
+  }
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .hero { padding: 60px 20px 40px; background: #0A1E46; }
+    .hero h1 { font-size: 30px; }
+    .cta-group { flex-direction: column; align-items: center; }
+    .glass-row { flex-direction: column; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .problem, .features, .footer-cta { padding: 40px 20px; }
+    .logo-cloud { gap: 16px; }
+    .integrations { padding: 24px 20px; }
+  }
+
+  .ea-modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+  .ea-modal-overlay.open { display: flex; }
+  .ea-modal { background: #0A1E46; border: 1px solid rgba(93,156,236,0.2); border-radius: 20px; padding: 36px; max-width: 480px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+  .ea-modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 24px; cursor: pointer; }
+  .ea-modal-close:hover { color: #fff; }
+  .ea-modal h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .ea-modal .ea-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.6; }
+  .ea-form-group { margin-bottom: 14px; text-align: left; }
+  .ea-form-group label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 6px; letter-spacing: 0.5px; }
+  .ea-form-group input, .ea-form-group select, .ea-form-group textarea { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+  .ea-form-group input:focus, .ea-form-group select:focus, .ea-form-group textarea:focus { border-color: rgba(93,156,236,0.5); }
+  .ea-form-group textarea { resize: vertical; min-height: 80px; }
+  .ea-form-group select option { background: #0A1E46; }
+  .ea-submit { width: 100%; background: #4A8AD9; color: #fff; padding: 13px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+  .ea-submit:hover { background: #4A8AD9; }
+  .ea-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ea-success { display: none; text-align: center; padding: 20px 0; }
+  .ea-success.show { display: block; }
+  .ea-success-icon { font-size: 48px; margin-bottom: 12px; }
+  .ea-success h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .ea-success p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .ea-error { display: none; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #fca5a5; margin-top: 8px; }
+  .ea-error.show { display: block; }
+  .ea-form-body { }
+
+  .nav-hamburger { display: none; cursor: pointer; padding: 8px; background: none; border: none; flex-direction: column; gap: 5px; margin-left: auto; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+  .nav-mobile-overlay.open { display: block; }
+  .nav-mobile-menu { display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 280px; max-width: 85vw; background: #0A1E46; z-index: 10000; padding: 80px 24px 32px; overflow-y: auto; border-left: 1px solid rgba(93,156,236,0.15); transform: translateX(100%); transition: transform 0.3s ease; }
+  .nav-mobile-menu.open { display: block; transform: translateX(0); }
+  .nav-mobile-menu a { display: block; padding: 14px 0; font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; }
+  .nav-mobile-menu a:hover { color: #5D9CEC; }
+  .nav-mobile-menu a.cta { color: #5D9CEC; font-weight: 700; }
+  .nav-mobile-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 28px; cursor: pointer; padding: 4px; }
+  .nav-mobile-close:hover { color: #fff; }
+  .nav-mobile-lang { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .nav-mobile-lang-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
+  .nav-mobile-lang a { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: none; }
+  .nav-mobile-lang a.active { color: #5D9CEC; }
+  .nav-mobile-lang a .flag { font-size: 18px; }
+
+  /* Competitors section */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A1E46;
+    --amber: #5D9CEC;
+    --amber-dim: rgba(93,156,236,0.15);
+    --amber-border: rgba(93,156,236,0.2);
+    --orange: #4A8AD9;
+    --text-primary: #fff;
+    --text-secondary: rgba(255,255,255,0.7);
+    --text-tertiary: rgba(255,255,255,0.45);
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-border-hover: rgba(93,156,236,0.2);
+    --red: #ef4444;
+    --green: #34d399;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .warm-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(93,156,236,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,212,255,0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(93,156,236,0.10) 0%, transparent 60%),
+      #0A1E46;
+    pointer-events: none;
+  }
+
+  /* ── SECTION CONTAINER ── */
+  .competitors-section {
+    position: relative;
+    z-index: 10;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 52px;
+  }
+
+  .section-header .overline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+
+  .section-header h2 {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+
+  .section-header h2 .strike {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255,255,255,0.2);
+  }
+
+  .section-header p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* ── COMPETITOR TABLE ── */
+  .competitor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 64px;
+  }
+
+  .competitor-table thead tr {
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .competitor-table thead th {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 0 0 14px;
+    text-align: left;
+  }
+
+  .competitor-table thead th:last-child {
+    text-align: right;
+  }
+
+  .competitor-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+
+  .competitor-table tbody tr:hover {
+    background: rgba(255,255,255,0.025);
+  }
+
+  .competitor-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .competitor-table tbody td {
+    padding: 18px 0;
+    vertical-align: top;
+  }
+
+  .competitor-table tbody td:first-child {
+    padding-right: 24px;
+  }
+
+  .competitor-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .competitor-verdict {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-width: 360px;
+  }
+
+  .competitor-proof {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    font-style: italic;
+    max-width: 260px;
+    margin-left: auto;
+  }
+
+  .competitor-proof strong {
+    color: var(--text-secondary);
+    font-style: normal;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--glass-border);
+    margin: 0 0 64px;
+  }
+
+  /* ── FLOW80 DIFFERENCE (HERO CALLOUT) ── */
+  .difference-hero {
+    background: linear-gradient(135deg, rgba(234,88,12,0.12) 0%, rgba(93,156,236,0.06) 100%);
+    border: 1px solid rgba(93,156,236,0.25);
+    border-radius: 24px;
+    padding: 40px 44px;
+    margin-bottom: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .difference-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(93,156,236,0.5), transparent);
+  }
+
+  .difference-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(93,156,236,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .difference-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .difference-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .difference-headline {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    max-width: 640px;
+  }
+
+  .difference-headline .them {
+    color: var(--text-tertiary);
+    font-weight: 600;
+  }
+
+  .difference-headline .us {
+    color: var(--amber);
+  }
+
+  .difference-copy {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 580px;
+    margin-bottom: 24px;
+  }
+
+  .difference-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .diff-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .diff-pill .icon {
+    font-size: 13px;
+  }
+
+  /* ── FOUNDER STORY ── */
+  .founder-story {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .founder-story::before {
+    content: 'C';
+    position: absolute;
+    top: -10px;
+    left: 28px;
+    font-size: 100px;
+    color: rgba(93,156,236,0.08);
+    line-height: 1;
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+
+  .founder-quote {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.85;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .founder-quote strong {
+    color: var(--text-primary);
+  }
+
+  .founder-attribution {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .founder-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(234,88,12,0.3), rgba(93,156,236,0.2));
+    border: 1px solid rgba(93,156,236,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .founder-info .founder-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .founder-info .founder-role {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 1px;
+  }
+
+  .founder-cred {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .founder-cred span {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .competitors-section {
+      padding: 50px 20px;
+    }
+
+    .section-header h2 {
+      font-size: 26px;
+    }
+
+    .competitor-table tbody td {
+      display: block;
+      padding: 12px 0 4px;
+    }
+
+    .competitor-table tbody td:first-child {
+      padding-right: 0;
+    }
+
+    .competitor-table thead {
+      display: none;
+    }
+
+    .competitor-proof {
+      text-align: left;
+      max-width: 100%;
+      margin-left: 0;
+      padding-bottom: 14px;
+    }
+
+    .competitor-table tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 0;
+      display: block;
+    }
+
+    .difference-hero {
+      padding: 28px 24px;
+    }
+
+    .difference-headline {
+      font-size: 20px;
+    }
+
+    .founder-story {
+      padding: 28px 24px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="warm-bg"></div>
+
+<nav>
+  <div class="nav-logo"><img src="/img/logo.png" alt="Flow80"> Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="/sv/features">Funktioner</a>
+    <a href="/sv/why">Varför Flow80</a>
+    <a href="/sv/how-it-works">Så fungerar det</a>
+    <a href="#" onclick="openEaModal();return false" class="cta-nav">Få tidig tillgång →</a>
+  </div>
+  <div class="lang-switcher" id="langSwitcher">
+    <button class="lang-switcher-btn" onclick="toggleLangMenu()" aria-label="Change language">
+      <span class="flag">🇸🇪</span>
+      <span class="lang-code">SV</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="lang-switcher-dropdown" id="langDropdown">
+      <a href="/en" class="lang-option" onclick="switchLang('en')"><span class="flag">🇬🇧</span><span><span class="lang-name">English</span><span class="lang-native">English</span></span></a>
+      <a href="/da" class="lang-option" onclick="switchLang('da')"><span class="flag">🇩🇰</span><span><span class="lang-name">Danish</span><span class="lang-native">Dansk</span></span></a>
+      <a href="/de" class="lang-option" onclick="switchLang('de')"><span class="flag">🇩🇪</span><span><span class="lang-name">German</span><span class="lang-native">Deutsch</span></span></a>
+      <a href="/it" class="lang-option" onclick="switchLang('it')"><span class="flag">🇮🇹</span><span><span class="lang-name">Italian</span><span class="lang-native">Italiano</span></span></a>
+      <a href="/sv" class="lang-option" onclick="switchLang('sv')"><span class="flag">🇸🇪</span><span><span class="lang-name">Swedish</span><span class="lang-native">Svenska</span></span></a>
+    </div>
+  </div>
+
+  <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-mobile-overlay" onclick="closeMobileMenu()"></div>
+  <div class="nav-mobile-menu">
+    <button class="nav-mobile-close" onclick="closeMobileMenu()" aria-label="Close">×</button>
+    <a href="/sv/features" onclick="closeMobileMenu()">Features</a>
+    <a href="/sv/why" onclick="closeMobileMenu()">Why Flow80</a>
+    <a href="/sv/how-it-works" onclick="closeMobileMenu()">How It Works</a>
+    <a href="#" onclick="openEaModal();closeMobileMenu();return false" class="cta">Get Early Access →</a>
+    <div class="nav-mobile-lang">
+      <div class="nav-mobile-lang-label">Language</div>
+      <a href="/en" class="active"><span class="flag">🇬🇧</span> English</a>
+      <a href="/da"><span class="flag">🇩🇰</span> Dansk</a>
+      <a href="/de"><span class="flag">🇩🇪</span> Deutsch</a>
+      <a href="/it"><span class="flag">🇮🇹</span> Italiano</a>
+      <a href="/sv"><span class="flag">🇸🇪</span> Svenska</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-badge">🚀 Utvecklat i Danmark · GDPR-kompatibelt</div>
+  <h1>Ert företag kör på manuellt arbete.<br><span class="accent">Vi fixar det.</span></h1>
+  <p>Flow80 ansluter dina system och automatiserar dina operationer — inga utvecklare behövs, ingen komplicerad setup. Kom igång på minuter, inte månader.</p>
+  <div class="cta-group">
+    <button class="btn-primary">Få tidig tillgång →</button>
+    <button class="btn-secondary">Se hur det fungerar ↓</button>
+  </div>
+  <div class="trust-badges">
+    <span class="trust-badge"><span class="dot"></span> Utvecklat i Danmark</span>
+    <span class="trust-badge"><span class="dot"></span> GDPR-kompatibelt</span>
+    <span class="trust-badge"><span class="dot"></span> Säkert byggt</span>
+  </div>
+
+  <div class="hero-layout">
+    <div class="hero-copy">
+      <div class="glass-row" style="margin-top:0">
+        <div class="glass-card">
+          <div class="glass-label">Automatisera uppgifter</div>
+          <div class="glass-value">2,841</div>
+          <div class="glass-sub">över alla arbetsflöden</div>
+          <span class="coming-soon">Live-siffror — kommer snart</span>
+        </div>
+        <div class="glass-card">
+          <div class="glass-label">Sparade timmar</div>
+          <div class="glass-value">94h</div>
+          <div class="glass-sub">denna vecka</div>
+          <span class="coming-soon">Live-siffror — kommer snart</span>
+        </div>
+        <div class="glass-card">
+          <div class="glass-label">Framgångsgrad</div>
+          <div class="glass-value">99.7%</div>
+          <div class="glass-sub">pålitlighetspoäng</div>
+          <span class="coming-soon">Live-siffror — kommer snart</span>
+        </div>
+      </div>
+
+      <div class="glass-workflow">
+        <div class="gw-header">
+          <span class="gw-title">Aktiva arbetsflöden</span>
+          <span class="gw-badge">Betaförhandsvisning</span>
+        </div>
+        <div class="gw-rows">
+          <div class="gw-row">
+            <span class="gw-dot orange"></span>
+            <div>
+              <div class="gw-name">Order Sync — API → ERP</div>
+              <div class="gw-meta">Kör nu · 847 ordrar bearbetade</div>
+            </div>
+            <span class="gw-status gs-run">● Live</span>
+          </div>
+          <div class="gw-row">
+            <span class="gw-dot green"></span>
+            <div>
+              <div class="gw-name">Invoice Processing — SAP Export</div>
+              <div class="gw-meta">Senaste körning: 18 min sedan · 100% framgång</div>
+            </div>
+            <span class="gw-status gs-ok">✓ I ordning</span>
+          </div>
+          <div class="gw-row">
+            <span class="gw-dot cyan"></span>
+            <div>
+              <div class="gw-name">Supplier Alert — Auto-resolved</div>
+              <div class="gw-meta">Kund meddelad · 14:32 idag</div>
+            </div>
+            <span class="gw-status gs-ok">✓ Klart</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="product-mockup">
+        <div class="mockup-bar">
+          <span class="mockup-dot red"></span>
+          <span class="mockup-dot yellow"></span>
+          <span class="mockup-dot green"></span>
+        </div>
+        <div class="mockup-content">
+          <div class="mockup-sidebar">
+            <div class="mockup-sidebar-item active"><span class="icon">⚡</span> Trigger</div>
+            <div class="mockup-sidebar-item"><span class="icon">🔄</span> Transform</div>
+            <div class="mockup-sidebar-item"><span class="icon">📊</span> Database</div>
+            <div class="mockup-sidebar-item"><span class="icon">✉</span> Email</div>
+            <div class="mockup-sidebar-item"><span class="icon">🪝</span> Webhook</div>
+            <div class="mockup-sidebar-item"><span class="icon">📁</span> File</div>
+          </div>
+          <div class="mockup-canvas">
+            <div class="mockup-line"></div>
+            <div class="mockup-node trigger" style="top:10px;left:20px;">
+              <span class="dot orange"></span> API Trigger
+            </div>
+            <div class="mockup-node" style="top:60px;left:60px;">
+              <span class="dot green"></span> Data Transform
+            </div>
+            <div class="mockup-node success" style="top:110px;left:120px;">
+              <span class="dot green"></span> Database Write
+            </div>
+            <div class="mockup-node" style="top:160px;left:200px;">
+              <span class="dot green"></span> Slack Notify
+            </div>
+            <div class="mockup-label">Flow80 · Live</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="integrations">
+  <p>Ansluter till verktygen du redan använder</p>
+  <div class="logo-cloud">
+    <div class="logo-item"><span class="icon">🔌</span> REST API</div>
+    <div class="logo-item"><span class="icon">🪝</span> Webhooks</div>
+    <div class="logo-item"><span class="icon">🗄️</span> Databases</div>
+    <div class="logo-item"><span class="icon">📧</span> Email</div>
+    <div class="logo-item"><span class="icon">📁</span> File Storage</div>
+    <div class="logo-item"><span class="icon">📊</span> PowerBI</div>
+    <div class="logo-item"><span class="icon">📦</span> WooCommerce</div>
+    <div class="logo-item"><span class="icon">🛒</span> Shopify</div>
+    <div class="logo-item"><span class="icon">📄</span> PDF</div>
+  </div>
+</div>
+
+<section class="problem">
+  <h2>Håller ni fortfarande på med allt manuellt?</h2>
+  <p>Varje operations-team har samma problem. Dina system pratar inte med varandra. Dina medarbetare lägger timmar varje vecka på att kopiera data från ett ställe till ett annat. Saker missas. Fel smiter igenom. Och varje gång något nytt behöver automatiseras väntar du antingen på IT eller betalar en byrå.</p>
+  <p>Du har provat verktygen. "No-code"-byggarna kan antingen inte göra det du faktiskt behöver, eller så går de sönder så fort något går fel. Du slutar ändå med att stå och passa dem.</p>
+  <p><span class="highlight">Flow80 är annorlunda.</span> Det är byggt för riktigt operationsarbete — den sorten som faktiskt betyder något för din verksamhet. Det ansluter till systemen du redan använder, hanterar logiken, och kör pålitligt utan att du behöver bevaka det.</p>
+  <p><span class="highlight">Du ställer in det en gång. Det fungerar. Du går vidare.</span></p>
+</section>
+<section class="competitors-section">
+  <!-- ── SECTION HEADER ── -->
+  <div class="section-header">
+    <div class="overline">The honest comparison</div>
+    <h2>The automation industry has a <span class="strike">problem</span>.</h2>
+    <p>Every platform sells you the same promise: drag a few blocks, automate your whole operation, no code required. That promise holds for exactly as long as your workflow stays a two-step toy example.</p>
+  </div>
+
+  <!-- ── COMPETITOR TABLE ── -->
+  <table class="competitor-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>The verdict</th>
+        <th>The proof</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="competitor-name">Zapier</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Best-in-class first-run experience — that falls apart the moment your workflow does.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">The 2-step Zap takes 15–30 minutes. Zapier's own learning platform is 36 hours of content. <strong>That's how much complexity they're hiding.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">Make</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">The most powerful template library in the category, buried under a UI that takes 1–3 months to navigate confidently.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">7,500+ pre-built templates exist. Community reports put actual automation proficiency at <strong>1–3 months of practice.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">n8n</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Open-source flexibility that assumes you have a developer on staff to maintain it.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">60% of non-technical users abandon n8n before reaching a working workflow. <strong>Docker and JSON expressions are the documented failure points.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">Power Automate</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Microsoft's answer to workflow automation, buried under licensing complexity and a UI users are actively fleeing.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">The early-2026 UI redesign is the subject of widespread Reddit criticism. <strong>"Gave up" posts are routine.</strong></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="competitor-name">UiPath</div>
+        </td>
+        <td>
+          <div class="competitor-verdict">Enterprise-grade RPA built for a team of engineers, not an ops manager with a problem to solve this week.</div>
+        </td>
+        <td>
+          <div class="competitor-proof">Getting a reliable business process running takes 2–6 weeks of learning. <strong>Recovery-from-failure is a documented pain point even for trained users.</strong></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="section-divider">
+
+  <!-- ── THE FLOW80 DIFFERENCE ── -->
+  <div class="difference-hero">
+    <div class="difference-label">The difference that matters</div>
+    <div class="difference-headline">
+      <span class="them">Competitors win the first 20 minutes.</span><br>
+      <span class="us">Flow80 wins the first 20 hours.</span>
+    </div>
+    <div class="difference-copy">
+      When Zapier silently fails a webhook overnight. When n8n starts throwing JSON errors. When UiPath needs a developer to fix the unattended bot. That's when automation actually matters — and that's exactly where Flow80 was designed to work.
+    </div>
+    <div class="difference-copy" style="margin-bottom:0">
+      Flow80 was built with a different assumption: that ops work matters most when things go wrong at 2am. Circuit breakers. Per-job MongoDB logging. Automatic retry logic. A failing job tells you exactly what broke and why — it doesn't silently disappear.
+    </div>
+    <div class="difference-pills">
+      <div class="diff-pill"><span class="icon">⚡</span> Circuit breakers</div>
+      <div class="diff-pill"><span class="icon">🪵</span> Per-job MongoDB logging</div>
+      <div class="diff-pill"><span class="icon">↺</span> Automatic retry logic</div>
+      <div class="diff-pill"><span class="icon">🔍</span> Exact error context</div>
+      <div class="diff-pill"><span class="icon">🇩🇰</span> Built in Denmark</div>
+    </div>
+  </div>
+
+  <!-- ── FOUNDER STORY ── -->
+  <div class="founder-story">
+    <p class="founder-quote">
+      "I stopped trusting Zapier the first time a workflow silently failed overnight and I didn't find out until a customer called. I moved to n8n and spent more time maintaining Docker than automating anything. I looked at UiPath and realized it was built for a team, not a person."
+    </p>
+    <p class="founder-quote" style="margin-bottom:24px">
+      <strong>Marc Wiese</strong> spent 18 years in IT operations — at DSV Road, LEGO, TV2, and enterprise environments across logistics, finance, and media. He built Flow80 because he lived the problem: every automation platform worked beautifully in the demo and fell apart in production.
+    </p>
+    <div class="founder-attribution">
+      <div class="founder-avatar">👨‍💻</div>
+      <div class="founder-info">
+        <div class="founder-name">Marc Wiese</div>
+        <div class="founder-role">Founder, Flow80</div>
+        <div class="founder-cred">
+          <span>DSV Road</span>
+          <span>LEGO</span>
+          <span>TV2</span>
+          <span>18 years IT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</section>
+
+
+<section class="features" id="features">
+  <div class="features-label">Vad du kommer att kunna göra</div>
+  <h2>Arbetsflöden som kör sig själva.</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="f-icon">✋</div>
+      <div class="f-name">Flytta data mellan dina system — automatiskt</div>
+      <div class="f-desc">Bygg automatiserade arbetsflöden utan att skriva en enda rad kod. Anslut dina system, definiera stegen, och låt Flow80 sköta resten.</div>
+    </div>
+    <div class="feature-card">
+      <div class="f-icon">📋</div>
+      <div class="f-name">Börja inte från noll — använd mallar som fungerar</div>
+      <div class="f-desc">Inte säker på var du ska börja? Välj från ett bibliotek av beprövade workflow-mallar för vanliga ops-uppgifter — orderhantering, datasynk, notifieringar och mer.</div>
+    </div>
+    <div class="feature-card">
+      <div class="f-icon">📊</div>
+      <div class="f-name">Se varje uppgift, varje resultat, varje fel</div>
+      <div class="f-desc">Se varje workflow-körning när det händer. Vet exakt vilka data som flyttades, vad som lyckades, och vad som behöver uppmärksamhet — innan det blir ett problem.</div>
+    </div>
+    <div class="feature-card">
+      <div class="f-icon">⚡</div>
+      <div class="f-name">När något går sönder, reparerar det sig själv först</div>
+      <div class="f-desc">När något oväntat händer — ett system är nere, data saknas, ett steg misslyckas — stannar inte Flow80. Det försöker intelligent igen och varnar dig bara när det faktiskt behövs.</div>
+    </div>
+  </div>
+</section>
+
+<section class="footer-cta" id="waitlist">
+  <h2>Vill du vara först?</h2>
+  <p>Ansök om tidig tillgång och få Flow80 före lanseringen. Platserna är begränsade.</p>
+  <button class="btn-primary">Ansök om tidig tillgång →</button>
+</section>
+
+
+<!-- Early Access Modal -->
+<div class="ea-modal-overlay" id="eaOverlay" onclick="if(event.target===this)closeEaModal()">
+  <div class="ea-modal">
+    <button class="ea-modal-close" onclick="closeEaModal()" aria-label="Close">×</button>
+    <div id="eaFormContainer">
+      <h2>Request Early Access</h2>
+      <p class="ea-sub">Tell us about your team and we'll get you set up before launch.</p>
+      <form id="eaForm" onsubmit="submitEaForm(event)">
+        <div class="ea-form-group">
+          <label>Your name</label>
+          <input type="text" name="name" placeholder="Anders Jensen" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Work email</label>
+          <input type="email" name="email" placeholder="anders@company.dk" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Company</label>
+          <input type="text" name="company" placeholder="Acme Logistics A/S" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Language</label>
+          <select name="language">
+            <option value="en">English</option>
+            <option value="da">Dansk</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="sv">Svenska</option>
+          </select>
+        </div>
+        <div class="ea-form-group">
+          <label>What do you want to automate? <span style="font-weight:400;opacity:0.6">(optional)</span></label>
+          <textarea name="challenge" placeholder="e.g. Sync orders from our webshop to our ERP automatically..."></textarea>
+        </div>
+        <div class="ea-error" id="eaError"></div>
+        <button type="submit" class="ea-submit" id="eaSubmit">Request Early Access →</button>
+      </form>
+    </div>
+    <div class="ea-success" id="eaSuccess">
+      <div class="ea-success-icon">✓</div>
+      <h3>You're on the list!</h3>
+      <p>We'll be in touch before launch. Check your inbox — we'll send a confirmation to the email you provided.</p>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <p>© 2026 Flow80. Alla rättigheter förbehållna.</p>
+  <p>Byggt för operations-team som är trötta på manuellt arbete.</p>
+  <div class="footer-badges">
+    🇪🇺 GDPR-kompatibelt · 🇩🇰 Utvecklat i Danmark · Säkert byggt
+  </div>
+</footer>
+<script>
+function openEaModal() { document.getElementById('eaOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeEaModal() { document.getElementById('eaOverlay').classList.remove('open'); document.body.style.overflow=''; }
+async function submitEaForm(e) {
+  e.preventDefault();
+  var form = document.getElementById('eaForm');
+  var btn = document.getElementById('eaSubmit');
+  var err = document.getElementById('eaError');
+  var data = { name: form.name.value, email: form.email.value, company: form.company.value, language: form.language.value, challenge: form.challenge.value };
+  btn.disabled = true; btn.textContent = 'Sending...'; err.classList.remove('show');
+  try {
+    var res = await fetch('/api/early-access/apply', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (res.ok) {
+      document.getElementById('eaFormContainer').style.display='none';
+      document.getElementById('eaSuccess').classList.add('show');
+      setTimeout(closeEaModal, 3000);
+    } else {
+      var j = await res.json(); err.textContent = j.message || 'Something went wrong. Please try again.'; err.classList.add('show');
+    }
+  } catch(err2) { err.textContent = 'Connection error. Please try again.'; err.classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Request Early Access →';
+}</script>
+<script>function toggleLangMenu(){var dropdown=document.getElementById('langDropdown');dropdown.classList.toggle('open');event.stopPropagation();}
+function switchLang(lang){document.getElementById('langDropdown').classList.remove('open');}
+document.addEventListener('click',function(e){var dropdown=document.getElementById('langDropdown');var btn=document.querySelector('.lang-switcher-btn');if(dropdown&&btn&&!btn.contains(e.target)&&!dropdown.contains(e.target)){dropdown.classList.remove('open');}});</script>
+
+(function(){var path=window.location.pathname;var lang="en";if(path.startsWith("/da"))lang="da";else if(path.startsWith("/de"))lang="de";else if(path.startsWith("/it"))lang="it";else if(path.startsWith("/sv"))lang="sv";var flags={en:"🇬🇧",da:"🇩🇰",de:"🇩🇪",it:"🇮🇹",sv:"🇸🇪"};var names={en:"EN",da:"DA",de:"DE",it:"IT",sv:"SV"};var btn=document.querySelector(".lang-switcher-btn");if(btn){btn.querySelector(".flag").textContent=flags[lang];btn.querySelector(".lang-code").textContent=names[lang];}})();
+</body>
+</html>

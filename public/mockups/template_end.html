@@ -1,0 +1,50 @@
+  var err = document.getElementById('eaError');
+  var data = { name: form.name.value, email: form.email.value, company: form.company.value, language: form.language.value, challenge: form.challenge.value };
+  btn.disabled = true; btn.textContent = 'Sending...'; err.classList.remove('show');
+  try {
+    var res = await fetch('/api/early-access/apply', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (res.ok) {
+      document.getElementById('eaFormContainer').style.display='none';
+      document.getElementById('eaSuccess').classList.add('show');
+      setTimeout(closeEaModal, 3000);
+    } else {
+      var j = await res.json(); err.textContent = j.message || 'Something went wrong. Please try again.'; err.classList.add('show');
+    }
+  } catch(err2) { err.textContent = 'Connection error. Please try again.'; err.classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Request Early Access →';
+}</script>
+</body>
+</html><script>
+// Inject hamburger for mobile nav
+document.addEventListener('DOMContentLoaded', function() {
+  var nav = document.querySelector('nav');
+  if (!nav) return;
+  var existing = nav.querySelector('.mobile-hamburger');
+  if (existing) return;
+  var hamburger = document.createElement('button');
+  hamburger.className = 'mobile-hamburger';
+  hamburger.setAttribute('aria-label', 'Toggle menu');
+  hamburger.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="8" x2="21" y2="8"/><line x1="3" y1="16" x2="21" y2="16"/></svg>';
+  hamburger.onclick = function() {
+    var links = nav.querySelector('.nav-links');
+    if (links) links.classList.toggle('mobile-open');
+  };
+  var navRight = nav.querySelector('.nav-right');
+  if (!navRight) {
+    navRight = document.createElement('div');
+    navRight.className = 'nav-right';
+    nav.appendChild(navRight);
+  }
+  navRight.appendChild(hamburger);
+});
+</script>
+<style>
+.mobile-hamburger { display: none; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: rgba(255,255,255,0.6); padding: 6px; cursor: pointer; margin-left: 8px; transition: all 0.15s; }
+.mobile-hamburger:hover { border-color: rgba(251,146,60,0.3); color: #fb923c; }
+@media (max-width: 900px) {
+  .mobile-hamburger { display: flex; align-items: center; justify-content: center; }
+  .nav-links { display: none !important; }
+  .nav-links.mobile-open { display: flex !important; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20,12,4,0.98); border-bottom: 1px solid rgba(251,146,60,0.1); padding: 12px 20px; z-index: 1000; }
+  .nav-links.mobile-open a { margin: 8px 0; font-size: 15px; }
+}
+</style>

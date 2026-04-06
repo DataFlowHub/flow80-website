@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Flow80 — Workflow Automation Without Code</title>
+<meta name="description" content="Flow80 is built for ops teams — not developers. No-code that actually works for real business logic. Built in Denmark. GDPR compliant.">
+<meta property="og:title" content="Why Flow80 — Workflow Automation Without Code">
+<meta property="og:description" content="Flow80 is built for ops teams, not developers. No-code that actually works.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1c1005; color: #fff; line-height: 1.6; overflow-x: hidden; }
+  .warm-bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(217,119,6,0.2) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 20%, rgba(180,83,9,0.15) 0%, transparent 60%), radial-gradient(ellipse 100% 80% at 50% 100%, rgba(251,146,60,0.12) 0%, transparent 60%), #1c1005; }
+  nav { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(28,16,5,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(251,146,60,0.1); }
+  .nav-logo { display: flex; align-items: center; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; gap: 8px; }
+  .nav-logo img { height: 28px; width: auto; }
+  .nav-logo span { color: #fb923c; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a:hover { color: #fff; }
+  .lang-switcher { position: relative; margin-left: 28px; }
+  .lang-switcher-btn { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; }
+  .lang-switcher-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(251,146,60,0.3); color: #fff; }
+  .lang-switcher-btn .flag { font-size: 16px; }
+  .lang-switcher-btn .arrow { font-size: 10px; opacity: 0.5; }
+  .lang-switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: rgba(20,12,4,0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 8px; min-width: 160px; z-index: 10000; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lang-switcher-dropdown.open { display: block; }
+  .lang-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.15s; cursor: pointer; }
+  .lang-option:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .lang-option.active { color: #fb923c; background: rgba(251,146,60,0.1); }
+  .lang-option .flag { font-size: 16px; }
+  .lang-option .lang-name { font-weight: 600; }
+  .lang-option .lang-native { font-size: 11px; opacity: 0.6; }
+  .nav-links a.cta-nav { color: #fb923c; font-weight: 600; }
+  nav .nav-links a.active { color: #fb923c; }
+  .breadcrumb { position: relative; z-index: 10; padding: 20px 48px 0; font-size: 13px; color: rgba(255,255,255,0.3); }
+  .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .breadcrumb a:hover { color: #fb923c; }
+  .hero { position: relative; z-index: 10; padding: 40px 48px 60px; text-align: center; max-width: 900px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.25); color: #fb923c; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+  .hero h1 { font-size: 44px; font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.5); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .comparison { position: relative; z-index: 10; padding: 40px 48px; max-width: 1100px; margin: 0 auto; }
+  .comparison-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .comp-header { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .comp-header-cell { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.3); text-align: center; }
+  .comp-header-cell:first-child { text-align: left; }
+  .comp-header-cell.highlight { color: #fb923c; }
+  .comp-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: center; }
+  .comp-feature { font-size: 14px; color: rgba(255,255,255,0.7); }
+  .comp-cell { text-align: center; font-size: 18px; }
+  .comp-yes { color: #34d399; }
+  .comp-no { color: rgba(255,255,255,0.15); }
+  .comp-partial { color: #fb923c; font-size: 12px; font-weight: 700; }
+  .why-section { position: relative; z-index: 10; padding: 60px 48px; max-width: 900px; margin: 0 auto; }
+  .why-section .section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fb923c; margin-bottom: 12px; }
+  .why-section h2 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
+  .why-block { margin-bottom: 40px; }
+  .why-block h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .why-block p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+  .why-block .highlight { color: #fb923c; font-weight: 600; }
+  .trust-row { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 500; padding: 12px 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; }
+  .trust-item .icon { font-size: 20px; }
+  .stories-section { position: relative; z-index: 10; padding: 60px 48px; }
+  .stories-section .section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fb923c; text-align: center; margin-bottom: 12px; }
+  .stories-section h2 { font-size: 28px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 36px; }
+  .story-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 900px; margin: 0 auto; }
+  .story-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; }
+  .story-card .sc-situation { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+  .story-card .sc-problem { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 12px; line-height: 1.6; }
+  .story-card .sc-before { font-size: 13px; color: rgba(255,255,255,0.25); margin-bottom: 8px; }
+  .story-card .sc-after { font-size: 14px; color: #34d399; font-weight: 600; }
+  .story-card .sc-metric { display: inline-block; background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25); color: #34d399; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-top: 12px; }
+  .cta-section { position: relative; z-index: 10; padding: 60px 48px; text-align: center; }
+  .cta-section h2 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -1px; }
+  .cta-section p { font-size: 15px; color: rgba(255,255,255,0.4); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .btn-primary { display: inline-block; background: #ea580c; color: #fff; padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(234,88,12,0.3); }
+  .btn-primary:hover { background: #c2410c; box-shadow: 0 6px 28px rgba(234,88,12,0.4); transform: translateY(-1px); }
+  footer { position: relative; z-index: 10; background: rgba(0,0,0,0.3); color: rgba(255,255,255,0.2); text-align: center; padding: 28px 48px; font-size: 12px; backdrop-filter: blur(10px); border-top: 1px solid rgba(251,146,60,0.06); }
+  @media (max-width: 900px) { .comparison-grid { grid-template-columns: 1fr; } .comp-header { display: none; } .comp-row { grid-template-columns: 1fr; gap: 4px; } .comp-feature { margin-bottom: 4px; } .comp-cell { text-align: left; font-size: 14px; } .story-grid { grid-template-columns: 1fr; } nav { padding: 14px 20px; } .nav-links { display: none; } .hero, .why-section, .stories-section, .cta-section { padding: 40px 20px; } }
+
+  .ea-modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+  .ea-modal-overlay.open { display: flex; }
+  .ea-modal { background: #1a1008; border: 1px solid rgba(251,146,60,0.2); border-radius: 20px; padding: 36px; max-width: 480px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+  .ea-modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 24px; cursor: pointer; }
+  .ea-modal-close:hover { color: #fff; }
+  .ea-modal h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .ea-modal .ea-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.6; }
+  .ea-form-group { margin-bottom: 14px; text-align: left; }
+  .ea-form-group label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 6px; letter-spacing: 0.5px; }
+  .ea-form-group input, .ea-form-group select, .ea-form-group textarea { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+  .ea-form-group input:focus, .ea-form-group select:focus, .ea-form-group textarea:focus { border-color: rgba(251,146,60,0.5); }
+  .ea-form-group textarea { resize: vertical; min-height: 80px; }
+  .ea-form-group select option { background: #1a1008; }
+  .ea-submit { width: 100%; background: #ea580c; color: #fff; padding: 13px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+  .ea-submit:hover { background: #c2410c; }
+  .ea-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ea-success { display: none; text-align: center; padding: 20px 0; }
+  .ea-success.show { display: block; }
+  .ea-success-icon { font-size: 48px; margin-bottom: 12px; }
+  .ea-success h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .ea-success p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .ea-error { display: none; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #fca5a5; margin-top: 8px; }
+  .ea-error.show { display: block; }
+  .ea-form-body { }
+</style>
+</head>
+<body>
+<div class="warm-bg"></div>
+<nav>
+  <div class="nav-logo"><img src="/img/logo.png" alt="Flow80"> Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="/en">Home</a>
+    <a href="/en/features">Features</a>
+    <a href="/en/why" class="active">Why Flow80</a>
+    <a href="/en/how-it-works">How It Works</a>
+    <a href="#" onclick="openEaModal();return false" class="cta-nav">Get Early Access →</a>
+  </div>
+  <div class="lang-switcher" id="langSwitcher">
+    <button class="lang-switcher-btn" onclick="toggleLangMenu()" aria-label="Change language">
+      <span class="flag">🇬🇧</span>
+      <span class="lang-code">EN</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="lang-switcher-dropdown" id="langDropdown">
+      <a href="/en" class="lang-option active" onclick="switchLang('en')"><span class="flag">🇬🇧</span><span><span class="lang-name">English</span><span class="lang-native">English</span></span></a>
+      <a href="/da" class="lang-option" onclick="switchLang('da')"><span class="flag">🇩🇰</span><span><span class="lang-name">Danish</span><span class="lang-native">Dansk</span></span></a>
+      <a href="/de" class="lang-option" onclick="switchLang('de')"><span class="flag">🇩🇪</span><span><span class="lang-name">German</span><span class="lang-native">Deutsch</span></span></a>
+      <a href="/it" class="lang-option" onclick="switchLang('it')"><span class="flag">🇮🇹</span><span><span class="lang-name">Italian</span><span class="lang-native">Italiano</span></span></a>
+      <a href="/sv" class="lang-option" onclick="switchLang('sv')"><span class="flag">🇸🇪</span><span><span class="lang-name">Swedish</span><span class="lang-native">Svenska</span></span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="breadcrumb"><a href="/en">Home</a> / Why Flow80</div>
+<section class="hero">
+  <div class="hero-badge">Why Flow80</div>
+  <h1>Built for ops teams.<br>Not developers.</h1>
+  <p>Most automation tools were designed for developers. Flow80 was designed for the people who actually do the work — your ops team, your logistics coordinator, your office manager.</p>
+</section>
+<section class="why-section">
+  <div class="section-label">The difference</div>
+  <h2>Your team actually runs it. Without tickets.</h2>
+  <div class="why-block">
+    <h3>You don't need IT to build it.</h3>
+    <p>With Flow80, your ops team builds and modifies workflows themselves. No dev tickets. No agency calls. You see a problem, you fix it. <span class="highlight">Same day, not next quarter.</span></p>
+  </div>
+  <div class="why-block">
+    <h3>It handles the edge cases.</h3>
+    <p>Real operations work is messy. Data is missing. Systems go down. A supplier sends a purchase order in the wrong format. Flow80 doesn't break when this happens — <span class="highlight">it retries, adapts, and escalates only when it genuinely needs you.</span></p>
+  </div>
+  <div class="why-block">
+    <h3>You see what's happening.</h3>
+    <p>No black boxes. Every workflow run is logged. Every step shows its input and output. When something goes wrong, you know exactly which step failed and why — <span class="highlight">not after the customer calls complaining.</span></p>
+  </div>
+  <div class="why-block">
+    <h3>It works with your existing tools.</h3>
+    <p>Flow80 connects to the systems you already use — REST APIs, databases, file storage, email, EDI, and more. <span class="highlight">No rip-and-replace. No migration projects.</span> Your systems stay; Flow80 sits in between them and makes them talk.</p>
+  </div>
+  <div class="trust-row">
+    <div class="trust-item"><span class="icon">🇩🇰</span> Built in Denmark</div>
+    <div class="trust-item"><span class="icon">🇪🇺</span> GDPR Compliant</div>
+    <div class="trust-item"><span class="icon">🔒</span> Secure by design</div>
+    <div class="trust-item"><span class="icon">📋</span> Audit logs included</div>
+  </div>
+</section>
+<section class="comparison">
+  <div class="section-label" style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fb923c;margin-bottom:20px">How we compare</div>
+  <div class="comp-header">
+    <div class="comp-header-cell">Capability</div>
+    <div class="comp-header-cell highlight">Flow80</div>
+    <div class="comp-header-cell">Traditional tools</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Built for non-developers</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-no">—</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Ops team can modify workflows without IT</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-no">—</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Handles errors automatically</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-partial">Partial</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Real-time run monitoring</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-partial">Partial</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">EDI support</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-partial">Varies</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Database integrations</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-yes">✓</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">GDPR-compliant data handling</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-partial">Varies</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Danish / European hosting option</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-no">—</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">One flat price — no per-user fees</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-no">—</div>
+  </div>
+  <div class="comp-row">
+    <div class="comp-feature">Setup in hours, not weeks</div>
+    <div class="comp-cell comp-yes">✓</div>
+    <div class="comp-cell comp-no">—</div>
+  </div>
+</section>
+<section class="stories-section">
+  <div class="section-label">Before and after</div>
+  <h2>What actually changes.</h2>
+  <div class="story-grid">
+    <div class="story-card">
+      <div class="sc-situation">Order processing</div>
+      <div class="sc-problem">Team manually copied orders from the webstore into the ERP every morning. 90 minutes of复制粘贴. Mistakes were common.</div>
+      <div class="sc-before">Before: 90 min/day manual copy-paste</div>
+      <div class="sc-after">After: Orders flow in automatically. Zero manual work.</div>
+      <div class="sc-metric">~8h/week saved</div>
+    </div>
+    <div class="story-card">
+      <div class="sc-situation">Invoice handling</div>
+      <div class="sc-problem">Suppliers sent invoices in different formats. Finance spent hours reformatting each one before it could be imported.</div>
+      <div class="sc-before">Before: Manual invoice reformatting per supplier</div>
+      <div class="sc-after">After: Each format automatically normalized on arrival.</div>
+      <div class="sc-metric">~5h/week saved</div>
+    </div>
+    <div class="story-card">
+      <div class="sc-situation">Supplier alerts</div>
+      <div class="sc-problem">When a critical supplier was unreachable or a delivery was delayed, the team found out from the customer — not from their own systems.</div>
+      <div class="sc-before">Before: Customers reported problems first</div>
+      <div class="sc-after">After: Flow80 alerts the team the moment something goes wrong.</div>
+      <div class="sc-metric">Faster resolution, fewer angry customers</div>
+    </div>
+    <div class="story-card">
+      <div class="sc-situation">Reporting</div>
+      <div class="sc-problem">Weekly KPI reports required pulling data from 3 different systems, cleaning it in Excel, and formatting it manually for management.</div>
+      <div class="sc-before">Before: 3h/week manual report assembly</div>
+      <div class="sc-after">After: Reports generated and delivered every Monday at 8am automatically.</div>
+      <div class="sc-metric">~12h/month saved</div>
+    </div>
+  </div>
+</section>
+<section class="cta-section" id="waitlist">
+  <h2>See what Flow80 can do for your team.</h2>
+  <p>Apply for early access and get Flow80 before the public launch.</p>
+  <a href="/en#waitlist"><button class="btn-primary" onclick="openEaModal()">Request Early Access →</button></a>
+</section>
+
+<!-- Early Access Modal -->
+<div class="ea-modal-overlay" id="eaOverlay" onclick="if(event.target===this)closeEaModal()">
+  <div class="ea-modal">
+    <button class="ea-modal-close" onclick="closeEaModal()" aria-label="Close">×</button>
+    <div id="eaFormContainer">
+      <h2>Request Early Access</h2>
+      <p class="ea-sub">Tell us about your team and we'll get you set up before launch.</p>
+      <form id="eaForm" onsubmit="submitEaForm(event)">
+        <div class="ea-form-group">
+          <label>Your name</label>
+          <input type="text" name="name" placeholder="Anders Jensen" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Work email</label>
+          <input type="email" name="email" placeholder="anders@company.dk" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Company</label>
+          <input type="text" name="company" placeholder="Acme Logistics A/S" required>
+        </div>
+        <div class="ea-form-group">
+          <label>Language</label>
+          <select name="language">
+            <option value="en">English</option>
+            <option value="da">Dansk</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="sv">Svenska</option>
+          </select>
+        </div>
+        <div class="ea-form-group">
+          <label>What do you want to automate? <span style="font-weight:400;opacity:0.6">(optional)</span></label>
+          <textarea name="challenge" placeholder="e.g. Sync orders from our webshop to our ERP automatically..."></textarea>
+        </div>
+        <div class="ea-error" id="eaError"></div>
+        <button type="submit" class="ea-submit" id="eaSubmit">Request Early Access →</button>
+      </form>
+    </div>
+    <div class="ea-success" id="eaSuccess">
+      <div class="ea-success-icon">✓</div>
+      <h3>You're on the list!</h3>
+      <p>We'll be in touch before launch. Check your inbox — we'll send a confirmation to the email you provided.</p>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <p>© 2026 Sikker IT. All rights reserved.</p><p>Flow80 is a product by <strong>Sikker IT</strong></p>
+  <p>Built by <strong>Sikker IT</strong> — for ops teams who are tired of manual work.</p>
+  <div style="display:flex;gap:20px;justify-content:center;font-size:11px;color:rgba(255,255,255,0.3);margin-top:12px">
+    🇪🇺 GDPR Compliant · 🇩🇰 Built in Denmark · Secure by design
+  </div>
+</footer>
+
+<script>
+function toggleLangMenu() {
+  var dropdown = document.getElementById('langDropdown');
+  dropdown.classList.toggle('open');
+  event.stopPropagation();
+}
+function switchLang(lang) {
+  document.getElementById('langDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  var dropdown = document.getElementById('langDropdown');
+  var btn = document.querySelector('.lang-switcher-btn');
+  if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove('open');
+  }
+});
+(function() {
+  var path = window.location.pathname;
+  var lang = 'en';
+  if (path.startsWith('/da')) lang = 'da';
+  else if (path.startsWith('/de')) lang = 'de';
+  else if (path.startsWith('/it')) lang = 'it';
+  else if (path.startsWith('/sv')) lang = 'sv';
+  var flags = { en: '🇬🇧', da: '🇩🇰', de: '🇩🇪', it: '🇮🇹', sv: '🇸🇪' };
+  var names = { en: 'EN', da: 'DA', de: 'DE', it: 'IT', sv: 'SV' };
+  var btn = document.querySelector('.lang-switcher-btn');
+  if (btn) { btn.querySelector('.flag').textContent = flags[lang]; btn.querySelector('.lang-code').textContent = names[lang]; }
+  document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.remove('active'); });
+  var active = document.querySelector('.lang-option[href="/' + lang + '"]');
+  if (active) active.classList.add('active');
+})();
+</script>
+<script>
+function openEaModal() { document.getElementById('eaOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeEaModal() { document.getElementById('eaOverlay').classList.remove('open'); document.body.style.overflow=''; }
+async function submitEaForm(e) {
+  e.preventDefault();
+  var form = document.getElementById('eaForm');
+  var btn = document.getElementById('eaSubmit');
+  var err = document.getElementById('eaError');
+  var data = { name: form.name.value, email: form.email.value, company: form.company.value, language: form.language.value, challenge: form.challenge.value };
+  btn.disabled = true; btn.textContent = 'Sending...'; err.classList.remove('show');
+  try {
+    var res = await fetch('/api/early-access/apply', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (res.ok) {
+      document.getElementById('eaFormContainer').style.display='none';
+      document.getElementById('eaSuccess').classList.add('show');
+      setTimeout(closeEaModal, 3000);
+    } else {
+      var j = await res.json(); err.textContent = j.message || 'Something went wrong. Please try again.'; err.classList.add('show');
+    }
+  } catch(err2) { err.textContent = 'Connection error. Please try again.'; err.classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Request Early Access →';
+}</script>
+</body>
+</html>

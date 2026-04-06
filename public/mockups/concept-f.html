@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow80 — Concept F: The Reckoning</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 10;
+  }
+  .nav-logo { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .nav-logo span { color: #10b981; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.4); font-size: 14px; margin-left: 28px; font-weight: 500; }
+  .nav-links a.cta-nav { color: #10b981; font-weight: 600; }
+  .nav-links a:hover { color: #fff; }
+
+  /* Hero split */
+  .hero-split {
+    display: flex;
+    min-height: 560px;
+  }
+
+  /* LEFT: CHAOS */
+  .chaos-side {
+    flex: 1;
+    background: #1a0000;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+  .chaos-side::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(220,38,38,0.04) 40px, rgba(220,38,38,0.04) 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(220,38,38,0.04) 40px, rgba(220,38,38,0.04) 41px);
+  }
+  .chaos-inner { position: relative; z-index: 1; padding: 40px 32px; height: 100%; display: flex; flex-direction: column; }
+  .chaos-header { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+  .chaos-icon { font-size: 20px; }
+  .chaos-title { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,180,180,0.6); }
+  .chaos-stats-col { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .chaos-stat-box {
+    background: rgba(220,38,38,0.1);
+    border: 1px solid rgba(220,38,38,0.2);
+    border-left: 3px solid rgba(220,38,38,0.6);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .chaos-stat-num { font-size: 32px; font-weight: 800; color: #fca5a5; letter-spacing: -2px; }
+  .chaos-stat-label { font-size: 11px; color: rgba(255,180,180,0.5); margin-top: 2px; }
+  .chaos-error-list { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+  .chaos-error-item {
+    background: rgba(220,38,38,0.15);
+    border: 1px solid rgba(220,38,38,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #fca5a5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chaos-error-item::before { content: '✗'; color: #ef4444; font-weight: 700; flex-shrink: 0; }
+
+  /* DIVIDER */
+  .split-divider {
+    width: 3px;
+    background: linear-gradient(to bottom, #ef4444, #fbbf24, #10b981);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .split-divider-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    background: #0a0a0a;
+    border: 2px solid #10b981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 2;
+    box-shadow: 0 0 24px rgba(16,185,129,0.4);
+  }
+
+  /* RIGHT: CALM */
+  .calm-side {
+    flex: 1;
+    background: #001a0a;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+  .calm-side::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(16,185,129,0.03) 40px, rgba(16,185,129,0.03) 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(16,185,129,0.03) 40px, rgba(16,185,129,0.03) 41px);
+  }
+  .calm-inner { position: relative; z-index: 1; padding: 40px 32px; height: 100%; display: flex; flex-direction: column; }
+  .calm-header { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+  .calm-icon { font-size: 20px; }
+  .calm-title { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(100,200,150,0.6); }
+  .calm-workflow-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .calm-workflow-row {
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cwf-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .cwf-dot.green { background: #10b981; box-shadow: 0 0 10px rgba(16,185,129,0.6); }
+  .cwf-dot.blue { background: #3b82f6; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
+  .cwf-dot.cyan { background: #22d3ee; box-shadow: 0 0 10px rgba(34,211,238,0.5); animation: pulseDot 2s ease-in-out infinite; }
+  @keyframes pulseDot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .cwf-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+  .cwf-meta { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .cwf-badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 100px; flex-shrink: 0; }
+  .badge-ok { background: rgba(16,185,129,0.15); color: #10b981; }
+  .badge-live { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+  .calm-summary { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .calm-sum-box { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15); border-radius: 10px; padding: 14px; text-align: center; }
+  .calm-sum-num { font-size: 28px; font-weight: 800; color: #10b981; letter-spacing: -1px; }
+  .calm-sum-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+  /* Tagline */
+  .tagline {
+    padding: 56px 48px 48px;
+    text-align: center;
+    background: #0a0a0a;
+  }
+  .tagline h1 { font-size: 44px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .tagline h1 .strike { color: #f87171; text-decoration: line-through; text-decoration-color: rgba(248,113,113,0.4); }
+  .tagline h1 .glow { color: #10b981; text-shadow: 0 0 24px rgba(16,185,129,0.4); }
+  .tagline p { font-size: 16px; color: rgba(255,255,255,0.4); max-width: 500px; margin: 0 auto 36px; line-height: 1.7; }
+  .cta-group { display: flex; gap: 14px; justify-content: center; margin-bottom: 24px; }
+  .btn-primary { background: #10b981; color: #fff; padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: #059669; }
+  .btn-secondary { background: transparent; color: rgba(255,255,255,0.6); padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; border: 2px solid rgba(255,255,255,0.15); cursor: pointer; }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+
+  /* Teaser */
+  .teaser { background: #0a0a0a; padding: 60px 48px; border-top: 1px solid rgba(255,255,255,0.04); text-align: center; }
+  .teaser-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #10b981; margin-bottom: 12px; }
+  .teaser h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .teaser p { font-size: 15px; color: rgba(255,255,255,0.35); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+  /* Footer */
+  footer { background: #050505; color: rgba(255,255,255,0.15); text-align: center; padding: 28px 48px; font-size: 12px; }
+
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero-split { flex-direction: column; min-height: auto; }
+    .split-divider { width: 100%; height: 3px; }
+    .split-divider-icon { transform: translate(-50%, -50%) rotate(90deg); }
+    .chaos-inner, .calm-inner { padding: 32px 20px; }
+    .tagline { padding: 40px 20px 32px; }
+    .tagline h1 { font-size: 28px; }
+    .cta-group { flex-direction: column; align-items: center; }
+    .teaser { padding: 40px 20px; }
+    .calm-summary { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Flow<span>80</span></div>
+  <div class="nav-links">
+    <a href="#">How It Works</a>
+    <a href="#">Pricing</a>
+    <a href="#" class="cta-nav">Get Early Access →</a>
+  </div>
+</nav>
+
+<!-- Hero Split -->
+<section class="hero-split">
+  <!-- CHAOS -->
+  <div class="chaos-side">
+    <div class="chaos-inner">
+      <div class="chaos-header">
+        <span class="chaos-icon">⚠️</span>
+        <span class="chaos-title">Without Flow80</span>
+      </div>
+      <div class="chaos-stats-col">
+        <div class="chaos-stat-box">
+          <div class="chaos-stat-num">40+</div>
+          <div class="chaos-stat-label">hours/week lost to manual work</div>
+        </div>
+        <div class="chaos-stat-box">
+          <div class="chaos-stat-num">12</div>
+          <div class="chaos-stat-label">systems, none connected</div>
+        </div>
+        <div class="chaos-stat-box">
+          <div class="chaos-stat-num">7</div>
+          <div class="chaos-stat-label">errors caught per week — too late</div>
+        </div>
+      </div>
+      <div class="chaos-error-list">
+        <div class="chaos-error-item">Invoice sync failed — manual intervention needed</div>
+        <div class="chaos-error-item">Order #29381 missing data from supplier</div>
+        <div class="chaos-error-item">Finance report delayed — person on holiday</div>
+        <div class="chaos-error-item">Slack thread: "who updated the spreadsheet?!"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="split-divider">
+    <div class="split-divider-icon">→</div>
+  </div>
+
+  <!-- CALM -->
+  <div class="calm-side">
+    <div class="calm-inner">
+      <div class="calm-header">
+        <span class="calm-icon">✨</span>
+        <span class="calm-title">With Flow80</span>
+      </div>
+      <div class="calm-workflow-list">
+        <div class="calm-workflow-row">
+          <span class="cwf-dot cyan"></span>
+          <div>
+            <div class="cwf-name">Order Sync — ACME Logistics API → ACME ERP</div>
+            <div class="cwf-meta">Running right now · 847 orders processed today</div>
+          </div>
+          <span class="cwf-badge badge-live">● Live</span>
+        </div>
+        <div class="calm-workflow-row">
+          <span class="cwf-dot green"></span>
+          <div>
+            <div class="cwf-name">Invoice Processing — SAP Export</div>
+            <div class="cwf-meta">Last run: 18 min ago · 100% success</div>
+          </div>
+          <span class="cwf-badge badge-ok">✓ Healthy</span>
+        </div>
+        <div class="calm-workflow-row">
+          <span class="cwf-dot blue"></span>
+          <div>
+            <div class="cwf-name">Supplier Alert — Delay auto-resolved</div>
+            <div class="cwf-meta">Customer notified automatically · 14:32</div>
+          </div>
+          <span class="cwf-badge badge-ok">✓ Done</span>
+        </div>
+        <div class="calm-workflow-row">
+          <span class="cwf-dot green"></span>
+          <div>
+            <div class="cwf-name">Finance Report — Weekly summary</div>
+            <div class="cwf-meta">Scheduled · tomorrow 08:00</div>
+          </div>
+          <span class="cwf-badge badge-ok">✓ Ready</span>
+        </div>
+      </div>
+      <div class="calm-summary">
+        <div class="calm-sum-box">
+          <div class="calm-sum-num">0</div>
+          <div class="calm-sum-label">errors this week</div>
+        </div>
+        <div class="calm-sum-box">
+          <div class="calm-sum-num">40h+</div>
+          <div class="calm-sum-label">saved per week</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tagline -->
+<div class="tagline">
+  <h1>Stop <span class="strike">manually</span> connecting your tools.<br><span class="glow">Let Flow80 do it.</span></h1>
+  <p>Flow80 connects your systems and automates your operations — no developers needed, no complicated setup. Get started in minutes, not months.</p>
+  <div class="cta-group">
+    <button class="btn-primary">Get Early Access →</button>
+    <button class="btn-secondary">See How It Works ↓</button>
+  </div>
+</div>
+
+<!-- Teaser -->
+<section class="teaser">
+  <div class="teaser-label">What happens automatically</div>
+  <h2>Your data. Your workflows. Finally under control.</h2>
+  <p>Every order synced, every invoice processed, every alert sent — without a single person watching. Flow80 runs your ops while your team does actual work.</p>
+</section>
+
+<footer>
+  <p>© 2026 Flow80. All rights reserved. · Built for ops teams who are tired of manual work.</p>
+</footer>
+</body>
+</html>

@@ -388,7 +388,7 @@ const en: Translations = {
   pricingTeaser: {
     sectionTitle: 'Pricing. (We kept it simple.)',
     leadIn: 'One flat price. No per-user fees. No per-execution charges. No complicated tiers to decode.',
-    pricePreview: 'Coming soon: €149/month — everything included',
+    pricePreview: 'Coming soon: €19/month — everything included',
     noCreditCard: '✦ No credit card required to join the waitlist.',
     earlyAccessHeading: 'Early access members get locked in at an exclusive rate.',
     earlyAccessBody: "You'll be the first to know when we open the doors.",

@@ -132,6 +132,52 @@ export function trackLanguageToggled(langFrom: string, langTo: string, switcherL
   });
 }
 
+// ── Onboarding Funnel Tracking ───────────────────────────────────────────────
+// Card: 69d57925390d8571c7c61c6d
+
+export type OnboardingStep = 'signup' | 'step1' | 'step2' | 'step3' | 'step4' | 'dashboard';
+
+interface OnboardingEventParams {
+  step: OnboardingStep;
+  userId?: string;     // falls back to flow80Uid or session ID
+  timeOnStepMs?: number;
+}
+
+function resolveUserId(): string {
+  if (typeof window === 'undefined') return '';
+  return window.flow80Uid || getSessionId();
+}
+
+export function trackOnboardingStepViewed(params: OnboardingEventParams): void {
+  sendEvent('onboarding_step_viewed', {
+    funnel_name:    'onboarding',
+    step_name:     params.step,
+    user_id:       params.userId ?? resolveUserId(),
+    time_on_step_ms: null,
+    site_state:    SITE_STATE,
+  });
+}
+
+export function trackOnboardingStepCompleted(params: OnboardingEventParams): void {
+  sendEvent('onboarding_step_completed', {
+    funnel_name:      'onboarding',
+    step_name:       params.step,
+    user_id:         params.userId ?? resolveUserId(),
+    time_on_step_ms: params.timeOnStepMs ?? null,
+    site_state:      SITE_STATE,
+  });
+}
+
+export function trackOnboardingStepAbandoned(params: OnboardingEventParams): void {
+  sendEvent('onboarding_step_abandoned', {
+    funnel_name:      'onboarding',
+    step_name:       params.step,
+    user_id:         params.userId ?? resolveUserId(),
+    time_on_step_ms: params.timeOnStepMs ?? null,
+    site_state:      SITE_STATE,
+  });
+}
+
 // ── Utility ──
 function getLanguage(): string {
   if (typeof document === 'undefined') return 'en';

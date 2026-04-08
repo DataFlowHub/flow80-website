@@ -13,9 +13,10 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   return (
     <div className="account-shell">
       <nav className="account-nav">
-        <a href="/account/analytics" className="account-nav__link">Analytics</a>
-        <a href="/account/billing"   className="account-nav__link">Billing</a>
-        <a href="/account/settings"   className="account-nav__link">Settings</a>
+        <a href="/account/analytics"  className="account-nav__link">Analytics</a>
+        <a href="/account/billing"    className="account-nav__link">Billing</a>
+        <a href="/account/settings"  className="account-nav__link">Settings</a>
+        <a href="/developer/getting-started" className="account-nav__link account-nav__link--dev">Developer Docs ↗</a>
       </nav>
       <main>{children}</main>
       <style jsx>{`
@@ -29,6 +30,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
           text-decoration: none; transition: color 0.15s;
         }
         .account-nav__link:hover { color: #6366f1; }
+        .account-nav__link--dev { color: #a5b4fc !important; }
       `}</style>
     </div>
   );

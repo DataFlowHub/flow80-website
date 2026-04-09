@@ -1478,7 +1478,7 @@ input, textarea { font-family: var(--font); }
 }
 
 .hero-section__cta-primary {
-  background: var(--color-primary);
+  background: var(--color-secondary);
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -1493,7 +1493,7 @@ input, textarea { font-family: var(--font); }
 }
 
 .hero-section__cta-primary:hover {
-  background: #1D4ED8;
+  background: var(--color-secondary-hover);
   transform: scale(1.02);
 }
 
@@ -1809,12 +1809,12 @@ input, textarea { font-family: var(--font); }
 }
 
 .pricing-card__cta--solid {
-  background: var(--color-primary);
+  background: var(--color-secondary);
   color: white;
 }
 
 .pricing-card__cta--solid:hover {
-  background: #1D4ED8;
+  background: var(--color-secondary-hover);
   transform: scale(1.02);
 }
 

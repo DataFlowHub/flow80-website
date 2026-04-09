@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import type { Translations } from '@/i18n/translations';
-import { trackCtaClicked } from '@/services/analytics';
 
 type Props = {
   t: Translations;

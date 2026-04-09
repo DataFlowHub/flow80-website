@@ -1,0 +1,31 @@
+## Summary
+Replaces the pre-launch landing page with Concept D design (dark #0a0a1a background, animated network nodes canvas, purple accent #7c3aed, Space Grotesk typography) and adds three real Next.js subpage routes.
+
+## Changes
+
+**Landing page (Concept D):**
+- New `ConceptDHero` component with animated network nodes canvas background
+- Dark neural network aesthetic: #0a0a1a bg, purple accent, glow effects
+- Hero: "Your data. Your workflows. Finally under control." with badge "Built in Denmark · GDPR Compliant"
+- Trust badges row, integration chips (SAP, Slack, PostgreSQL, SFTP/EDI, HubSpot, REST/GraphQL, 40+ more)
+- Flow section: "Connect -> Define -> Automate -> Relax"
+- CTAs: purple "Get Early Access ->", outlined "See How It Works down arrow"
+- New `ConceptDNav` with fixed nav, logo, links, language switcher
+
+**Subpages:**
+- `/[locale]/how-it-works/page.tsx` - 3-step process, manual work problems, order processing example with stats
+- `/[locale]/features/page.tsx` - Visual builder, error handling, real-time monitoring, integrations grid, templates
+- `/[locale]/pricing/page.tsx` - 3-tier pricing (EUR19/EUR49/EUR149), FAQ section, trust badges
+
+**CSS:**
+- Concept D design tokens added to globals.css (--concept-d-* variables)
+- Full component styles for hero, nav, subpage layouts, cards, pricing cards
+
+## Verification
+- `npm run build` passes cleanly (0 errors)
+- All routes present in build output: `/[locale]`, `/[locale]/how-it-works`, `/[locale]/features`, `/[locale]/pricing`
+- All 3 locales (en/da/sv) supported via existing i18n infrastructure
+- Language switcher functional on all pages
+
+## Deploy
+After PR merge: rebuild `/opt/sites/flow80/` via the standard git pull + npm run build + PORT=3000 startup.

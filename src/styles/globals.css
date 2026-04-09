@@ -1970,3 +1970,675 @@ input, textarea { font-family: var(--font); }
     font-size: 40px;
   }
 }
+
+/* ═══════════════════════════════════════════
+   CONCEPT D — Dark Neural Network Theme
+   ═══════════════════════════════════════════ */
+
+:root {
+  --concept-d-bg: #0a0a1a;
+  --concept-d-accent: #7c3aed;
+  --concept-d-accent-light: #8b5cf6;
+  --concept-d-accent-glow: rgba(124, 58, 237, 0.4);
+  --concept-d-text: #e2e8f0;
+  --concept-d-muted: #94a3b8;
+  --concept-d-surface: #1e1e3f;
+  --concept-d-border: rgba(124, 58, 237, 0.25);
+}
+
+/* ── Concept D Hero ── */
+.concept-d-hero {
+  position: relative;
+  background: var(--concept-d-bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 80px 0 60px;
+}
+
+.concept-d-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.concept-d-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.concept-d-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--concept-d-muted);
+  background: rgba(124, 58, 237, 0.12);
+  border: 1px solid var(--concept-d-border);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+  letter-spacing: 0.02em;
+}
+
+.concept-d-hero__headline {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 700;
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  max-width: 680px;
+}
+
+.concept-d-hero__headline-accent {
+  color: var(--concept-d-accent-light);
+}
+
+.concept-d-hero__sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--concept-d-muted);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: 36px;
+}
+
+.concept-d-hero__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.concept-d-hero__cta-primary {
+  background: var(--concept-d-accent);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+}
+
+.concept-d-hero__cta-primary:hover {
+  background: #6d28d9;
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px var(--concept-d-accent-glow);
+}
+
+.concept-d-hero__cta-primary:active { transform: scale(0.98); }
+
+.concept-d-hero__cta-secondary {
+  background: transparent;
+  color: var(--concept-d-text);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: border-color 0.2s, background 0.2s;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.concept-d-hero__cta-secondary:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+}
+
+.concept-d-hero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--concept-d-muted);
+  margin-bottom: 40px;
+}
+
+.concept-d-hero__integrations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.concept-d-hero__integrations-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--concept-d-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+}
+
+.concept-d-hero__chip {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--chip-color, var(--concept-d-accent-light));
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid var(--concept-d-border);
+  padding: 5px 12px;
+  border-radius: 100px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.concept-d-hero__chip:hover {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+.concept-d-hero__flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.concept-d-hero__flow-step {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background: var(--concept-d-surface);
+  border: 1px solid var(--concept-d-border);
+  padding: 8px 18px;
+  border-radius: 8px;
+}
+
+.concept-d-hero__flow-step--relax {
+  color: var(--concept-d-accent-light);
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.concept-d-hero__flow-arrow {
+  font-size: 20px;
+  color: var(--concept-d-accent);
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .concept-d-hero { padding: 120px 0 80px; }
+  .concept-d-hero__ctas { flex-direction: row; align-items: center; }
+  .concept-d-hero__headline { font-size: 64px; }
+}
+
+@media (min-width: 1024px) {
+  .concept-d-hero__headline { font-size: 72px; }
+}
+
+/* ── Concept D Nav ── */
+.concept-d-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(10, 10, 26, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--concept-d-border);
+  height: var(--nav-height-mobile);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.concept-d-nav__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.concept-d-nav__logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  font-family: var(--font-heading);
+}
+
+.concept-d-nav__links {
+  display: none;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.concept-d-nav__link {
+  font-size: var(--text-sm);
+  color: var(--concept-d-muted);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.concept-d-nav__link:hover { color: white; }
+
+.concept-d-nav__cta {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  background: var(--concept-d-accent);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.concept-d-nav__cta:hover { background: #6d28d9; transform: scale(1.03); }
+
+.concept-d-nav__lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--concept-d-muted);
+}
+
+.concept-d-nav__lang-btn {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--concept-d-muted);
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.concept-d-nav__lang-btn:hover { color: white; }
+.concept-d-nav__lang-btn.active { color: white; background: rgba(124, 58, 237, 0.2); }
+
+@media (min-width: 640px) {
+  .concept-d-nav { height: var(--nav-height); padding: 0 24px; }
+  .concept-d-nav__links { display: flex; }
+}
+
+/* ── Concept D Layout ── */
+.concept-d-layout {
+  background: var(--concept-d-bg);
+  color: var(--concept-d-text);
+  min-height: 100vh;
+}
+
+.concept-d-nav ~ main { padding-top: var(--nav-height-mobile); }
+@media (min-width: 640px) { .concept-d-nav ~ main { padding-top: var(--nav-height); } }
+
+/* ── Concept D Subpage Shared ── */
+.concept-d-subpage {
+  padding: 80px 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.concept-d-subpage__hero { text-align: center; margin-bottom: 64px; }
+
+.concept-d-subpage__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--concept-d-muted);
+  background: rgba(124, 58, 237, 0.12);
+  border: 1px solid var(--concept-d-border);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+
+.concept-d-subpage__headline {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+.concept-d-subpage__sub {
+  font-size: 18px;
+  color: var(--concept-d-muted);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.concept-d-subpage__section { margin-bottom: 64px; }
+
+.concept-d-subpage__section-title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 32px;
+}
+
+/* ── Concept D How It Works Page ── */
+.concept-d-hiw-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.concept-d-hiw-step {
+  background: var(--concept-d-surface);
+  border: 1px solid var(--concept-d-border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+}
+
+.concept-d-hiw-step__number {
+  width: 48px;
+  height: 48px;
+  background: var(--concept-d-accent);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.concept-d-hiw-step__heading {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.concept-d-hiw-step__body {
+  font-size: 15px;
+  color: var(--concept-d-muted);
+  line-height: 1.75;
+}
+
+.concept-d-hiw-example {
+  background: var(--concept-d-surface);
+  border: 1px solid var(--concept-d-border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  margin-bottom: 48px;
+}
+
+.concept-d-hiw-example__title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.concept-d-hiw-example__subtitle { font-size: 14px; color: var(--concept-d-muted); margin-bottom: 28px; }
+
+.concept-d-hiw-example__steps { display: flex; flex-direction: column; gap: 16px; }
+
+.concept-d-hiw-example__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+  background: rgba(124, 58, 237, 0.08);
+  border-radius: 10px;
+  border: 1px solid var(--concept-d-border);
+}
+
+.concept-d-hiw-example__step-check {
+  width: 20px; height: 20px;
+  color: #10B981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.concept-d-hiw-example__step-text { flex: 1; }
+
+.concept-d-hiw-example__step-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.concept-d-hiw-example__step-meta { font-size: 12px; color: var(--concept-d-muted); }
+
+.concept-d-hiw-example__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--concept-d-border);
+}
+
+.concept-d-hiw-example__stat { text-align: center; }
+
+.concept-d-hiw-example__stat-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--concept-d-accent-light);
+}
+
+.concept-d-hiw-example__stat-label { font-size: 12px; color: var(--concept-d-muted); margin-top: 4px; }
+
+/* ── Concept D Features Page ── */
+.concept-d-features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 64px;
+}
+
+.concept-d-card {
+  background: var(--concept-d-surface);
+  border: 1px solid var(--concept-d-border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.concept-d-card:hover {
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.1);
+}
+
+.concept-d-card__icon { font-size: 32px; margin-bottom: 16px; }
+
+.concept-d-card__title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.concept-d-card__body {
+  font-size: 15px;
+  color: var(--concept-d-muted);
+  line-height: 1.75;
+}
+
+.concept-d-features-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--concept-d-accent-light);
+  margin-bottom: 20px;
+}
+
+.concept-d-integrations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.concept-d-integration-chip {
+  background: var(--concept-d-surface);
+  border: 1px solid var(--concept-d-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--concept-d-text);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.concept-d-integration-chip:hover {
+  border-color: rgba(124, 58, 237, 0.5);
+  background: rgba(124, 58, 237, 0.08);
+}
+
+/* ── Concept D Pricing Page ── */
+.concept-d-pricing-hero { text-align: center; margin-bottom: 56px; }
+
+.concept-d-pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.concept-d-pricing-card {
+  background: var(--concept-d-surface);
+  border: 1px solid var(--concept-d-border);
+  border-radius: 20px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.concept-d-pricing-card--highlight {
+  border-color: var(--concept-d-accent);
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.2);
+}
+
+.concept-d-pricing-card__badge {
+  display: inline-block;
+  background: var(--concept-d-accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.concept-d-pricing-card__tier {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.concept-d-pricing-card__tagline { font-size: 13px; color: var(--concept-d-muted); margin-bottom: 24px; }
+
+.concept-d-pricing-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 28px;
+}
+
+.concept-d-pricing-card__amount {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.02em;
+}
+
+.concept-d-pricing-card__period { font-size: 16px; color: var(--concept-d-muted); }
+
+.concept-d-pricing-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex: 1;
+}
+
+.concept-d-pricing-card__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--concept-d-text);
+}
+
+.concept-d-pricing-card__check {
+  width: 16px; height: 16px;
+  color: #10B981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.concept-d-pricing-card__cta {
+  width: 100%;
+  padding: 13px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  text-align: center;
+  display: block;
+  border: none;
+}
+
+.concept-d-pricing-card__cta--solid {
+  background: var(--concept-d-accent);
+  color: white;
+}
+
+.concept-d-pricing-card__cta--solid:hover { background: #6d28d9; transform: scale(1.02); }
+
+.concept-d-pricing-card__cta--outline {
+  background: transparent;
+  color: var(--concept-d-text);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.concept-d-pricing-card__cta--outline:hover {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05);
+}
+
+@media (min-width: 640px) {
+  .concept-d-hiw-grid { grid-template-columns: repeat(3, 1fr); }
+  .concept-d-features-grid { grid-template-columns: repeat(2, 1fr); }
+  .concept-d-integrations-grid { grid-template-columns: repeat(3, 1fr); }
+  .concept-d-pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
+}

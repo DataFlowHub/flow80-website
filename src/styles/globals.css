@@ -4,8 +4,8 @@
 :root {
   /* Brand: Deep Navy + Electric Blue + Cyan Glow */
   --color-primary: #0A1E46;      /* Deep Navy */
-  --color-secondary: #5D9CEC;    /* Electric Blue — primary CTA color */
-  --color-secondary-hover: #4A8AD9;
+  --color-secondary: #F97316;    /* Warm Orange — primary CTA color */    /* Electric Blue — primary CTA color */
+  --color-secondary-hover: #EA580C;
   --color-accent: #00D4FF;        /* Cyan Glow — highlights & glow */
   --color-accent-hover: #00B8E0;
   --color-dark: #0A1E46;          /* Deep Navy */

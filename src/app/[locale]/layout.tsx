@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { translations, type Locale } from '@/i18n/translations';
+import LocaleShell from './LocaleShell';
 
 type Props = { params: { locale: string } };
 
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function LocaleLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default function LocaleLayout({ children, params }: { children: React.ReactNode; params: Props['params'] }) {
+  const locale = (params.locale || 'en') as Locale;
+  return <LocaleShell initialLocale={locale}>{children}</LocaleShell>;
 }

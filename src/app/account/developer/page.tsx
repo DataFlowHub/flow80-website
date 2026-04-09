@@ -1,3 +1,6 @@
+
+'use client';
+
 /**
  * Flow80 — Developer Portal / API Reference
  * Card: 69d0f53115a6e8f21953c43b
@@ -869,7 +872,7 @@ curl -X POST "${BASE_URL}/webhooks/inbound" \\
               <div key={String(env)} className="env-row">
                 <span className="env-row__env">{env}</span>
                 <code className="env-row__val">{domain}</code>
-                <span className="env-row__val">{                <span className="env-row__val">{limits}</span>
+                <span className="env-row__val">{limits}</span>
               </div>
             ))}
           </div>

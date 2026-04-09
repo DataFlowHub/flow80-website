@@ -1,13 +1,10 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import CodeBlock from '@/components/DevDocs/CodeBlock';
 import LanguageTabs, { TabPane } from '@/components/DevDocs/LanguageTabs';
 import type { Language } from '@/components/DevDocs/LanguageTabs';
 
-export const metadata: Metadata = {
-  title: 'API Reference',
-  description: 'Complete Flow80 API reference — endpoints, request/response formats, error codes, and language examples.',
-};
 
 const BASE_URL = 'https://app.flow80.com/api/v1';
 

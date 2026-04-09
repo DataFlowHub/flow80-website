@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-type Language = 'php' | 'python' | 'node' | 'ruby' | 'go' | 'curl';
+export type Language = 'php' | 'python' | 'node' | 'ruby' | 'go' | 'curl';
 
 export const LANG_LABELS: Record<Language, string> = {
   php: 'PHP', python: 'Python', node: 'Node.js', ruby: 'Ruby', go: 'Go', curl: 'cURL',

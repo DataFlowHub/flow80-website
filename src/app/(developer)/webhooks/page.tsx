@@ -1,13 +1,10 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import CodeBlock from '@/components/DevDocs/CodeBlock';
 import LanguageTabs, { TabPane } from '@/components/DevDocs/LanguageTabs';
 import type { Language } from '@/components/DevDocs/LanguageTabs';
 
-export const metadata: Metadata = {
-  title: 'Webhooks',
-  description: 'Receive real-time events from Flow80 workflows. Learn how to configure, verify, and handle outbound webhooks.',
-};
 
 const hmacSamples: Record<Language, string> = {
   php: `<?php

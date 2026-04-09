@@ -62,7 +62,7 @@ export async function getDueEntries(email_id: number, limit = 50): Promise<DripE
   }).limit(limit * 3).toArray();
 
   // Filter to those whose next email is due
-  return entries.filter(entry => {
+  return (entries as DripEntry[]).filter(entry => {
     const sentIds = entry.emails_sent.map(e => e.email_id);
     if (sentIds.includes(email_id)) return false;
 
@@ -84,8 +84,11 @@ export async function markEmailSent(email: string, email_id: number, message_id:
   await coll.updateOne(
     { email },
     {
-      $push: { emails_sent: { email_id, sent_at: new Date() }, mailgun_message_ids: message_id },
-    }
+      $push: {
+        emails_sent: { email_id, sent_at: new Date() },
+        mailgun_message_ids: message_id,
+      },
+    } as Parameters<typeof coll.updateOne>[2]
   );
 }
 

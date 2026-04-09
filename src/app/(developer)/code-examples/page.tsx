@@ -1,12 +1,9 @@
-import type { Metadata } from 'next';
+'use client';
+
 import CodeBlock from '@/components/DevDocs/CodeBlock';
 import LanguageTabs, { TabPane } from '@/components/DevDocs/LanguageTabs';
 import type { Language } from '@/components/DevDocs/LanguageTabs';
 
-export const metadata: Metadata = {
-  title: 'Code Examples',
-  description: 'Complete, copy-paste-ready integration examples for common Flow80 use cases in PHP, Python, Node, Ruby, Go, and cURL.',
-};
 
 const BASE_URL = 'https://app.flow80.com/api/v1';
 
@@ -308,7 +305,7 @@ go func() {
 # This example uses bash + jq:
 RUN_ID="run_yyyyyyyyyyyyyyyy"
 for i in $(seq 1 30); do
-  STATUS=$(curl -s "${BASE_URL}/flows/runs/${RUN_ID}" \\
+  STATUS=$(curl -s "${BASE_URL}/flows/runs/\${RUN_ID}" \\
     -H "Authorization: Bearer flw_test_..." | jq -r '.status')
   echo "[$i] Status: $STATUS"
   [[ "$STATUS" =~ completed|failed|cancelled ]] && break

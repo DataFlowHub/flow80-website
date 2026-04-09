@@ -1,11 +1,8 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import CodeBlock from '@/components/DevDocs/CodeBlock';
 
-export const metadata: Metadata = {
-  title: 'Authentication',
-  description: 'Learn how Flow80 API authentication works — API key types, scopes, security best practices, and enterprise SSO.',
-};
 
 function InlineCode({ children }: { children: React.ReactNode }) {
   return <code className="inline-code">{children}</code>;

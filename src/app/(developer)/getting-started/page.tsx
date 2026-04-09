@@ -1,11 +1,8 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import CodeBlock from '@/components/DevDocs/CodeBlock';
 
-export const metadata: Metadata = {
-  title: 'Getting Started',
-  description: 'Get up and running with the Flow80 API in minutes. Learn your API keys, authentication, and base URL.',
-};
 
 const BASE_URL = 'https://app.flow80.com/api/v1';
 

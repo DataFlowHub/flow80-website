@@ -3,6 +3,7 @@
  * Card: 69d57927864d77f88b8251bc
  */
 import type { Metadata } from 'next';
+import '@/styles/account.css';
 
 export const metadata: Metadata = {
   title: 'Account — Flow80',
@@ -19,19 +20,6 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
         <a href="/developer/getting-started" className="account-nav__link account-nav__link--dev">Developer Docs ↗</a>
       </nav>
       <main>{children}</main>
-      <style jsx>{`
-        .account-shell { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        .account-nav {
-          display: flex; gap: 1.5rem; padding: 1.25rem 0;
-          border-bottom: 1px solid #1e293b; margin-bottom: 0;
-        }
-        .account-nav__link {
-          font-size: 0.9rem; font-weight: 500; color: #64748b;
-          text-decoration: none; transition: color 0.15s;
-        }
-        .account-nav__link:hover { color: #6366f1; }
-        .account-nav__link--dev { color: #a5b4fc !important; }
-      `}</style>
     </div>
   );
 }

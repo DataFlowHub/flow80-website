@@ -450,19 +450,19 @@ const en: Translations = {
   },
   meta: {
     en: {
-      title: 'Workflow Automation Without Code — Flow80',
+      title: 'Workflow Automation Without Code | Flow80',
       description:
-        'Flow80 connects your systems and automates your operations. No developers, no complicated setup. Get started in minutes.',
+        'Flow80 is the workflow automation platform built for ops teams. Connect databases, apps and APIs in minutes. No code required.',
     },
     da: {
-      title: 'Automatisering uden kode — Flow80',
+      title: 'Automatisering uden kode | Flow80',
       description:
-        'Flow80 forbinder dine systemer og automatiserer dine arbejdsgange. Ingen udviklere, ingen kompliceret opsætning. Kom i gang på minutter.',
+        'Flow80 er workflow-automatiseringsplatformen bygget til operations-teams. Forbind databaser, apps og APIer paa faa minutter. Ingen kode kraevet.',
     },
     sv: {
-      title: 'Automatisering utan kodning — Flow80',
+      title: 'Automatisering utan kodning | Flow80',
       description:
-        'Flow80 kopplar ihop dina system och automatiserar dina arbetsflöden. Inga utvecklare, ingen komplicerad setup. Kom igång på några minuter.',
+        'Flow80 är workflow-automatiseringsplattformen byggd för operations-team. Anslut databaser, appar och API:er på några minuter. Ingen kod krävs.',
     },
   },
 };
@@ -724,9 +724,9 @@ const da: Translations = {
   meta: {
     en: en.meta.en,
     da: {
-      title: 'Automatisering uden kode — Flow80',
+      title: 'Automatisering uden kode | Flow80',
       description:
-        'Flow80 forbinder dine systemer og automatiserer dine arbejdsgange. Ingen udviklere, ingen kompliceret opsætning. Kom i gang på minutter.',
+        'Flow80 er workflow-automatiseringsplatformen bygget til operations-teams. Forbind databaser, apps og APIer paa faa minutter. Ingen kode kraevet.',
     },
     sv: en.meta.sv,
   },
@@ -990,9 +990,9 @@ const sv: Translations = {
     en: en.meta.en,
     da: en.meta.da,
     sv: {
-      title: 'Automatisering utan kodning — Flow80',
+      title: 'Automatisering utan kodning | Flow80',
       description:
-        'Flow80 kopplar ihop dina system och automatiserar dina arbetsflöden. Inga utvecklare, ingen komplicerad setup. Kom igång på några minuter.',
+        'Flow80 är workflow-automatiseringsplattformen byggd för operations-team. Anslut databaser, appar och API:er på några minuter. Ingen kod krävs.',
     },
   },
 };

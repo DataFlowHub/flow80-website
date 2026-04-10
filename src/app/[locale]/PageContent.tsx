@@ -48,7 +48,7 @@ export default function PageContent({ locale }: Props) {
         <CompetitorTable t={t} />
         <TrustSection t={t} />
       </main>
-      <Footer t={t} locale={locale} />
+      <Footer />
     </>
   );
 }

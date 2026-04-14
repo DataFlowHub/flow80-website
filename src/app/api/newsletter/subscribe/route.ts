@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Newsletter subscription endpoint
-// Connects to email platform (jared@ooz.dk)
-// In production this would integrate with Mailgun, ConvertKit, Buttondown, etc.
-
 interface SubscribeBody {
   name: string;
   email: string;
   language?: string;
 }
+
+const LARAVEL_API_URL = process.env.LARAVEL_API_URL ?? 'http://localhost:8000';
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,45 +21,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Invalid email address' }, { status: 400 });
     }
 
-    // TODO: Wire to actual email platform
-    // Options: Mailgun API, ConvertKit, Buttondown, Mailchimp
-    // env.NEXT_PUBLIC_EMAIL_PROVIDER=x
-    // env.MAILGUN_API_KEY=...
-    // env.MAILGUN_DOMAIN=...
-    // env.CONVERTKIT_API_KEY=...
-    // env.BUTTONDOWN_API_KEY=...
-    //
-    // For now, log to console (staging verification)
-    console.log('[Newsletter Subscribe]', {
-      name,
-      email,
-      language,
-      timestamp: new Date().toISOString(),
+    // Forward to Laravel backend for storage + email notification
+    const laravelRes = await fetch(`${LARAVEL_API_URL}/api/leads/newsletter`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ name, email, language: language || 'en' }),
     });
 
-    // Simulate network latency
-    await new Promise((r) => setTimeout(r, 400));
-
-    // In production, replace this block with actual email platform API call:
-    //
-    // Example — Mailgun:
-    // const formData = new URLSearchParams({
-    //   from: 'Flow80 <noreply@flow80.com>',
-    //   to: 'jared@ooz.dk',
-    //   subject: `New newsletter signup: ${name}`,
-    //   text: `Name: ${name}\nEmail: ${email}\nLanguage: ${language}`,
-    // });
-    // const mgRes = await fetch(
-    //   `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Authorization': `Basic ${Buffer.from(`api:${process.env.MAILGUN_API_KEY}`).toString('base64')}`,
-    //     },
-    //     body: formData,
-    //   }
-    // );
-    // if (!mgRes.ok) throw new Error('Mailgun error');
+    if (!laravelRes.ok) {
+      const errData = await laravelRes.json().catch(() => ({}));
+      console.error('[Newsletter] Laravel error:', errData);
+      return NextResponse.json(
+        { message: errData.message || 'Failed to subscribe' },
+        { status: laravelRes.status }
+      );
+    }
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err) {

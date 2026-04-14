@@ -8,6 +8,8 @@ interface EarlyAccessBody {
   language?: string;
 }
 
+const LARAVEL_API_URL = process.env.LARAVEL_API_URL ?? 'http://localhost:8000';
+
 export async function POST(req: NextRequest) {
   try {
     const body: EarlyAccessBody = await req.json();
@@ -27,29 +29,26 @@ export async function POST(req: NextRequest) {
       company,
       challenge: challenge || '',
       language: language || 'en',
-      source: 'flow80-prelaunch',
-      timestamp: new Date().toISOString(),
     };
 
-    console.log('[Early Access Apply]', payload);
+    // Forward to Laravel backend for storage + email notification
+    const laravelRes = await fetch(`${LARAVEL_API_URL}/api/leads/early-access`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
 
-    // TODO: Wire to Mission Control (port 8101) to notify Ruby
-    // const mcRes = await fetch('http://localhost:8101/api/tasks', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     type: 'early_access_application',
-    //     priority: 'normal',
-    //     data: payload,
-    //     notify: 'ruby',
-    //   }),
-    // });
-
-    // TODO: Store in database (Mission Control / Supabase / etc.)
-    // const dbRes = await supabase.from('early_access_applications').insert(payload);
-
-    // Simulate network latency
-    await new Promise((r) => setTimeout(r, 400));
+    if (!laravelRes.ok) {
+      const errData = await laravelRes.json().catch(() => ({}));
+      console.error('[Early Access] Laravel error:', errData);
+      return NextResponse.json(
+        { message: errData.message || 'Failed to submit application' },
+        { status: laravelRes.status }
+      );
+    }
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err) {

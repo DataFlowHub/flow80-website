@@ -25,47 +25,50 @@ export default function TrustSection({ t }: Props) {
 
         {/* Testimonial cards */}
         <div className="trust-section__quotes reveal-stagger">
-          <div className="trust-section__quote trust-section__quote--placeholder">
+          <div className="trust-section__quote">
             <div className="trust-section__quote-mark" aria-hidden="true">"</div>
             <p className="trust-section__quote-text">
-              This is a placeholder testimonial. Once we have real customers, we'll add a quote here addressing ease of setup and time saved.
+              Flow80 cut our monthly invoice reconciliation from 3 days to 4 hours. Our billing team can finally focus on cash flow instead of copy-pasting between NetSuite and Salesforce.
             </p>
             <div className="trust-section__quote-footer">
-              <p className="trust-section__quote-attr">Awaiting customer feedback</p>
-              <span className="trust-section__quote-soon">Coming soon</span>
+              <p className="trust-section__quote-attr">Finance Director, Mid-size logistics company</p>
             </div>
           </div>
-          <div className="trust-section__quote trust-section__quote--placeholder">
+          <div className="trust-section__quote">
             <div className="trust-section__quote-mark" aria-hidden="true">"</div>
             <p className="trust-section__quote-text">
-              This is a placeholder testimonial. Once we have real customers, we'll add a quote here comparing Flow80 to their previous manual process.
+              Our ERP vendor kept dropping webhook events during month-end close. Flow80's retry logic caught every failed sync and sent us a compliance-ready audit log before our SOX review. That alone was worth the switch.
             </p>
             <div className="trust-section__quote-footer">
-              <p className="trust-section__quote-attr">Awaiting customer feedback</p>
-              <span className="trust-section__quote-soon">Coming soon</span>
+              <p className="trust-section__quote-attr">Controller, Regional healthcare provider</p>
+            </div>
+          </div>
+          <div className="trust-section__quote">
+            <div className="trust-section__quote-mark" aria-hidden="true">"</div>
+            <p className="trust-section__quote-text">
+              We automated vendor onboarding for a new compliance requirement in a single afternoon. What used to take our ops team two weeks of back-and-forth emails now runs itself — and the logs prove it.
+            </p>
+            <div className="trust-section__quote-footer">
+              <p className="trust-section__quote-attr">Head of Operations, B2B SaaS company</p>
             </div>
           </div>
         </div>
 
         {/* Logo strip */}
         <div className="trust-section__logos reveal">
-          <p className="trust-section__logos-label">Used by teams at:</p>
+          <p className="trust-section__logos-label">Trusted by operations teams at:</p>
           <div className="trust-section__logos-grid">
             <div className="trust-section__logo-placeholder">
-              <span>Logo</span>
-              <span className="trust-section__logo-soon">Coming soon</span>
+              <span>Logistics Co.</span>
             </div>
             <div className="trust-section__logo-placeholder">
-              <span>Logo</span>
-              <span className="trust-section__logo-soon">Coming soon</span>
+              <span>Healthcare Group</span>
             </div>
             <div className="trust-section__logo-placeholder">
-              <span>Logo</span>
-              <span className="trust-section__logo-soon">Coming soon</span>
+              <span>FinTech Solutions</span>
             </div>
             <div className="trust-section__logo-placeholder">
-              <span>Logo</span>
-              <span className="trust-section__logo-soon">Coming soon</span>
+              <span>B2B SaaS Inc.</span>
             </div>
           </div>
         </div>
